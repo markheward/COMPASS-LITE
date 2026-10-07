@@ -1,0 +1,17 @@
+{
+  "name": "compass-lite",
+  "private": true,
+  "description": "Release tests for compass-lite.html. Not needed to install or run Compass Lite.",
+  "scripts": {
+    "test": "playwright test",
+    "release-check": "python3 tools/release_check.py"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.56.1",
+    "docx": "8.5.0",
+    "mammoth": "1.8.0",
+    "pdfjs-dist": "3.11.174",
+    "xlsx": "0.18.5"
+  }
+}

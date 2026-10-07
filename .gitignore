@@ -1,0 +1,11 @@
+# Backups are business data. Never commit them (CL-1301).
+*.json
+!capabilities.json
+!package.json
+!package-lock.json
+*backup*
+# Test tooling
+node_modules/
+test-results/
+playwright-report/
+.DS_Store
