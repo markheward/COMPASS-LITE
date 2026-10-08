@@ -293,6 +293,27 @@ test.describe('P1 set-up', () => {
     await expect(s).toContainText('Confirmed');
   });
 
+  test('the Policy and SOP mirrors the policy set: documents, sections and cross-links (CL-1312)', async ({ open, page }) => {
+    await open(); await firstRun(page);
+    await page.locator('.subnav').getByRole('button', { name: 'Policy and SOP' }).click();
+    const nav = page.getByRole('navigation', { name: 'Policy and SOP documents' });
+    const labels = ['Your Strategy Explained', 'Compass Lite Policy', 'Annex A · Cadence Calendar', 'Annex B · Records and AEGIS Handoff', 'Annex C · Escalation Signals', 'P1 · Review Cadence', 'P2 · WIG Turnover', 'P3 · Set-up and Snapshot', 'Page guide'];
+    await expect(nav.getByRole('button')).toHaveText(labels);
+    await expect(page.locator('#sop-doc')).toContainText('1. Why your strategy exists');
+    await expect(page.locator('#sop-doc')).toContainText('Purpose.');
+    await expect(page.locator('#sop-doc')).toContainText('Output / value.');
+    await nav.getByRole('button', { name: 'Compass Lite Policy' }).click();
+    await expect(page.locator('#sop-doc')).toContainText('Strategy Management Policy');
+    for (const h of ['1. Purpose and scope', '2. Principles', '3. The rules', '4. How the strategy is managed', '5. How we measure', '6. Roles', '7. Exceptions and incidents', '8. Review and document control', '9. Using your strategy']) await expect(page.locator('#sop-doc h4', { hasText: h })).toHaveCount(1);
+    await page.locator('#sop-doc').getByRole('link', { name: 'Annex C · Escalation Signals' }).click();
+    await expect(page.locator('#sop-doc')).toHaveAttribute('data-doc', 'annex-c');
+    await expect(nav.getByRole('button', { name: 'Annex C · Escalation Signals' })).toHaveAttribute('aria-current', 'true');
+    await nav.getByRole('button', { name: 'P3 · Set-up and Snapshot' }).click();
+    await expect(page.locator('#sop-doc')).toContainText('Stage 1 — Set-up');
+    await expect(page.locator('#sop-doc')).toContainText('Arrives in P7');
+    await expect(page.locator('#sop-doc')).not.toContainText('folder');
+  });
+
   test('pilot badge shows until an approval with a name and date is recorded (CL-613)', async ({ open, page }) => {
     await open(); await firstRun(page);
     await expect(page.locator('#pilot-badge')).toBeVisible();
@@ -316,7 +337,7 @@ test.describe('P1 set-up', () => {
     await expect(page.locator('#ft-sop')).toContainText('does not match');
     await page.getByRole('tab', { name: 'Set-up' }).click();
     await expect(page.locator('#version-card')).toContainText('Does not match');
-    await page.locator('.subnav').getByRole('button', { name: 'How Lite works (SOP)' }).click();
+    await page.locator('.subnav').getByRole('button', { name: 'Policy and SOP' }).click();
     await expect(page.locator('#sop-header')).toContainText('but v');
     await ctx.close();
   });
@@ -494,7 +515,7 @@ test.describe('P1 data health, guide, logs and dashboard', () => {
 test.describe('P1 non-functional', () => {
   test('no sideways page scroll on any tab (NF-18)', async ({ open, page }) => {
     await open(); await firstRun(page);
-    const views = [['Dashboard'], ['Set-up'], ['Set-up', 'Organization'], ['Set-up', 'How Lite works (SOP)'], ['Stage 3'], ['Stage 4'], ['Stage 5'], ['Reviews']];
+    const views = [['Dashboard'], ['Set-up'], ['Set-up', 'Organization'], ['Set-up', 'Policy and SOP'], ['Stage 3'], ['Stage 4'], ['Stage 5'], ['Reviews']];
     for (const [tab, tool] of views) {
       await page.getByRole('tab', { name: tab }).click();
       if (tool) await page.locator('.subnav').getByRole('button', { name: tool }).click();
@@ -508,7 +529,7 @@ test.describe('P1 non-functional', () => {
     let r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
     expect(r.violations.map(v => v.id + ': ' + v.nodes.map(n => n.target).join(' '))).toEqual([]);
     await firstRun(page);
-    for (const [tab, tool] of [['Dashboard'], ['Set-up'], ['Set-up', 'Organization'], ['Reviews']]) {
+    for (const [tab, tool] of [['Dashboard'], ['Set-up'], ['Set-up', 'Organization'], ['Set-up', 'Policy and SOP'], ['Reviews']]) {
       await page.getByRole('tab', { name: tab }).click();
       if (tool) await page.locator('.subnav').getByRole('button', { name: tool }).click();
       r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();

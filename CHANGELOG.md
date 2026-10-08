@@ -3,6 +3,10 @@
 Compass Lite shows its version in the footer of every page and on **Set-up**,
 where **What's new** lists these notes. Backups record which version made them.
 
+## v0.1.1 — 2026-10-08
+- **Policy and SOP:** the in-page SOP now mirrors *Compass Lite: Policy, Process and Procedure*. It has Your Strategy Explained, the Strategy Management Policy with Annexes A to C (Cadence Calendar, Records and AEGIS Handoff, Escalation Signals), Procedures P1 to P3 (Review Cadence, WIG Turnover, Set-up and Snapshot), and a page guide to every feature. Steps that arrive in a later phase are marked. Open it from **Set-up → Policy and SOP**.
+- Data levels in the reference data now read L1 Public and L5 Critical.
+
 ## v0.1.0 — 2026-10-07
 Phase 1, Foundation. The first installable release. It starts empty, with no sample data.
 - **Saving:** every confirmed change saves to the page's own database. The status chip shows Saved, Saving, Not connected or Save failed. A copy with no database connection still opens and says plainly that changes will not be saved.

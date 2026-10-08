@@ -97,7 +97,27 @@ input[type=file]{font-size:12.5px;max-width:100%}
 .rolechip{display:inline-flex;align-items:center;gap:4px;font-size:12px;background:var(--info-t);color:var(--info);border-radius:99px;padding:1px 4px 1px 9px;margin:2px 4px 2px 0}
 .rolechip button{border:0;background:none;color:inherit;cursor:pointer;font-weight:700;padding:0 5px;min-height:0}
 .pre{white-space:pre-wrap;font:12.5px/1.45 ui-monospace,Menlo,monospace;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px;max-height:260px;overflow:auto}
-.sop section{margin-bottom:16px} .sop h4{margin-top:4px} .sop p,.sop li{max-width:75ch}
+.sop section{margin-bottom:18px} .sop h4{margin:4px 0 6px;font:700 15.5px var(--serif)} .sop h5{font:600 12.5px var(--label);margin:12px 0 4px} .sop p,.sop li{max-width:78ch} .sop li{margin-bottom:4px}
+.sop .sop-title{font:700 19px var(--serif);letter-spacing:0;text-transform:none;color:var(--ink);margin:0 0 4px}
+.sop .sop-lede{color:var(--ink2);font-size:14.5px;margin:0 0 14px}
+.sop a{color:var(--info)}
+.sop .tw{margin:8px 0 10px}
+.sopnav{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.sopnav button{width:100%;text-align:left;font:600 12.5px var(--label);background:none;border:0;border-left:3px solid transparent;color:var(--ink2);padding:6px 10px;cursor:pointer;border-radius:0 6px 6px 0}
+.sopnav button[aria-current=true]{border-left-color:var(--red);color:var(--ink);background:var(--surface2)}
+.sopnav .sub button{padding-left:24px;font-weight:500}
+.soplayout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:760px){.soplayout{grid-template-columns:1fr}}
+.thread{margin:12px 0;padding:0}
+.thread figcaption{font:600 13.5px var(--label);margin-bottom:8px}
+.thread ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+.thread li{position:relative;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--surface);max-width:none}
+.thread li b{display:block;font:600 14px var(--label)}
+.thread li span{color:var(--ink2);font-size:13px}
+.thread li em{position:absolute;top:8px;right:12px;font:500 11.5px var(--label);font-style:normal;color:var(--mute)}
+.thread li i{position:absolute;left:calc(50% + 12px);bottom:-17px;font:500 11.5px var(--sans);font-style:normal;color:var(--mute)}
+.thread li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:-17px;height:15px;border-left:1.5px solid var(--mute)}
+.thread li.main{border:2px solid var(--info);background:var(--info-t)}
 .msg{font-size:13px;margin-top:8px}
 .msg.err{color:var(--crit)} .msg.ok{color:var(--good)}
 footer{color:var(--mute);font-size:12px}
@@ -118,54 +138,488 @@ footer .bad{color:var(--crit);font-weight:600}
   <footer id="footer"></footer>
 </div>
 
-<!-- SOP: the in-page explanation of every feature. data-sop-version must equal APP_RELEASE.version (CL-1312). -->
-<template id="sop-template" data-sop-version="0.1.0">
-  <section><h4>What Compass Lite is</h4>
-    <p>Compass Lite takes you through BSIP Stage 3 (Strategic Direction), Stage 4 (Goals and Objectives) and Stage 5 (Strategic Roadmap), then keeps the strategy alive through reviews. Lite proposes. You decide. Nothing is written to any register until you press a Confirm button, and every confirmed change is added to the Change log with who made it and when.</p>
-    <p>This release is Phase 1 (Foundation): saving, set-up, the Organization tab, backup and restore, the Dashboard, the Guide panel and the logs. Tools that arrive in a later phase are shown with the phase they arrive in.</p></section>
+<!-- SOP: the in-page Policy, Process and Procedure set (mirrors "Compass Lite: Policy, Process and Procedure") plus the page guide that explains every feature. data-sop-version must equal APP_RELEASE.version (CL-1312). -->
+<template id="sop-template" data-sop-version="0.1.1">
+<article data-doc="explained" data-label="Your Strategy Explained">
+  <h3 class="sop-title">Your Strategy Explained</h3>
+  <p class="sop-lede">Your strategy exists to focus the business on the few things that matter most, and to show that everyday work serves them.</p>
+
+  <section><h4>1. Why your strategy exists</h4>
+    <p><b>Purpose.</b> Explain, in plain words, why you have a strategy and what it is for.</p>
+    <p><b>Summary.</b> A business always has more good ideas than time, people or money. A strategy is the set of choices that decides which ideas get your effort and which do not. BSIP, the Business Strategy and Implementation Process, builds those choices from evidence rather than instinct, tests them against who you are as a business, and turns them into a handful of goals you can track. Compass Lite then keeps the strategy alive after launch, so it is checked on a rhythm and not filed away.</p>
+    <p><b>Output / value.</b> A strategy you can explain in a few minutes, that your team can follow and that you can measure.</p></section>
+
+  <section><h4>2. The BSIP approach</h4>
+    <p><b>Purpose.</b> Show how evidence becomes goals and action.</p>
+    <p><b>Summary.</b> BSIP has seven stages: Environmental Scan, Internal Analysis, Strategic Direction, Goals and Objectives, Strategic Roadmap, BSIP Release and Implementation. Compass Lite builds Stages 3 to 5 and then manages the result. It does not repeat Stages 1 and 2. It starts from an Intake Pack: your ACES Analysis (what you want to Achieve, Conserve, Eliminate and Start), a Client Intake and your Strategy Statement. The communication campaign and full implementation programme of Stages 6 and 7 sit outside Lite.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="BSIP stages in Compass Lite"><table><thead><tr><th>Stage</th><th>The question it answers</th><th>What you get</th></tr></thead><tbody>
+      <tr><td>3 Strategic Direction</td><td>Where will we compete, how will we win, and does that fit who we are?</td><td>A Strategy Statement, strategic themes, a Mission, Vision and Values check, and AI ethics alignment</td></tr>
+      <tr><td>4 Goals and Objectives</td><td>What are the few goals that matter most?</td><td>WIGs (Wildly Important Goals), objectives with owners and dates, measures, and a trace from every document back to its goal</td></tr>
+      <tr><td>5 Strategic Roadmap</td><td>In what order, and who does what?</td><td>A three-phase roadmap, milestones, responsibilities and thresholds for your key indicators</td></tr>
+      <tr><td>After launch</td><td>Is it working?</td><td>Weekly, monthly and quarterly reviews, and a clean handover when a goal is achieved</td></tr>
+    </tbody></table></div>
+    <p><b>Strategy proposes, identity constrains.</b> The Strategy Statement is drawn from the evidence. Your Mission, Vision, Values and AI ethical principles then test it. A choice that fails the test goes back to you. It is never quietly rewritten, and your values are never quietly bent to fit the strategy.</p>
+    <p><b>Output / value.</b> You can see where each piece of your strategy came from and why it is there.</p></section>
+
+  <section><h4>3. The stages Compass Lite leaves out</h4>
+    <p><b>Purpose.</b> Be clear about what Compass Lite does not do, why, and where to go if you need it.</p>
+    <p><b>Summary.</b> Compass Lite is built for small and mid-sized businesses, run directly by the owner, and sized to get you to a working strategy quickly. To keep it that way, four of the seven BSIP stages are not part of Lite. In each case Lite does something lighter in their place, so you can still move forward.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="Stages Compass Lite leaves out"><table><thead><tr><th>Stage</th><th>What it does in full BSIP</th><th>Why Lite leaves it out</th><th>What Lite does instead</th></tr></thead><tbody>
+      <tr><td>1 Environmental Scan</td><td>Builds a full picture of the outside world around your business</td><td>A complete scan is a larger piece of work than an owner-run, quick-to-start tool is meant to carry</td><td>Starts from your ACES Analysis and Client Intake. With your permission, researches best practice on the web and marks it unverified until you confirm</td></tr>
+      <tr><td>2 Internal Analysis</td><td>Looks honestly at the business inside: strengths, gaps and capability</td><td>A full internal analysis needs deeper fact-finding than Lite is sized for</td><td>Takes what you say about the business in the Client Intake and your website address, and checks every draft against your own Mission, Vision and Values</td></tr>
+      <tr><td>6 BSIP Release</td><td>Communicates the strategy across the business through campaigns</td><td>Communication campaigns are outside Lite's scope</td><td>Produces a short progress update and client-ready exports you can share yourself</td></tr>
+      <tr><td>7 Implementation</td><td>Delivers the plan through a full programme with project management</td><td>A full implementation programme with a PMO is outside Lite's scope, and Lite does not run your scoreboard or project tools</td><td>Manages the strategy once it is live: weekly, monthly and quarterly reviews, with WIGs and risks tracked</td></tr>
+    </tbody></table></div>
+    <p><b>Where to go for the full version.</b> Compass is planned as three levels, and Lite is Level 1. The full BSIP, with all seven stages, is the fuller route and is proposed as Compass Level 2. Level 3 is proposed to bring in Helm AI. Both are still proposals, so ask SpecNav (specnav.global) where they stand. You are likely to want the full version if you need a deeper outside-in scan, a thorough internal analysis, a company-wide communication campaign, or a managed implementation programme.</p>
+    <p><b>What Lite does when you need a missing stage.</b> It tells you plainly that the stage is not part of Lite and points you to SpecNav for the full BSIP route. It does not improvise the stage or present a partial one as complete.</p>
+    <p><b>Output / value.</b> You know exactly what Lite covers, why the rest is left out, and where to go when your business is ready for more.</p></section>
+
+  <section><h4>4. The parts of your strategy</h4>
+    <p><b>Purpose.</b> Show what each part is and why it exists.</p>
+    <p><b>Summary.</b> Every part has one job. Together they form a golden thread: every document, initiative and measure cites the WIG it serves, and every WIG cites its reason for being.</p>
+    <figure class="thread" aria-label="The golden thread: every part of your strategy traces back to evidence and forward to a review">
+      <figcaption>Every part of your strategy traces back to evidence and forward to a review</figcaption>
+      <ol>
+        <li><b>Evidence</b><span>Start from facts: your ACES Analysis and Client Intake</span></li>
+        <li><b>Strategy Statement</b><span>The choice: where to play, how to win, what not to do</span></li>
+        <li><b>Mission, Vision, Values and AI ethics</b><span>The test: strategy proposes, identity constrains</span></li>
+        <li><b>Strategic themes</b><span>Growth, Efficiency, Innovation and Risk mitigation</span></li>
+        <li class="main"><b>WIGs</b><span>The few goals that matter most: at most four per level</span></li>
+        <li><b>Objectives and measures</b><span>Steps with owners, dates, lead and lag measures</span></li>
+        <li><b>Roadmap</b><span>Float, Move and Sustain: what comes in which order</span></li>
+        <li><b>Reviews</b><span>Weekly, monthly and quarterly: is it working?</span></li>
+      </ol>
+    </figure>
+    <p>Read top to bottom. Each part exists because of the one above it, and the reviews feed what you learn into the next round of evidence.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="The parts of your strategy"><table><thead><tr><th>Part</th><th>What it is</th><th>Why it exists</th></tr></thead><tbody>
+      <tr><td>Strategy Statement</td><td>Your choice: who you serve, the problem you solve, what sets you apart and the trade-offs you accept</td><td>So everyone knows where you will compete, how you will win and what you will not do</td></tr>
+      <tr><td>Mission, Vision, Values and AI ethical principles</td><td>Why you exist, where you are heading, how you behave and the boundaries on AI use</td><td>To keep the strategy honest. They test the Strategy Statement, and you decide any conflict</td></tr>
+      <tr><td>Strategic themes</td><td>Growth, Efficiency, Innovation and Risk mitigation</td><td>To group what the evidence says and give each WIG a home</td></tr>
+      <tr><td>WIGs</td><td>The few goals that matter most, written From X to Y by when</td><td>To focus your effort. Section 5 explains them</td></tr>
+      <tr><td>Objectives</td><td>The steps that deliver a WIG, each with an owner, a date and measures</td><td>To turn a goal into work someone is accountable for</td></tr>
+      <tr><td>Measures</td><td>Lead measures (actions you control), lag measures (the result), KPIs (how well it is going) and KRIs (early warnings)</td><td>To show whether it is working while you can still act</td></tr>
+      <tr><td>Roadmap</td><td>Three phases. Float stabilises the business and lays foundations, including controlled AI pilots. Move drives efficiency, automation and growth. Sustain optimises, innovates and builds lasting advantage</td><td>To put the goals in order</td></tr>
+      <tr><td>AI use cases</td><td>Specific uses of AI, each tied to a WIG and assessed in AEGIS Essentials</td><td>So AI serves the strategy and never the other way round</td></tr>
+      <tr><td>Reviews</td><td>Weekly, monthly and quarterly checks</td><td>To keep the strategy current. <a href="#" data-act="sopDoc" data-arg="p1">P1</a> sets them out</td></tr>
+    </tbody></table></div>
+    <p><b>Output / value.</b> One clear line from your evidence to your goals to your daily work.</p></section>
+
+  <section><h4>5. WIGs: the goals that matter most</h4>
+    <p><b>Purpose.</b> Explain what a WIG is and why you have so few.</p>
+    <p><b>Summary.</b> A WIG is the centre of the strategy. Compass Lite uses the 4DX approach (the Four Disciplines of Execution) to keep WIGs few, measured and reviewed.</p>
+    <h5>What a WIG is</h5>
+    <p>A WIG is a Wildly Important Goal: a goal so important that missing it would make other successes matter little. It is written as From X to Y by when. For example, From 12 repeat clients to 20 by 31 December. Each WIG has a lag measure, which is the result (X to Y), and lead measures, which are the actions you control that move the result. Lite runs a SMART check on every WIG before you confirm it.</p>
+    <h5>Why there are at most four</h5>
+    <p>The first discipline of 4DX is to focus on the wildly important. The idea is simple: the more goals you chase at once, the less energy each one gets, and a small team can only keep a few goals in view. Compass Lite sets a ceiling of four WIGs at any level, and many small businesses will do better with fewer. Lite flags more than four active WIGs as a risk, because too many goals is a common reason strategies stall. Everything else you do still matters. It simply is not a WIG.</p>
+    <h5>How Lite applies the four disciplines</h5>
+    <div class="tw" tabindex="0" role="region" aria-label="The four disciplines"><table><thead><tr><th>Discipline</th><th>What it means</th><th>Where you see it</th></tr></thead><tbody>
+      <tr><td>1 Focus on the wildly important</td><td>Work on a few goals, not everything</td><td>At most four WIGs per level, with a four-slot WIG view</td></tr>
+      <tr><td>2 Act on the lead measures</td><td>Track the actions you control, not only the result</td><td>Every objective carries lead and lag measures</td></tr>
+      <tr><td>3 Keep a compelling scoreboard</td><td>Everyone can see whether you are winning</td><td>The Dashboard and the scoreboard definition</td></tr>
+      <tr><td>4 Create a cadence of accountability</td><td>Short, regular check-ins</td><td>Weekly, monthly and quarterly reviews (<a href="#" data-act="sopDoc" data-arg="p1">P1</a>)</td></tr>
+    </tbody></table></div>
+    <p>When a WIG is achieved, it is closed out properly (<a href="#" data-act="sopDoc" data-arg="p2">P2</a>). That frees its slot, and the next WIG is chosen from the ranked backlog.</p>
+    <p><b>Output / value.</b> You know what a WIG is, why the number is capped, and how the reviews keep each one moving.</p></section>
+</article>
+
+<article data-doc="policy" data-label="Compass Lite Policy">
+  <h3 class="sop-title">Compass Lite: Strategy Management Policy</h3>
+  <p class="sop-lede">We manage our strategy on a set rhythm. Compass Lite drafts, checks and tracks. People decide.</p>
+
+  <section><h4>1. Purpose and scope</h4>
+    <p><b>Purpose.</b> Set the rules for managing a strategy built with Compass Lite, so goals stay current, evidenced and in step with AEGIS Essentials.</p>
+    <p><b>Summary.</b> This policy covers the strategy Lite builds from BSIP Stages 3 to 5 (Strategy Statement, WIGs, objectives and roadmap) and how it is managed after launch. It follows the AEGIS Essentials layout: a policy, annexes and procedures. The policy says <i>what</i> must happen. The annexes hold the detail and the procedures say <i>how</i>. Lite hands its AI use case list to AEGIS Essentials, where each use case is assessed. Stage 1 and 2 analysis, Stage 6 communication and running your scoreboard are out of scope. <a href="#" data-act="sopDoc" data-arg="explained">Your Strategy Explained</a>, section 3, says why and where to go for them.</p>
+    <p><b>New to the approach?</b> Start with <a href="#" data-act="sopDoc" data-arg="explained">Your Strategy Explained</a>. It explains why your strategy exists, what each part is, and what a WIG is and why there are at most four.</p>
+    <figure class="thread tiers" aria-label="Policy sets the rules, annexes hold the detail, procedures set the steps">
+      <figcaption>Policy sets the rules, annexes hold the detail, procedures set the steps</figcaption>
+      <ol>
+        <li><b>Policy</b> <em>SN-CMP-POL-01</em><span>What: eight principles, eleven rules, scales, roles and review</span><i>is detailed in</i></li>
+        <li><b>Annexes</b> <em>Annexes A to C</em><span>Detail: cadence calendar, records, AEGIS handoff, escalation signals</span><i>is put into practice by</i></li>
+        <li class="main"><b>Procedure</b> <em>P1 to P3</em><span>How: stages with a trigger, steps, output and check</span><i>writes to and reads from</i></li>
+        <li><b>Records</b> <em>Six records</em><span>Evidence: what every review reads and writes</span></li>
+      </ol>
+    </figure>
+    <div class="tw" tabindex="0" role="region" aria-label="Parts of the policy"><table><thead><tr><th>Part</th><th>What it holds</th></tr></thead><tbody>
+      <tr><td>This policy</td><td>Principles, rules, scales, roles, exceptions and review</td></tr>
+      <tr><td><a href="#" data-act="sopDoc" data-arg="annex-a">Annex A · Cadence Calendar</a></td><td>The review rhythm, who joins and what each review reads</td></tr>
+      <tr><td><a href="#" data-act="sopDoc" data-arg="annex-b">Annex B · Records and AEGIS Handoff</a></td><td>The registers, and how Lite output moves into AEGIS Essentials</td></tr>
+      <tr><td><a href="#" data-act="sopDoc" data-arg="annex-c">Annex C · Escalation Signals</a></td><td>Signals that need a decision, and who decides</td></tr>
+      <tr><td><a href="#" data-act="sopDoc" data-arg="p1">P1 · Review Cadence</a></td><td>Session open check, weekly, monthly and quarterly reviews</td></tr>
+      <tr><td><a href="#" data-act="sopDoc" data-arg="p2">P2 · WIG Turnover</a></td><td>Completing a WIG, close-out decisions and choosing the next WIG</td></tr>
+      <tr><td><a href="#" data-act="sopDoc" data-arg="p3">P3 · Set-up and Snapshot</a></td><td>First-run set-up and the facilitator snapshot</td></tr>
+    </tbody></table></div>
+    <p><b>Output / value.</b> One map of how your strategy is governed day to day, traceable from a rule to a routine to a record.</p></section>
+
+  <section><h4>2. Principles</h4>
+    <ol>
+      <li><b>Strategy first.</b> Every objective traces to a WIG, and every WIG to the Strategy Statement. Lite proposes an AI use case only when a WIG calls for it. AI is a means to the strategy, never a goal in itself. When a WIG is achieved, AI that is now part of how we work moves to Run The Business: still governed, but no longer counted as strategy work.</li>
+      <li><b>A person is always accountable.</b> Every WIG, objective, risk and decision has one named owner.</li>
+      <li><b>Humans decide.</b> Lite may draft, suggest and summarise. Every goal, score, treatment and decision is a suggestion until a person confirms it.</li>
+      <li><b>Evidence before investment.</b> Reviews use only figures held in the registers. A missing figure shows as Not recorded and is never estimated.</li>
+      <li><b>True to who we are.</b> Every draft is tested against our Mission, Vision, Values and AI ethical principles. Lite never decides them.</li>
+      <li><b>Our data stays ours.</b> Our records live in our own Compass Lite page, under our own Claude account, and our backups sit in our own cloud storage. No client data goes to SpecNav, and web research never carries it.</li>
+      <li><b>Proportionate.</b> Light touch for low-risk items; more checks as risk rises. Sized for a small business.</li>
+      <li><b>Finish before moving on.</b> A WIG completes only when every objective under it is Completed or Cancelled.</li>
+    </ol>
+    <p>Together these apply the AEGIS Essentials principles of strategy first, a named accountable person, human decisions and proportionate control to the work of managing a strategy.</p></section>
+
+  <section><h4>3. The rules</h4>
+    <h5>Everyone must</h5>
+    <ul>
+      <li>Confirm each Lite draft before it is recorded, and check any Lite output before it leaves the business or is relied on.</li>
+      <li>Link every objective to a WIG, and every AI use case to a WIG or objective, before it is put forward.</li>
+      <li>Take each AI use case Lite proposes through AEGIS Essentials P1 before relying on AI for a business process. Take any need for a stage Lite leaves out (a full external scan, internal analysis, communication campaign or implementation programme) to SpecNav for the full BSIP route, and do not ask Lite to improvise it.</li>
+      <li>Keep the WIG Register, KPI and KRI Register, Milestone Plan, Risk Register and Decision Log current, and hold reviews on the cadence in section 4.</li>
+      <li>Report a Lite error, near miss or concern to the AI Governance Lead within 1 working day, at once if serious.</li>
+    </ul>
+    <h5>Everyone must not</h5>
+    <ul>
+      <li>Treat a Lite draft as a decision.</li>
+      <li>Put data into Lite above its approved data level (ceiling L3, L5 always refused), or use a personal account for business data.</li>
+      <li>Let Lite send, publish or change a record without a person's confirmation.</li>
+      <li>Keep relying on AI for a process that no longer supports a current WIG or objective, unless it has moved to Run The Business through a WIG close-out (<a href="#" data-act="sopDoc" data-arg="p2">P2</a>).</li>
+      <li>Run more than four WIGs at any level, or complete a WIG while an objective under it is still open.</li>
+      <li>Edit or replace reference data, such as the AEGIS Master Categories and Scoring, outside a new release of Compass Lite.</li>
+    </ul>
+    <p><b>Output / value.</b> Eleven plain rules that anyone helping run the strategy can follow.</p></section>
+
+  <section><h4>4. How the strategy is managed</h4>
+    <p><b>Purpose.</b> Show the cadence that keeps your strategy current.</p>
+    <p><b>Summary.</b> Seven routines run on four rhythms: once, every session, on a regular cycle, and when something happens. Weekly, monthly and quarterly frequencies are starting defaults to confirm at set-up. The quarterly review matches the AEGIS Essentials Quarterly Governance Review, every 90 days by default. <a href="#" data-act="sopDoc" data-arg="annex-a">Annex A</a> holds the calendar.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="Routines"><table><thead><tr><th>Routine</th><th>Procedure</th><th>Runs</th><th>You get</th></tr></thead><tbody>
+      <tr><td>Set up</td><td>P3</td><td>Once, then while skipped steps remain</td><td>Saving checked, roles, website address, cadence and data limits confirmed</td></tr>
+      <tr><td>Session open check</td><td>P1</td><td>Every session</td><td>A readout of stale entries, overdue reviews and risk indicators</td></tr>
+      <tr><td>Weekly progress check</td><td>P1</td><td>Weekly</td><td>Each WIG's status and percent complete, up to date</td></tr>
+      <tr><td>Monthly review</td><td>P1</td><td>Monthly</td><td>A short progress update you can share</td></tr>
+      <tr><td>Quarterly strategy review</td><td>P1</td><td>Every 90 days by default</td><td>Strategy, values fit and WIGs retested, with decisions logged</td></tr>
+      <tr><td>WIG turnover</td><td>P2</td><td>When a WIG is achieved</td><td>The result archived, close-out decisions made, the next WIG chosen</td></tr>
+      <tr><td>Facilitator snapshot</td><td>P3</td><td>On request</td><td>An Excel status snapshot for your retained facilitator</td></tr>
+    </tbody></table></div>
+    <p><b>Output / value.</b> A small, predictable routine. Nothing drifts for months before anyone notices.</p></section>
+
+  <section><h4>5. How we measure</h4>
+    <p><b>Purpose.</b> Give every score one scale, so a Compass Lite reading and an AEGIS Essentials reading mean the same thing.</p>
+    <p><b>Summary.</b> Lite uses the AEGIS Essentials scales. The details sit in the AEGIS Essentials annexes, and Lite carries the Master Categories and Scoring as read-only reference data, labelled Template.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="Scales"><table><thead><tr><th>Scale</th><th>In one line</th><th>Details</th></tr></thead><tbody>
+      <tr><td>Strategic alignment</td><td>Every objective traces to a WIG; every AI use case links to a WIG or objective. No link, no approval</td><td>AEGIS Essentials Annex E</td></tr>
+      <tr><td>Risk</td><td>Likelihood × Impact (1 to 25), banded Low 1 to 5, Medium 6 to 10, High 11 to 15, Critical 16 to 25. The band sets who approves</td><td>AEGIS Essentials Annex B</td></tr>
+      <tr><td>Data</td><td>Five levels, L1 Public to L5 Critical. Lite's ceiling is L3 and L5 is always refused</td><td>AEGIS Essentials Annex C</td></tr>
+      <tr><td>Key risk indicators</td><td>Ten indicators read from the registers, each with threshold, trend and source. No data shows as Not recorded</td><td>AEGIS Essentials Annex B</td></tr>
+      <tr><td>Incident priority</td><td>P0 (drop everything) to P4 (cosmetic)</td><td>AEGIS Essentials Annex D</td></tr>
+    </tbody></table></div>
+    <p><b>Who approves.</b> Low risk, the BU Lead. Medium, the AI Governance Lead. High, the Executive Sponsor. Critical cannot proceed until treated. Tolerating a High or Critical risk needs a recorded reason and flags the Executive Sponsor.</p>
+    <p><b>Output / value.</b> Fair, comparable scores, and nothing recorded without a person's confirmation.</p></section>
+
+  <section><h4>6. Roles</h4>
+    <p><b>Purpose.</b> Make sure every step has a named person.</p>
+    <p><b>Summary.</b> Six roles, as in AEGIS Essentials. In a small business one person often holds several, and the Owner or MD is usually the Executive Sponsor. Every WIG, objective and risk has one named owner. You record who holds each role on Set-up, Organization.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="Roles"><table><thead><tr><th>Role</th><th>Typical holder</th><th>Accountable for</th></tr></thead><tbody>
+      <tr><td>Executive Sponsor</td><td>Owner / MD</td><td>The Strategy Statement, WIGs and objectives; this policy; High-risk decisions; approving moves to Run The Business; the quarterly review</td></tr>
+      <tr><td>AI Governance Lead</td><td>Ops lead or fractional AI advisor</td><td>Running P1 to P3 and the registers; Medium-risk decisions; rating incidents</td></tr>
+      <tr><td>DPO (Data Protection)</td><td>Owner, ops lead or outside adviser</td><td>Data levels and Lite's data ceiling</td></tr>
+      <tr><td>IT or Security Lead</td><td>In-house IT or managed service provider</td><td>Access to the Compass Lite page, and where its backups are kept</td></tr>
+      <tr><td>BU Lead</td><td>Head of each function</td><td>The objectives they own; Low-risk decisions</td></tr>
+      <tr><td>End User</td><td>All staff</td><td>Following the rules; raising ideas and concerns</td></tr>
+    </tbody></table></div>
+    <p>Two supporting parties are not roles. A retained facilitator, if you have one, receives the status snapshot you choose to send, or is invited to the page by you. Lite drafts, checks and tracks. It never decides, sends or edits reference data.</p>
+    <p><b>Output / value.</b> No orphan goals, no unowned risks.</p></section>
+
+  <section><h4>7. Exceptions and incidents</h4>
+    <p><b>Exceptions.</b> Only the Executive Sponsor can grant one. It must be written, limited to 90 days, and logged in the Decision Log. There is no exception to the strategy link for an objective or an AI use case.</p>
+    <p><b>Incidents.</b> Report to the AI Governance Lead, who rates the incident P0 to P4. The Executive Sponsor decides on containment and client notification for P0 and P1. Honest, prompt reporting is never treated as misconduct.</p></section>
+
+  <section><h4>8. Review and document control</h4>
+    <p><b>Quarterly Strategy Review.</b> The Executive Sponsor reviews the WIG Register, Milestone Plan, Risk Register, risk indicators and Decision Log, together with anything Lite has flagged. <a href="#" data-act="sopDoc" data-arg="p1">P1</a> sets out the steps.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="Document control"><table><thead><tr><th>Control</th><th>Detail</th></tr></thead><tbody>
+      <tr><td>Document ID</td><td>SN-CMP-POL-01 (proposed)</td></tr>
+      <tr><td>Version</td><td>0.1 (draft), shared by the policy, annexes and procedures</td></tr>
+      <tr><td>Owner</td><td>Executive Sponsor</td></tr>
+      <tr><td>Review</td><td>Every 12 months, after a P0 incident, when AEGIS risk scoring changes, or when WIGs are reset</td></tr>
+      <tr><td>This in-page copy</td><td>Carried in the Compass Lite file and checked against the release that is running (see the header above)</td></tr>
+    </tbody></table></div>
+    <div class="tw" tabindex="0" role="region" aria-label="Version history"><table><thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead><tbody>
+      <tr><td>0.1</td><td>2026-10-04</td><td>First draft, realigned to the AEGIS Essentials policy structure (policy, annexes, procedures, numbered sections, roles, review and document control)</td></tr>
+    </tbody></table></div>
+    <p><b>Still to confirm.</b> Weekly, monthly and quarterly frequencies and depth are defaults from the Compass Lite specification. Whether the business owner or a SpecNav consultant runs Lite also remains open, and it sets who confirms each step.</p></section>
+
+  <section><h4>9. Using your strategy with your team and others</h4>
+    <p><b>Purpose.</b> Make sure the strategy is lived by the whole team, kept current from real figures, improved by what you learn, and shown to others when it helps.</p>
+    <p><b>Summary.</b> Five practices extend the policy beyond the owner. Each one keeps the same rule as everything else in Lite: Lite drafts, a person confirms, and nothing is sent or shared without you.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="Practices"><table><thead><tr><th>Practice</th><th>What we do</th><th>Rule</th></tr></thead><tbody>
+      <tr><td>Start small <span class="pill idle">Arrives in P3</span></td><td>Reach a first confirmed goal and scoreboard in one sitting, using the quick start. Deferred set-up steps stay on the open list.</td><td>Skipped is never the same as done.</td></tr>
+      <tr><td>Weekly team rhythm <span class="pill idle">Arrives in P5</span></td><td>Hold a 15-minute weekly meeting. Each person makes one commitment linked to an objective. Review last week's commitments first.</td><td>Commitments record follow-through. They are not a score for people.</td></tr>
+      <tr><td>Use real figures <span class="pill idle">Arrives in P8</span></td><td>Where tools are connected, measures update from them, with the source and date shown.</td><td>Read-only. Only totals are kept, never customer records. A missing figure stays Not recorded.</td></tr>
+      <tr><td>Learn from results <span class="pill idle">Arrives in P5</span></td><td>Record a forecast and its key assumption for each goal. Compare with the result when the goal is reviewed or archived.</td><td>Learning is about our forecasting, not about individuals.</td></tr>
+      <tr><td>Show your governance <span class="pill idle">Arrives in P7</span></td><td>Prepare an assurance pack, or answer a supplier questionnaire, from the registers.</td><td>The owner chooses what is included and confirms every answer. Lite never claims a certification you do not hold, and never sends.</td></tr>
+    </tbody></table></div>
+    <p><b>Benchmarks.</b> Anonymous, numbers-only benchmarks are optional and off by default. If you turn them on, you see exactly what would be shared first, and you can stop at any time. No names, figures, customers or documents are ever shared.</p>
+    <p><b>Output / value.</b> A strategy the whole team follows, current figures, better forecasts over time, and evidence you can show a lender, insurer or customer.</p></section>
+</article>
+
+<article data-doc="annex-a" data-label="Annex A · Cadence Calendar" data-parent="policy">
+  <h3 class="sop-title">Annex A — Cadence Calendar</h3>
+  <p class="sop-lede">Every routine, when it runs, who joins and what it reads.</p>
+  <p><b>Purpose.</b> Put the whole review rhythm on one page. <b>Used by.</b> Policy section 4, P1, P2, P3. <b>Value.</b> You know what is due and who needs to be in the room.</p>
+  <div class="tw" tabindex="0" role="region" aria-label="Cadence calendar"><table><thead><tr><th>Rhythm</th><th>Procedure</th><th>Proposed attendees</th><th>Reads</th><th>You leave with</th></tr></thead><tbody>
+    <tr><td>Once</td><td>P3 Stage 1</td><td>Executive Sponsor, AI Governance Lead</td><td>Intake Pack, your website address, Risk Management Policy if you have one</td><td>Set-up with each step Set, Skipped or Not applicable</td></tr>
+    <tr><td>Every session</td><td>P1 Stage 1</td><td>Whoever opens Lite</td><td>All registers, release and SOP versions</td><td>A one-screen readout</td></tr>
+    <tr><td>Weekly</td><td>P1 Stage 2</td><td>AI Governance Lead, WIG owners</td><td>WIG Register, Milestone Plan</td><td>WIG status and percent complete up to date</td></tr>
+    <tr><td>Monthly</td><td>P1 Stage 3</td><td>Executive Sponsor, BU Leads</td><td>Weekly picture, KPI and KRI Register, Decision Log</td><td>A short progress update</td></tr>
+    <tr><td>Every 90 days by default</td><td>P1 Stage 4</td><td>Executive Sponsor, AI Governance Lead</td><td>All registers, including the Risk Register</td><td>Retested strategy, decisions logged</td></tr>
+    <tr><td>When a WIG is achieved</td><td>P2</td><td>WIG owner, Executive Sponsor</td><td>WIG Register, Milestone Plan, linked use cases</td><td>An archived WIG and the next WIG chosen</td></tr>
+    <tr><td>On request</td><td>P3 Stage 2</td><td>Executive Sponsor</td><td>All registers</td><td>An Excel status snapshot</td></tr>
+  </tbody></table></div>
+  <p>Attendees are a proposal. In a small business one person may fill every seat. Weekly, monthly and quarterly frequencies are defaults to confirm at set-up (P3 Stage 1). The 90-day default matches the AEGIS Essentials Quarterly Governance Review.</p>
+</article>
+
+<article data-doc="annex-b" data-label="Annex B · Records and AEGIS Handoff" data-parent="policy">
+  <h3 class="sop-title">Annex B — Records and AEGIS Handoff</h3>
+  <p class="sop-lede">The registers every review reads, and how Compass Lite output moves into AEGIS Essentials.</p>
+  <p><b>Purpose.</b> Name the single record behind each review and show where Lite output goes next. <b>Used by.</b> Every procedure. <b>Value.</b> No review uses a figure you cannot trace, and nothing needs retyping when you move to AEGIS Essentials.</p>
+  <h5>B.1 Records</h5>
+  <div class="tw" tabindex="0" role="region" aria-label="Records"><table><thead><tr><th>Record</th><th>What it holds</th><th>Read at</th></tr></thead><tbody>
+    <tr><td>WIG Register</td><td>Each WIG, its objectives, status and percent complete</td><td>Weekly, monthly, quarterly</td></tr>
+    <tr><td>KPI and KRI Register</td><td>Measures, thresholds and the ten risk indicator readings</td><td>Every session, monthly, quarterly</td></tr>
+    <tr><td>Milestone Plan</td><td>Phases, milestones and owners</td><td>Weekly, monthly</td></tr>
+    <tr><td>Risk Register</td><td>Each risk with score, band, treatment, controls and owner</td><td>Quarterly, and when an indicator crosses its threshold</td></tr>
+    <tr><td>Decision Log</td><td>Every decision, its reason and its date</td><td>Quarterly</td></tr>
+    <tr><td>Archive</td><td>Completed WIGs with result, lessons and date. Read-only</td><td>On request and at the quarterly review</td></tr>
+  </tbody></table></div>
+  <p>Every record lives in the page's own database. The Change log keeps who changed what and when, and a backup holds every record in one file.</p>
+  <h5>B.2 How Lite output becomes AEGIS Essentials records</h5>
+  <div class="tw" tabindex="0" role="region" aria-label="AEGIS handoff"><table><thead><tr><th>Compass Lite</th><th>Becomes in AEGIS Essentials</th></tr></thead><tbody>
+    <tr><td>AI use case list</td><td>The starting list for P1 Use Case Assessment</td></tr>
+    <tr><td>Risk Register (AEGIS scale)</td><td>Risk rows on the AEGIS scale, exported as proposed entries only</td></tr>
+    <tr><td>WIG Register</td><td>The WIG and Objectives List (proposed mapping)</td></tr>
+    <tr><td>Close-out decisions in P2</td><td>WIG close-out decisions (Annex E.3), recorded in the Use Case Register</td></tr>
+    <tr><td>Decision Log</td><td>Evidence for the Quarterly Governance Review</td></tr>
+  </tbody></table></div>
+  <p>Nothing is applied in AEGIS Essentials until a person confirms it, and Lite changes nothing in AEGIS Essentials itself. The exports arrive in Phase 7.</p>
+</article>
+
+<article data-doc="annex-c" data-label="Annex C · Escalation Signals" data-parent="policy">
+  <h3 class="sop-title">Annex C — Escalation Signals</h3>
+  <p class="sop-lede">What Lite does when a reading goes wrong, and who decides what happens next.</p>
+  <p><b>Purpose.</b> Show which signals need a decision and whose decision it is. <b>Used by.</b> P1, P2, policy sections 5 and 7. <b>Value.</b> Problems reach you early, with options attached.</p>
+  <div class="tw" tabindex="0" role="region" aria-label="Escalation signals"><table><thead><tr><th>Signal</th><th>What Lite does</th><th>Who decides</th></tr></thead><tbody>
+    <tr><td>A risk indicator crosses its threshold</td><td>Sends it to you with the options for bringing it back in range</td><td>Owner of the risk</td></tr>
+    <tr><td>A figure is missing</td><td>Shows Not recorded and never estimates</td><td>The person who owns the figure enters it</td></tr>
+    <tr><td>An entry is stale or a review is overdue</td><td>Reports it when the session opens. It does not send reminders</td><td>Executive Sponsor</td></tr>
+    <tr><td>A Medium risk is scored</td><td>Shows the response the band calls for</td><td>AI Governance Lead</td></tr>
+    <tr><td>A High risk is scored or tolerated</td><td>Shows the response the band calls for. Tolerating needs a recorded reason and flags the Executive Sponsor</td><td>Executive Sponsor</td></tr>
+    <tr><td>A Critical risk is scored</td><td>Blocks progress until the risk is treated, and flags the Executive Sponsor</td><td>Executive Sponsor</td></tr>
+    <tr><td>An assumption has failed</td><td>Retests it at the quarterly review and logs the decision</td><td>Executive Sponsor</td></tr>
+    <tr><td>A WIG still has an open objective</td><td>Blocks completion and names the open objectives</td><td>WIG owner</td></tr>
+    <tr><td>The release, SOP or Ask Lite instructions do not match</td><td>Reports it on Set-up and in the footer before other work</td><td>AI Governance Lead</td></tr>
+    <tr><td>No Risk Management Policy on file</td><td>States the gap on every risk view and export, and recommends writing one</td><td>Executive Sponsor</td></tr>
+    <tr><td>A required role is vacant</td><td>Flags it every time Lite opens, in the Guide panel and on the Dashboard</td><td>Executive Sponsor</td></tr>
+    <tr><td>A backup is overdue</td><td>Shows it on Set-up and in the Guide panel after 7 days without a backup</td><td>IT or Security Lead</td></tr>
+    <tr><td>An incident or near miss</td><td>Records it for the AI Governance Lead, who rates it P0 to P4</td><td>AI Governance Lead. Executive Sponsor for P0 and P1</td></tr>
+  </tbody></table></div>
+</article>
+
+<article data-doc="p1" data-label="P1 · Review Cadence">
+  <h3 class="sop-title">Procedure P1 — Review Cadence</h3>
+  <p class="sop-lede">Every review follows the same steps, so your strategy gets the same attention every time.</p>
+  <section><h4>1. Purpose and scope</h4>
+    <p><b>Purpose.</b> Run the session open check and the weekly, monthly and quarterly reviews the same way every time. <b>Covers.</b> Four stages, from a quick check each session to the quarterly strategy review. <b>Value.</b> Your goals are checked on a rhythm, with evidence, and every decision is logged.</p></section>
+  <section><h4>2. Roles</h4>
+    <div class="tw" tabindex="0" role="region" aria-label="P1 roles"><table><thead><tr><th>Stage</th><th>Runs it</th><th>Confirms</th><th>Joins</th></tr></thead><tbody>
+      <tr><td>1 Session open check</td><td>Lite</td><td>Whoever opens the session</td><td>Anyone</td></tr>
+      <tr><td>2 Weekly progress check</td><td>AI Governance Lead</td><td>WIG owners</td><td>BU Leads as needed</td></tr>
+      <tr><td>3 Monthly review</td><td>AI Governance Lead</td><td>Executive Sponsor</td><td>BU Leads</td></tr>
+      <tr><td>4 Quarterly strategy review</td><td>Executive Sponsor</td><td>Executive Sponsor</td><td>AI Governance Lead, BU Leads</td></tr>
+    </tbody></table></div>
+    <p>Lite prepares and drafts at every stage. A person confirms before anything is recorded.</p></section>
+  <section><h4>3. Procedure</h4>
+    <h5>Stage 1 — Session open check</h5>
+    <p><b>Trigger.</b> Someone opens Lite.</p>
+    <ol>
+      <li>Lite checks the release, the SOP and the Ask Lite instructions agree, and reports any mismatch on Set-up and in the footer.</li>
+      <li>Lite lists open set-up items, stale register entries and overdue reviews: on the Dashboard, and in the Guide panel on every other tab.</li>
+      <li>Lite reads each risk indicator and shows its current reading, threshold, trend, source and what would bring it back in range. <span class="pill idle">Arrives in P5</span></li>
+      <li>You choose what to work on.</li>
+    </ol>
+    <p><b>Output.</b> A one-screen readout. <b>Check.</b> An indicator with no data shows Not recorded, never an estimate.</p>
+    <h5>Stage 2 — Weekly progress check <span class="pill idle">Arrives in P5</span></h5>
+    <p><b>Trigger.</b> The weekly slot you set.</p>
+    <ol>
+      <li>Lite shows each WIG with its status and percent complete from the registers.</li>
+      <li>The WIG owner updates any figure that has changed.</li>
+      <li>Lite flags entries that have not been updated.</li>
+      <li>Lite shows what it would write. A person confirms.</li>
+    </ol>
+    <p><b>Output.</b> An updated WIG Register and Milestone Plan. <b>Check.</b> The readout uses only data a person entered.</p>
+    <h5>Stage 3 — Monthly review <span class="pill idle">Arrives in P5</span></h5>
+    <p><b>Trigger.</b> The monthly slot you set.</p>
+    <ol>
+      <li>Review the weekly picture and milestone status against the Milestone Plan.</li>
+      <li>Review the risk indicators, open decisions and open exceptions.</li>
+      <li>Lite drafts a short progress update. The Executive Sponsor edits it.</li>
+      <li>The Executive Sponsor confirms the final wording.</li>
+    </ol>
+    <p><b>Output.</b> A shareable progress update. <b>Check.</b> The update contains confirmed content only.</p>
+    <h5>Stage 4 — Quarterly strategy review <span class="pill idle">Arrives in P5</span></h5>
+    <p><b>Trigger.</b> The review date, every 90 days by default (Set-up step 7). This is the strategy side of the AEGIS Essentials Quarterly Governance Review.</p>
+    <ol>
+      <li>Walk the registers: every WIG, objective, milestone and AI use case still in strategy.</li>
+      <li>Compare each WIG's results with its target.</li>
+      <li>Retest the Strategy Statement, Mission, Vision, Values and AI ethical principles against the results. Revisit every assumption that failed.</li>
+      <li>Re-score the risks that are due, Critical first. Check each High or Critical risk against who approves it.</li>
+      <li>Check every strategy AI use case still links to a current WIG or objective, and every Run The Business item is still part of its established process.</li>
+      <li>Check revisit dates that have fallen due, and any exceptions granted that quarter.</li>
+      <li>Record two or three lessons learned, log each decision, and set the next review date.</li>
+    </ol>
+    <p><b>Output.</b> An updated Decision Log and registers. <b>Check.</b> Every failed assumption is retested and a decision is logged.</p></section>
+  <section><h4>4. Records</h4>
+    <p>Stages 1 to 4 read and write the WIG Register, KPI and KRI Register, Milestone Plan, Risk Register and Decision Log (<a href="#" data-act="sopDoc" data-arg="annex-b">Annex B</a>).</p>
+    <p><b>Output / value.</b> A repeatable routine that leaves an audit trail.</p></section>
+</article>
+
+<article data-doc="p2" data-label="P2 · WIG Turnover">
+  <h3 class="sop-title">Procedure P2 — WIG Turnover <span class="pill idle">Arrives in P3</span></h3>
+  <p class="sop-lede">When a WIG is achieved, finish it cleanly, decide what happens to the AI that served it, and choose the next goal.</p>
+  <section><h4>1. Purpose and scope</h4>
+    <p><b>Purpose.</b> Complete a WIG, archive its result and close out its linked AI use cases, in step with AEGIS Essentials Annex E.3. <b>Covers.</b> Five stages. <b>Value.</b> Finished goals leave a record, AI that now runs the business stays governed, and the next WIG starts with evidence.</p></section>
+  <section><h4>2. Roles</h4>
+    <div class="tw" tabindex="0" role="region" aria-label="P2 roles"><table><thead><tr><th>Stage</th><th>Runs it</th><th>Decides</th></tr></thead><tbody>
+      <tr><td>1 to 3 Check, record, archive</td><td>WIG owner</td><td>WIG owner</td></tr>
+      <tr><td>4 Close-out decisions</td><td>WIG owner proposes</td><td>Executive Sponsor approves any move to Run The Business</td></tr>
+      <tr><td>5 Next WIG</td><td>Lite drafts</td><td>Executive Sponsor chooses</td></tr>
+    </tbody></table></div></section>
+  <section><h4>3. Procedure</h4>
+    <h5>Stage 1 — Check the objectives</h5>
+    <p><b>Trigger.</b> The WIG owner reports the WIG as achieved.</p>
+    <ol>
+      <li>Lite checks every objective under the WIG is Completed or Cancelled.</li>
+      <li>If any objective is open, completion is blocked and the open objectives are named. The WIG owner completes or cancels each one first.</li>
+    </ol>
+    <p><b>Check.</b> A WIG with an open objective cannot be marked Completed.</p>
+    <h5>Stage 2 — Record the result</h5>
+    <ol>
+      <li>Record the final result against the lag measure.</li>
+      <li>Record the lessons learned and the date.</li>
+    </ol>
+    <h5>Stage 3 — Archive</h5>
+    <ol>
+      <li>Lite moves the WIG to the Archive. It becomes read-only and keeps its objectives, final result, lessons learned, linked use cases and change log.</li>
+      <li>The WIG leaves the active WIG Register and frees its place. It stays readable at reviews and can be included in the facilitator snapshot.</li>
+    </ol>
+    <p><b>Check.</b> Nothing in the Archive is edited or deleted.</p>
+    <h5>Stage 4 — Close out the linked AI use cases</h5>
+    <p>For every linked use case still in strategy, the WIG owner proposes one of three decisions.</p>
+    <div class="tw" tabindex="0" role="region" aria-label="Close-out decisions"><table><thead><tr><th>Decision</th><th>When it applies</th><th>What happens</th></tr></thead><tbody>
+      <tr><td>Move to Run The Business</td><td>The use case is live and the result now depends on it</td><td>Name the established process it now belongs to. It leaves the strategy pipeline. Owner, KPIs and KRIs continue</td></tr>
+      <tr><td>Re-link</td><td>It also moves another current WIG or objective</td><td>Link it to that WIG or objective</td></tr>
+      <tr><td>Improve or stop</td><td>Neither of the above</td><td>Follow the AEGIS Essentials improve-or-stop route. A use case that is not yet live is archived with the reason and a revisit date</td></tr>
+    </tbody></table></div>
+    <p>The Executive Sponsor approves each move to Run The Business. Each decision is logged in the Decision Log and flagged for the AEGIS Essentials Use Case Register. Lite changes nothing in AEGIS Essentials itself.</p>
+    <h5>Stage 5 — Choose the next WIG</h5>
+    <ol>
+      <li>Lite presents the ranked backlog.</li>
+      <li>Lite drafts the next WIG with depth probing, labelled SUGGESTION and showing its source. Until Ask Lite arrives in Phase 6, you write the WIG and Lite checks it.</li>
+      <li>The Executive Sponsor chooses the next WIG.</li>
+    </ol>
+    <p><b>Output.</b> An archived WIG, decisions on every linked use case, and a chosen next WIG.</p></section>
+  <section><h4>4. Records</h4>
+    <p>WIG Register, Archive, Decision Log, and the use case flags for AEGIS Essentials (<a href="#" data-act="sopDoc" data-arg="annex-b">Annex B</a>).</p>
+    <p><b>Output / value.</b> AI is pointed at the strategy while it serves a goal, and stays governed after the goal is met.</p></section>
+</article>
+
+<article data-doc="p3" data-label="P3 · Set-up and Snapshot">
+  <h3 class="sop-title">Procedure P3 — Set-up and Snapshot</h3>
+  <p class="sop-lede">Get Lite set up properly once, and send a clean status snapshot to your facilitator whenever you need one.</p>
+  <section><h4>1. Purpose and scope</h4>
+    <p><b>Purpose.</b> Run the first-run set-up and produce the facilitator snapshot. <b>Covers.</b> Two stages. <b>Value.</b> Lite starts with saving checked and the right roles, cadence and data limits, and you can share status without exposing more than you choose.</p></section>
+  <section><h4>2. Roles</h4>
+    <div class="tw" tabindex="0" role="region" aria-label="P3 roles"><table><thead><tr><th>Stage</th><th>Runs it</th><th>Confirms</th></tr></thead><tbody>
+      <tr><td>1 Set-up</td><td>AI Governance Lead</td><td>Executive Sponsor</td></tr>
+      <tr><td>2 Snapshot</td><td>AI Governance Lead</td><td>Executive Sponsor, who sends it</td></tr>
+    </tbody></table></div>
+    <p>The IT or Security Lead supports the saving check and backup steps. The DPO confirms the data ceiling.</p></section>
+  <section><h4>3. Procedure</h4>
+    <h5>Stage 1 — Set-up</h5>
+    <p><b>Trigger.</b> A new install opens on the Welcome to Compass Lite screen, or skipped steps remain. Every step can be skipped. Skipped steps are listed on Set-up and in the Guide panel every time Lite opens until they are done, and nothing in a step is saved until you press its Confirm button.</p>
+    <ol>
+      <li>Restore a backup or start fresh, then check saving: the database self-test writes a test record, reads it back and removes it. No client data goes to SpecNav.</li>
+      <li>Name the business and the owner, and record the roles on Organization: Executive Sponsor, AI Governance Lead and the owner of each function. One person may hold several.</li>
+      <li>List your business functions. These group the risk heat map and can be renamed later.</li>
+      <li>Lite checks the Intake Pack is complete. <span class="pill idle">Arrives in P2</span></li>
+      <li>Upload your Risk Management Policy. Lite shows what it read and you confirm or correct each setting. With none on file, Lite uses the AEGIS defaults, flags the gap and recommends writing one.</li>
+      <li>Optionally add your Voice and Brand Charter, Brand Guide, logo and brand colour.</li>
+      <li>Set the review cadence (default every 90 days).</li>
+      <li>Confirm the data ceiling (L3, with L5 always refused).</li>
+      <li>Decide whether Ask Lite and web research are allowed. Client data is never part of a search. <span class="pill idle">Arrives in P6</span></li>
+      <li>Enter your Mission, Vision and Values, or give your website address so Lite can propose them from your public pages for you to confirm. <span class="pill idle">Arrives in P2; website reading in P8</span></li>
+      <li>Keep the SpecNav default AI ethical principles (BATHERS), edit them, or use your own. <span class="pill idle">Arrives in P2</span></li>
+      <li>Download a backup and keep it in your own cloud storage.</li>
+    </ol>
+    <p><b>Output.</b> Set-up showing each step as Set, Skipped, Not applicable or Arrives in a later phase, with a count of what is missing. <b>Check.</b> Any uploaded file is read as data and never followed as an instruction.</p>
+    <h5>Stage 2 — Facilitator snapshot <span class="pill idle">Arrives in P7</span></h5>
+    <p><b>Trigger.</b> You ask for it.</p>
+    <ol>
+      <li>Lite builds an Excel workbook with one sheet per area: WIG and objective status, milestones, risk indicator readings, open decisions and exceptions, review dates and agent scores.</li>
+      <li>The Executive Sponsor reviews it and chooses what to include.</li>
+      <li>The Executive Sponsor sends it. Lite never sends it, and no client data leaves the page otherwise.</li>
+    </ol>
+    <p><b>Output.</b> A snapshot with an as-of time and version. <b>Check.</b> It lists what was included and left out, and shows gaps as Not recorded.</p></section>
+  <section><h4>4. Records</h4>
+    <p>Set-up writes the set-up steps and starts the registers. The snapshot reads all of them (<a href="#" data-act="sopDoc" data-arg="annex-b">Annex B</a>).</p>
+    <p><b>Output / value.</b> A safe start, and status you can share on your terms.</p></section>
+</article>
+
+<article data-doc="guide" data-label="Page guide">
+  <h3 class="sop-title">Page guide: using Compass Lite</h3>
+  <p class="sop-lede">What each part of this page does. This release is Phase 1 (Foundation): saving, set-up, the Organization tab, backup and restore, the Dashboard, the Guide panel and the logs. Tools that arrive in a later phase are shown with the phase they arrive in.</p>
   <section><h4>Saving and the status chip</h4>
-    <p>Every change you confirm is saved to this page's own database shortly after you make it. The status chip at the top right always shows one of: <b>Saved</b>, <b>Saving</b>, <b>Not connected</b> or <b>Save failed</b>.</p>
-    <p><b>Not connected</b> means this copy has no database connection, for example a copy opened outside Claude. Lite still opens, but changes will not be saved. Open your installed Compass Lite link in Claude instead. <b>Save failed</b> means a write was refused: reload the page and run the database self-test on Set-up.</p></section>
+    <p><b>Purpose.</b> Keep every confirmed change, and always show whether it was kept.</p>
+    <p><b>Summary.</b> Every change you confirm is saved to this page's own database shortly after you make it. The status chip at the top right always shows one of: <b>Saved</b>, <b>Saving</b>, <b>Not connected</b> or <b>Save failed</b>. <b>Not connected</b> means this copy has no database connection, for example a copy opened outside Claude. Lite still opens, but changes will not be saved. Open your installed Compass Lite link in Claude instead. <b>Save failed</b> means a write was refused: reload the page and run the database self-test on Set-up.</p>
+    <p><b>Output / value.</b> You always know whether your work is safe.</p></section>
   <section><h4>Welcome to Compass Lite (the first-run screen)</h4>
-    <p>The first time you open a new install, the Welcome to Compass Lite screen offers <b>Restore my backup</b> or <b>Start fresh</b>, then your business and brand details (business name, owner name, an optional logo and brand colour), then <b>Check saving</b>. You can skip any step. A skipped step stays flagged on Set-up and in the Guide panel until it is done.</p></section>
+    <p><b>Purpose.</b> Start a new install the right way.</p>
+    <p><b>Summary.</b> The first time you open a new install, the Welcome to Compass Lite screen offers <b>Restore my backup</b> or <b>Start fresh</b>, then your business and brand details (business name, owner name, an optional logo and brand colour), then <b>Check saving</b>. You can skip any step. A skipped step stays flagged on Set-up and in the Guide panel until it is done.</p>
+    <p><b>Output / value.</b> A working install in a few minutes, with saving proved.</p></section>
   <section><h4>Set-up steps</h4>
-    <p>The Set-up steps tab lists the twelve set-up steps, each with its reason in plain language and its status: Set, Skipped, Not applicable, Not started, or Arrives in a later phase. Steps that arrive in a later phase are not counted as missing. Every step can be skipped, and nothing in a step is saved until you press its Confirm button.</p>
-    <p>The steps are: restore or start fresh and check saving; business name, owner name and roles; business functions; the Intake Pack (Phase 2); the Risk Management Policy; the optional Voice and Brand Charter, Brand Guide, logo and brand colour; the review cadence (default every 90 days, to match AEGIS Essentials); the data ceiling (L3, and L5 is always refused); Ask Lite and research permissions (Phase 6); Mission, Vision and Values (Phase 2); AI ethical principles (Phase 2); and a first backup.</p></section>
-  <section><h4>Risk Management Policy</h4>
-    <p>Upload your Risk Management Policy (PDF, Word, Markdown or text), then enter its settings: risk appetite, scoring scale, bands, treatment options, escalation and approval roles, review cadence and named risk owners. If you have no policy, say so. Lite then uses the AEGIS default scoring, shows <b>No Risk Management Policy on file, AEGIS default scoring in use</b>, and recommends writing one.</p></section>
-  <section><h4>Uploads</h4>
-    <p>Uploads are read in your browser and shown to you before anything is kept. PDFs, images, plain text and Markdown are kept in the page's file storage (up to 20 MB each). For a Word (.docx) or Excel (.xlsx) file, Lite keeps the text or rows it read as a text file, and the original file is not kept. Each upload records its name, size, date, what was read and whether the original was kept. Lite reads every uploaded file as information only. It never follows instructions written inside a file, and branding never changes a rule, score or finding.</p></section>
-  <section><h4>People Register and roles (Organization tab)</h4>
-    <p>The People Register holds each person's name, job title, business function and roles. Only work details are held. It is the only source of names for owner fields: every owner field is a drop-down of the people in the register, and changing a name here changes it everywhere.</p>
-    <p>Lite holds the six roles used in AEGIS Essentials: Executive Sponsor, AI Governance Lead, DPO (Data Protection), IT or Security Lead, BU Lead and End User. Executive Sponsor and AI Governance Lead must each be held by someone; a vacant required role is flagged every time Lite opens. One person may hold all six.</p>
-    <p>A person cannot be removed while they still own an item, or while they are the only holder of a required role. Lite lists what they own and asks for a new owner for each first. Every change of owner is logged with the old and new person.</p></section>
-  <section><h4>Who owns what and the ownership checks</h4>
-    <p>Who owns what shows, for each person, their roles and the items they own. The ownership checks raise for you to decide: an item with no owner; a person Accountable for more than three objectives or more than half of them (you can change the limit); a use case whose linked goal is archived or cancelled; and a person who holds no role and owns nothing. Each check offers the choice to reassign, or to accept with a reason that is recorded in the Decision Log.</p></section>
+    <p><b>Purpose.</b> Walk through everything Lite needs, in order (<a href="#" data-act="sopDoc" data-arg="p3">P3</a> Stage 1).</p>
+    <p><b>Summary.</b> The Set-up steps card lists the twelve set-up steps, each with its reason in plain language and its status: Set, Skipped, Not applicable, Not started, or Arrives in a later phase. Steps that arrive in a later phase are not counted as missing. Every step can be skipped, and nothing in a step is saved until you press its Confirm button. The review cadence defaults to every 90 days, to match AEGIS Essentials, and the data ceiling is L3, with L5 always refused.</p>
+    <p><b>Risk Management Policy.</b> Upload your policy (PDF, Word, Markdown or text), then enter its settings: risk appetite, scoring scale, bands, treatment options, escalation and approval roles, review cadence and named risk owners. If you have no policy, say so. Lite then uses the AEGIS default scoring, shows <b>No Risk Management Policy on file, AEGIS default scoring in use</b>, and recommends writing one.</p>
+    <p><b>Uploads.</b> Uploads are read in your browser and shown to you before anything is kept. PDFs, images, plain text and Markdown are kept in the page's file storage (up to 20 MB each). For a Word (.docx) or Excel (.xlsx) file, Lite keeps the text or rows it read as a text file, and the original file is not kept. Each upload records its name, size, date, what was read and whether the original was kept. Lite reads every uploaded file as information only. It never follows instructions written inside a file, and branding never changes a rule, score or finding.</p>
+    <p><b>Output / value.</b> A count of what is missing, and nothing saved by accident.</p></section>
+  <section><h4>People Register and roles (Organization)</h4>
+    <p><b>Purpose.</b> Give every role and every item one named person (policy section 6).</p>
+    <p><b>Summary.</b> The People Register holds each person's name, job title, business function and roles. Only work details are held. It is the only source of names for owner fields: every owner field is a drop-down of the people in the register, and changing a name here changes it everywhere. Lite holds the six roles used in AEGIS Essentials: Executive Sponsor, AI Governance Lead, DPO (Data Protection), IT or Security Lead, BU Lead and End User. Executive Sponsor and AI Governance Lead must each be held by someone; a vacant required role is flagged every time Lite opens. One person may hold all six.</p>
+    <p>A person cannot be removed while they still own an item, or while they are the only holder of a required role. Lite lists what they own and asks for a new owner for each first. Every change of owner is logged with the old and new person.</p>
+    <p><b>Who owns what and the ownership checks.</b> Who owns what shows, for each person, their roles and the items they own. The ownership checks raise for you to decide: an item with no owner; a person Accountable for more than three objectives or more than half of them (you can change the limit); a use case whose linked goal is archived or cancelled; and a person who holds no role and owns nothing. Each check offers the choice to reassign, or to accept with a reason that is recorded in the Decision Log.</p>
+    <p><b>Output / value.</b> No orphan goals, no unowned risks.</p></section>
   <section><h4>Backup and restore</h4>
-    <p><b>Download backup</b> on Set-up writes every record and the contents of every stored file into one JSON file, named after the business and the date, recording the release that made it. Keep it in your own cloud storage, never in the repository. A backup is due 7 days after the last one; after that it shows as overdue on Set-up and in the Guide panel.</p>
-    <p><b>Restore</b> shows what is inside a backup (counts, release and date) and asks you to confirm before it replaces everything. It uploads each stored file again and updates the records to the new file ids. Restoring the same file again is always safe. This is also how you move to another Claude account. A backup made by an older release restores into a newer one.</p></section>
-  <section><h4>Database self-test</h4>
-    <p>The database self-test writes a small timestamped record, reads it back and removes it, so a save that only looks fine is caught. If the write fails, Lite shows <b>Not saved</b> straight away.</p></section>
-  <section><h4>Data health check</h4>
-    <p>The data health check looks for records that have drifted: duplicate IDs, a reference to a person who was removed, links to items that no longer exist, and left-over test data. Each problem is listed with a fix, and each fix can be undone.</p></section>
-  <section><h4>The Guide panel</h4>
-    <p>The Guide panel sits at the top of every tab except the Dashboard. It shows your next step, worked out from your records with no AI involved, so the same records always give the same next step. The gaps that matter most come first. Each item says what to do and goes away when it is fixed.</p></section>
+    <p><b>Purpose.</b> Keep a copy you control, and move between accounts.</p>
+    <p><b>Summary.</b> <b>Download backup</b> on Set-up writes every record and the contents of every stored file into one JSON file, named after the business and the date, recording the release that made it. Keep it in your own cloud storage, never in the repository. A backup is due 7 days after the last one; after that it shows as overdue on Set-up and in the Guide panel. <b>Restore</b> shows what is inside a backup (counts, release and date) and asks you to confirm before it replaces everything. It uploads each stored file again and updates the records to the new file ids. Restoring the same file again is always safe. A backup made by an older release restores into a newer one.</p>
+    <p><b>Output / value.</b> Nothing is lost if a page, an account or a device is.</p></section>
+  <section><h4>Database self-test and data health check</h4>
+    <p><b>Purpose.</b> Catch a save that only looks fine, and records that have drifted.</p>
+    <p><b>Summary.</b> The database self-test writes a small timestamped record, reads it back and removes it. If the write fails, Lite shows <b>Not saved</b> straight away. The data health check looks for duplicate IDs, a reference to a person who was removed, links to items that no longer exist, and left-over test data. Each problem is listed with a fix, and each fix can be undone.</p>
+    <p><b>Output / value.</b> Records you can trust.</p></section>
+  <section><h4>The Guide panel and the Dashboard</h4>
+    <p><b>Purpose.</b> Show what to do next (<a href="#" data-act="sopDoc" data-arg="p1">P1</a> Stage 1).</p>
+    <p><b>Summary.</b> The Dashboard opens first. It shows goals and objectives, the scoreboard, risks to watch, open decisions, set-up gaps, gate status and the next review. Every panel shows the date its data last changed, and panels whose tools arrive in a later phase say so. The Guide panel sits at the top of every other tab. It shows your next step, worked out from your records with no AI involved, so the same records always give the same next step. The gaps that matter most come first. Each item says what to do and goes away when it is fixed.</p>
+    <p><b>Output / value.</b> You never have to hunt for what is open.</p></section>
   <section><h4>Labels and statuses</h4>
-    <p>Anything Lite raises beyond plain reflection carries one of four labels, SUGGESTION, OPPORTUNITY, CONFLICT or POTENTIAL CHALLENGE, and an urgency: Resolve now or Can park. Every record is Draft or Confirmed, and nothing is Confirmed on Lite's own judgment. Contradictions in your records, such as a set-up step marked Set whose answer is missing, are raised as their own CONFLICT item.</p></section>
+    <p><b>Purpose.</b> Make clear what is a suggestion and what is decided (policy principle 3).</p>
+    <p><b>Summary.</b> Anything Lite raises beyond plain reflection carries one of four labels, SUGGESTION, OPPORTUNITY, CONFLICT or POTENTIAL CHALLENGE, and an urgency: Resolve now or Can park. Every record is Draft or Confirmed, and nothing is Confirmed on Lite's own judgment. Contradictions in your records, such as a set-up step marked Set whose answer is missing, are raised as their own CONFLICT item.</p>
+    <p><b>Output / value.</b> No draft is mistaken for a decision.</p></section>
   <section><h4>Decision Log, Change log and the assumptions log</h4>
-    <p>The Decision Log records each decision you make: what was decided, the options, your choice, the reason, who and when. The Change log records every confirmed change with the record, the field, the old and new value, who and when, and whether a guest made it. The log of assumptions, constraints and challenges holds each entry with an owner from the People Register and a review date. All three are on the Reviews tab.</p></section>
-  <section><h4>Dashboard</h4>
-    <p>The Dashboard opens first. It shows goals and objectives, the scoreboard, risks to watch, open decisions, set-up gaps, gate status and the next review. Every panel shows the date its data last changed. Panels whose tools arrive in a later phase say so.</p></section>
-  <section><h4>Pilot badge</h4>
-    <p>Until an approval with a name and a date is recorded on Set-up, the Pilot badge shows in the header and on every export. Recording the approval removes the badge.</p></section>
-  <section><h4>Templates</h4>
-    <p>Reference data is carried inside the file and labelled Template: the AEGIS Master Categories and Scoring V1.0, the six AEGIS roles, the BATHERS default AI principles, and the nine default failure modes under their four categories. It is kept separate from your own records. A fresh install holds no names, goals or figures other than templates.</p></section>
-  <section><h4>Versions and this SOP</h4>
-    <p>The release number lives in one place in the file. This SOP, the Ask Lite instruction block, the changelog and the README each state the release they were written for. Set-up and the footer show whether they agree, and the header of this page turns red if this SOP was written for a different release. Your saved records carry the schema version; a newer release reads records saved by an older one and gives any new field a default, and never deletes a record to make room for a change.</p></section>
+    <p><b>Purpose.</b> Keep the audit trail every review reads (<a href="#" data-act="sopDoc" data-arg="annex-b">Annex B</a>).</p>
+    <p><b>Summary.</b> The Decision Log records each decision you make: what was decided, the options, your choice, the reason, who and when. The Change log records every confirmed change with the record, the field, the old and new value, who and when, and whether a guest made it. The log of assumptions, constraints and challenges holds each entry with an owner from the People Register and a review date. All three are on the Reviews tab.</p>
+    <p><b>Output / value.</b> Every change and decision can be traced.</p></section>
+  <section><h4>Pilot badge, templates and versions</h4>
+    <p><b>Pilot badge.</b> Until an approval with a name and a date is recorded on Set-up, the Pilot badge shows in the header and on every export. Recording the approval removes the badge.</p>
+    <p><b>Templates.</b> Reference data is carried inside the file and labelled Template: the AEGIS Master Categories and Scoring V1.0, the six AEGIS roles, the BATHERS default AI principles, and the nine default failure modes under their four categories. It is kept separate from your own records. A fresh install holds no names, goals or figures other than templates.</p>
+    <p><b>Versions and this SOP.</b> The release number lives in one place in the file. This SOP, the Ask Lite instruction block, the changelog and the README each state the release they were written for. Set-up and the footer show whether they agree, and the header of this page turns red if this SOP was written for a different release. Your saved records carry the schema version; a newer release reads records saved by an older one and gives any new field a default, and never deletes a record to make room for a change.</p></section>
+</article>
 </template>
 
 <!-- Ask Lite instruction block (CL-1406). Used from Phase 6; versioned with the release now so the release check keeps it aligned. -->
-<script type="text/plain" id="ask-lite-instructions" data-release="0.1.0">
+<script type="text/plain" id="ask-lite-instructions" data-release="0.1.1">
 You are Ask Lite inside Compass Lite, a strategy tool a small business owner runs for themselves.
 Guardrails:
 1. Reflect and prompt. Never decide. The owner decides every purpose, value, ethic, goal, score and risk acceptance.
@@ -183,11 +637,12 @@ Guardrails:
 
 /* ===================== Release record (the only place the version lives, CL-605) ===================== */
 const APP_RELEASE = {
-  version: '0.1.0',
-  date: '2026-10-07',
+  version: '0.1.1',
+  date: '2026-10-08',
   phase: 1,
   name: 'P1 Foundation',
   notes: [
+    { version: '0.1.1', date: '2026-10-08', text: 'The SOP now mirrors Compass Lite: Policy, Process and Procedure: Your Strategy Explained, the Strategy Management Policy, Annexes A to C, Procedures P1 to P3, and a page guide to every feature.' },
     { version: '0.1.0', date: '2026-10-07', text: 'Phase 1 Foundation: saving with the status chip, first-run screen, Set-up steps, Organization tab, backup and restore, database self-test, data health check, Dashboard, Guide panel, Decision Log, Change log, assumptions log and the release check.' }
   ]
 };
@@ -212,11 +667,11 @@ const TEMPLATES = {
     functions: ['Govern', 'Identify', 'Protect', 'Detect', 'Respond', 'Recover and improve'],
     categories: ['Governance, accountability and oversight', 'Legal, regulatory and compliance', 'Data governance and privacy', 'Fairness, ethics and human rights', 'Safety, security and resilience', 'Model performance and reliability', 'Transparency, explainability and disclosure', 'Operational and lifecycle management', 'Third-party and supply chain', 'Strategic, financial and reputational impact'],
     data_levels: [
-      { level: 'L1', note: 'As defined in the AEGIS Master Categories' },
+      { level: 'L1', note: 'Public' },
       { level: 'L2', note: 'As defined in the AEGIS Master Categories' },
       { level: 'L3', note: 'Confidential. The highest level Lite accepts' },
       { level: 'L4', note: 'Above the L3 ceiling: flagged and left out of exports' },
-      { level: 'L5', note: 'Secrets such as passwords and keys: always refused' }
+      { level: 'L5', note: 'Critical, such as passwords and keys: always refused' }
     ]
   },
   roles: ['Executive Sponsor', 'AI Governance Lead', 'DPO (Data Protection)', 'IT or Security Lead', 'BU Lead', 'End User'],
@@ -293,7 +748,7 @@ let db = null, assetsNs = null, downloadsNs = null, userNs = null;
 const me = { id: null, isOwner: true, guest: false, canWrite: true };
 let connState = 'checking'; // checking | connected | none
 const Q = new Map(); let flushing = false, flushTimer = null, writeFailed = false;
-const UI = { top: 'dashboard', tool: { setup: 'setup', s3: 'strategy', s4: 'aces', s5: 'timeline' }, draft: {}, msg: {}, open: {}, restore: null, undo: [], health: null, removing: null, editPerson: null, pending: {}, showAllGuide: false, logLimit: 100 };
+const UI = { top: 'dashboard', tool: { setup: 'setup', s3: 'strategy', s4: 'aces', s5: 'timeline' }, draft: {}, msg: {}, open: {}, restore: null, undo: [], health: null, removing: null, editPerson: null, pending: {}, showAllGuide: false, logLimit: 100, sopDoc: 'explained' };
 let pendingRender = false, renderQueued = false;
 
 /* ===================== Helpers ===================== */
@@ -862,7 +1317,7 @@ async function undoHealthFix(i) {
 /* ===================== Views ===================== */
 const TOP = [['dashboard', 'Dashboard'], ['setup', 'Set-up'], ['s3', 'Stage 3'], ['s4', 'Stage 4'], ['s5', 'Stage 5'], ['reviews', 'Reviews']];
 const TOOLS = {
-  setup: [['setup', 'Set-up'], ['org', 'Organization'], ['sop', 'How Lite works (SOP)']],
+  setup: [['setup', 'Set-up'], ['org', 'Organization'], ['sop', 'Policy and SOP']],
   s3: [['strategy', 'Strategy Statement', 2, 'Intake Pack, the four-part statement, themes and exceptions', 'CL-301 to CL-309'], ['mvv', 'Mission, Vision and Values', 2, 'Your Mission, Vision and Values, the MVV Alignment Score and exceptions', 'CL-1001 to CL-1005, CL-1009'], ['ethics', 'AI ethics', 2, 'BATHERS default or your own set, with mappings', 'CL-1006 to CL-1008'], ['sop1', 'Strategy on a page', 5, 'Confirmed content only, to print or download', 'CL-1111']],
   s4: [['aces', 'ACES', 3, 'Rows, weights, and re-scoring with before and after', 'CL-409, CL-411'], ['goals', 'Goals (WIGs)', 3, 'Up to four active goals, objectives, owners and failure mode chips', 'CL-401 to CL-405, CL-709'], ['backlog', 'Backlog', 3, 'Ranked candidates and the next-goal choice', 'CL-410, CL-711'], ['archive', 'Archive', 3, 'Completed goals, read-only', 'CL-710'], ['usecases', 'AI use cases', 3, 'Use cases with owner, indicative data and pilot review date', 'CL-803 to CL-805, CL-817'], ['library', 'Starter library', 3, 'Examples by sector, labelled Example', 'CL-1102']],
   s5: [['timeline', 'Timeline', 5, 'Phases, milestones, RASCI, thresholds and the gate pack', 'CL-501 to CL-507'], ['riskreg', 'Risk Register', 4, 'AEGIS scoring, heat map and treatment', 'CL-903 to CL-909'], ['failure', 'Failure patterns', 4, 'Readiness check, the register by four categories, goal-to-mode links and plans', 'CL-813, CL-814, CL-818 to CL-828'], ['team', 'Team pack', 5, 'Weekly pack and Commitment Register', 'CL-1112, CL-1113'], ['data', 'Connected data', 8, 'Measures, provenance and readings to map', 'CL-1121, CL-1122'], ['assure', 'Assurance', 7, 'Assurance pack and supplier questionnaire helper', 'CL-1141, CL-1142']]
@@ -1067,7 +1522,7 @@ function viewSetup() {
   <section class="card plain" id="version-card"><h3>Version and SOP</h3>
     <dl class="kv"><dt>Release</dt><dd>v${esc(v.release)}, ${esc(APP_RELEASE.date)} (${esc(APP_RELEASE.name)})</dd><dt>SOP written for</dt><dd>v${esc(v.sop)} ${v.sopOk ? pill('good', 'Matches') : pill('crit', 'Does not match')}</dd><dt>Ask Lite instructions</dt><dd>v${esc(v.ask)} ${v.askOk ? pill('good', 'Matches') : pill('crit', 'Does not match')}</dd><dt>Saved data version</dt><dd>${S.meta.schema ? 'Schema ' + esc(S.meta.schema.version) + ', last written by v' + esc(S.meta.schema.release) : 'Schema ' + SCHEMA_VERSION + ' (nothing saved yet)'}</dd></dl>
     <div style="margin-top:8px"><h4>What's new</h4>${APP_RELEASE.notes.map(n => `<div class="mute"><b>v${esc(n.version)}</b> ${esc(n.date)}: ${esc(n.text)}</div>`).join('')}</div>
-    <div style="margin-top:8px"><button class="btn" data-act="tool" data-arg="sop">Open How Lite works (SOP)</button></div></section>
+    <div style="margin-top:8px"><button class="btn" data-act="tool" data-arg="sop">Open the Policy and SOP</button></div></section>
   </div>
 
   <section class="card plain" id="uploads-card" style="margin-top:14px"><h3>Uploads</h3>${uploadsTable()}</section>
@@ -1240,10 +1695,17 @@ function viewReviews() {
 const fmtVal = v => v == null ? '—' : typeof v === 'string' ? (/^PER-\d+$/.test(v) ? pname(v) + ' (' + v + ')' : v) : JSON.stringify(v);
 
 /* ----- SOP ----- */
+function sopDocs() {
+  const t = $('#sop-template');
+  return t ? Array.from(t.content.querySelectorAll('article')).map(a => ({ id: a.getAttribute('data-doc'), label: a.getAttribute('data-label'), parent: a.getAttribute('data-parent'), html: a.innerHTML })) : [];
+}
 function viewSop() {
-  const v = versionStatus(); const t = $('#sop-template');
-  return `<div id="view-sop" class="sop"><div class="card plain ${v.sopOk ? '' : 'critb'}" id="sop-header" style="margin-bottom:14px"><div class="row"><h2>How Compass Lite works</h2>${v.sopOk ? pill('good', 'Written for v' + v.sop + ', the version running') : pill('crit', 'Written for v' + v.sop + ', but v' + v.release + ' is running')}</div></div>
-  <div class="card plain">${t ? t.innerHTML : ''}</div></div>`;
+  const v = versionStatus(); const docs = sopDocs();
+  const cur = docs.find(d => d.id === UI.sopDoc) || docs[0];
+  const nav = docs.map(d => `<li class="${d.parent ? 'sub' : ''}"><button data-act="sopDoc" data-arg="${esc(d.id)}" aria-current="${!!cur && d.id === cur.id}">${esc(d.label)}</button></li>`).join('');
+  return `<div id="view-sop" class="sop"><div class="card plain ${v.sopOk ? '' : 'critb'}" id="sop-header" style="margin-bottom:14px"><div class="row"><h2>Compass Lite: Policy, Process and Procedure</h2>${v.sopOk ? pill('good', 'Written for v' + v.sop + ', the version running') : pill('crit', 'Written for v' + v.sop + ', but v' + v.release + ' is running')}</div><p class="mute" style="margin:4px 0 0">The policy says what must happen, the annexes hold the detail, and the procedures say how. The page guide explains each part of this page.</p></div>
+  <div class="soplayout"><nav class="card plain" aria-label="Policy and SOP documents" style="padding:10px 8px"><ul class="sopnav">${nav}</ul></nav>
+  <article class="card plain" id="sop-doc" data-doc="${esc(cur ? cur.id : '')}" tabindex="-1">${cur ? cur.html : ''}</article></div></div>`;
 }
 
 /* ===================== Actions ===================== */
@@ -1482,7 +1944,8 @@ const ACT = {
     catch (e) { UI.open['text:' + id] = 'Could not read the stored text: ' + e.message; }
     render(true);
   },
-  moreLog() { UI.logLimit += 200; render(true); }
+  moreLog() { UI.logLimit += 200; render(true); },
+  sopDoc(id) { UI.sopDoc = id; UI.top = 'setup'; UI.tool.setup = 'sop'; render(true); const d = $('#sop-doc'); if (d) { d.focus({ preventScroll: true }); d.scrollIntoView({ block: 'start' }); } }
 };
 function maybeSetBusinessStep() {
   setTimeout(() => {
