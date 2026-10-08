@@ -123,6 +123,30 @@ input[type=file]{font-size:12.5px;max-width:100%}
 footer{color:var(--mute);font-size:12px}
 footer .bad{color:var(--crit);font-weight:600}
 .firstrun{max-width:760px}
+.statement{font:600 17px/1.45 var(--serif);max-width:62ch;margin:6px 0}
+.sc3{display:inline-grid;place-items:center;min-width:44px;height:24px;border-radius:99px;font:700 11.5px var(--label);padding:0 10px}
+.sc3.good{background:var(--good-t);color:var(--good)}.sc3.warn{background:var(--warn-t);color:var(--warn)}.sc3.crit{background:var(--crit-t);color:var(--crit)}.sc3.idle{background:var(--idle-t);color:var(--mute)}
+.bar{height:8px;background:var(--idle-t);border-radius:99px;margin:8px 0 4px;overflow:hidden}.bar i{display:block;height:100%;border-radius:99px}
+.flow{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:22px}
+.flow li{position:relative;min-width:0;display:flex}
+.flow li:not(:last-child)::after{content:"";position:absolute;right:-18px;top:50%;width:14px;height:14px;border-top:2px solid var(--mute);border-right:2px solid var(--mute);transform:translateY(-50%) rotate(45deg)}
+.fnode{width:100%;text-align:left;display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit}
+.fnode:hover{border-color:var(--blue)}
+.fnode .fstage{font:600 10px var(--label);letter-spacing:.05em;text-transform:uppercase;color:var(--mute)}
+.fnode .fn{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--idle-t);color:var(--ink);font:700 12px var(--label)}
+.fnode b{font:600 13.5px var(--label)}
+.fnode .fwhat{font-size:12px;color:var(--ink2)}
+.fnode .fstat{font-size:12px;color:var(--ink2);margin-top:auto}
+.fnode.done{border-color:var(--good)}.fnode.done .fn{background:var(--good);color:#fff}
+.fnode.draft{border-color:var(--warn)}.fnode.draft .fn{background:var(--warn-t);color:var(--warn)}
+.fnode.next{border:2px solid var(--navy);box-shadow:var(--shadow)}.fnode.next .fn{background:var(--navy);color:#fff}
+:root[data-theme="dark"] .fnode.next{border-color:var(--info)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fnode.next{border-color:var(--info)}}
+.fnode .fnext{font:700 10.5px var(--label);letter-spacing:.05em;text-transform:uppercase;color:var(--red)}
+.fnode.later{background:var(--surface2);border-style:dashed}
+@media(max-width:980px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.flow li:not(:last-child)::after{display:none}}
+@media(max-width:560px){.flow{grid-template-columns:1fr;gap:20px}.flow li:not(:last-child)::after{display:block;right:auto;left:50%;top:auto;bottom:-15px;transform:translateX(-50%) rotate(135deg)}}
+.flowbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:14px;background:var(--surface2)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
@@ -139,7 +163,7 @@ footer .bad{color:var(--crit);font-weight:600}
 </div>
 
 <!-- SOP: the in-page Policy, Process and Procedure set (mirrors "Compass Lite: Policy, Process and Procedure") plus the page guide that explains every feature. data-sop-version must equal APP_RELEASE.version (CL-1312). -->
-<template id="sop-template" data-sop-version="0.1.2">
+<template id="sop-template" data-sop-version="0.2.0">
 <article data-doc="explained" data-label="Your Strategy Explained">
   <h3 class="sop-title">Your Strategy Explained</h3>
   <p class="sop-lede">Your strategy exists to focus the business on the few things that matter most, and to show that everyday work serves them.</p>
@@ -151,7 +175,7 @@ footer .bad{color:var(--crit);font-weight:600}
 
   <section><h4>2. The BSIP approach</h4>
     <p><b>Purpose.</b> Show how evidence becomes goals and action.</p>
-    <p><b>Summary.</b> BSIP has seven stages: Environmental Scan, Internal Analysis, Strategic Direction, Goals and Objectives, Strategic Roadmap, BSIP Release and Implementation. Compass Lite builds Stages 3 to 5 and then manages the result. It does not repeat Stages 1 and 2. It starts from an Intake Pack: your ACES Analysis (what you want to Achieve, Conserve, Eliminate and Start), a Client Intake and your Strategy Statement. The communication campaign and full implementation programme of Stages 6 and 7 sit outside Lite.</p>
+    <p><b>Summary.</b> BSIP has seven stages: Environmental Scan, Internal Analysis, Strategic Direction, Goals and Objectives, Strategic Roadmap, BSIP Release and Implementation. Compass Lite builds Stages 3 to 5 and then manages the result. It does not repeat Stages 1 and 2. It starts from your evidence: your ACES Analysis (what you want to Achieve, Conserve, Eliminate and Start) and your Strategy Statement. You can build both in Lite from scratch, following the flow on the Dashboard, or bring them in an Intake Pack from Chart's facilitated discussion (Phase 2). The communication campaign and full implementation programme of Stages 6 and 7 sit outside Lite.</p>
     <div class="tw" tabindex="0" role="region" aria-label="BSIP stages in Compass Lite"><table><thead><tr><th>Stage</th><th>The question it answers</th><th>What you get</th></tr></thead><tbody>
       <tr><td>3 Strategic Direction</td><td>Where will we compete, how will we win, and does that fit who we are?</td><td>A Strategy Statement, strategic themes, a Mission, Vision and Values check, and AI ethics alignment</td></tr>
       <tr><td>4 Goals and Objectives</td><td>What are the few goals that matter most?</td><td>WIGs (Wildly Important Goals), objectives with owners and dates, measures, and a trace from every document back to its goal</td></tr>
@@ -346,7 +370,7 @@ footer .bad{color:var(--crit);font-weight:600}
     <p><b>Purpose.</b> Make sure the strategy is lived by the whole team, kept current from real figures, improved by what you learn, and shown to others when it helps.</p>
     <p><b>Summary.</b> Five practices extend the policy beyond the owner. Each one keeps the same rule as everything else in Lite: Lite drafts, a person confirms, and nothing is sent or shared without you.</p>
     <div class="tw" tabindex="0" role="region" aria-label="Practices"><table><thead><tr><th>Practice</th><th>What we do</th><th>Rule</th></tr></thead><tbody>
-      <tr><td>Start small <span class="pill idle" data-arrives="3">Arrives in P3</span></td><td>Reach a first confirmed goal and scoreboard in one sitting, using the quick start. Deferred set-up steps stay on the open list.</td><td>Skipped is never the same as done.</td></tr>
+      <tr><td>Start small</td><td>Reach a first confirmed goal in one sitting by following the flow on the Dashboard: ACES, Strategy Statement, Mission, Vision and Values, then a first WIG. The quick start and starter library arrive in Phase 3. Deferred set-up steps stay on the open list.</td><td>Skipped is never the same as done.</td></tr>
       <tr><td>Weekly team rhythm <span class="pill idle" data-arrives="5">Arrives in P5</span></td><td>Hold a 15-minute weekly meeting. Each person makes one commitment linked to an objective. Review last week's commitments first.</td><td>Commitments record follow-through. They are not a score for people.</td></tr>
       <tr><td>Use real figures <span class="pill idle" data-arrives="8">Arrives in P8</span></td><td>Where tools are connected, measures update from them, with the source and date shown.</td><td>Read-only. Only totals are kept, never customer records. A missing figure stays Not recorded.</td></tr>
       <tr><td>Learn from results <span class="pill idle" data-arrives="5">Arrives in P5</span></td><td>Record a forecast and its key assumption for each goal. Compare with the result when the goal is reviewed or archived.</td><td>Learning is about our forecasting, not about individuals.</td></tr>
@@ -477,7 +501,7 @@ footer .bad{color:var(--crit);font-weight:600}
 </article>
 
 <article data-doc="p2" data-label="P2 · WIG Turnover">
-  <h3 class="sop-title">Procedure P2 — WIG Turnover <span class="pill idle" data-arrives="3">Arrives in P3</span></h3>
+  <h3 class="sop-title">Procedure P2 — WIG Turnover</h3>
   <p class="sop-lede">When a WIG is achieved, finish it cleanly, decide what happens to the AI that served it, and choose the next goal.</p>
   <section><h4>1. Purpose and scope</h4>
     <p><b>Purpose.</b> Complete a WIG, archive its result and close out its linked AI use cases, in step with AEGIS Essentials Annex E.3. <b>Covers.</b> Five stages. <b>Value.</b> Finished goals leave a record, AI that now runs the business stays governed, and the next WIG starts with evidence.</p></section>
@@ -500,13 +524,13 @@ footer .bad{color:var(--crit);font-weight:600}
       <li>Record the final result against the lag measure.</li>
       <li>Record the lessons learned and the date.</li>
     </ol>
-    <h5>Stage 3 — Archive</h5>
+    <h5>Stage 3 — Archive <span class="pill idle" data-arrives="3">Arrives in P3</span></h5>
     <ol>
       <li>Lite moves the WIG to the Archive. It becomes read-only and keeps its objectives, final result, lessons learned, linked use cases and change log.</li>
       <li>The WIG leaves the active WIG Register and frees its place. It stays readable at reviews and can be included in the facilitator snapshot.</li>
     </ol>
     <p><b>Check.</b> Nothing in the Archive is edited or deleted.</p>
-    <h5>Stage 4 — Close out the linked AI use cases</h5>
+    <h5>Stage 4 — Close out the linked AI use cases <span class="pill idle" data-arrives="3">Arrives in P3</span></h5>
     <p>For every linked use case still in strategy, the WIG owner proposes one of three decisions.</p>
     <div class="tw" tabindex="0" role="region" aria-label="Close-out decisions"><table><thead><tr><th>Decision</th><th>When it applies</th><th>What happens</th></tr></thead><tbody>
       <tr><td>Move to Run The Business</td><td>The use case is live and the result now depends on it</td><td>Name the established process it now belongs to. It leaves the strategy pipeline. Owner, KPIs and KRIs continue</td></tr>
@@ -514,7 +538,7 @@ footer .bad{color:var(--crit);font-weight:600}
       <tr><td>Improve or stop</td><td>Neither of the above</td><td>Follow the AEGIS Essentials improve-or-stop route. A use case that is not yet live is archived with the reason and a revisit date</td></tr>
     </tbody></table></div>
     <p>The Executive Sponsor approves each move to Run The Business. Each decision is logged in the Decision Log and flagged for the AEGIS Essentials Use Case Register. Lite changes nothing in AEGIS Essentials itself.</p>
-    <h5>Stage 5 — Choose the next WIG</h5>
+    <h5>Stage 5 — Choose the next WIG <span class="pill idle" data-arrives="3">Arrives in P3</span></h5>
     <ol>
       <li>Lite presents the ranked backlog.</li>
       <li>Lite drafts the next WIG with depth probing, labelled SUGGESTION and showing its source. Until Ask Lite arrives in Phase 6, you write the WIG and Lite checks it.</li>
@@ -544,13 +568,13 @@ footer .bad{color:var(--crit);font-weight:600}
       <li data-cap="step-start" data-sop-reviewed="0.1.0">Restore a backup or start fresh, then check saving: the database self-test writes a test record, reads it back and removes it. No client data goes to SpecNav.</li>
       <li data-cap="step-business" data-sop-reviewed="0.1.0">Name the business and the owner, and record the roles on Organization: Executive Sponsor, AI Governance Lead and the owner of each function. One person may hold several.</li>
       <li data-cap="step-functions" data-sop-reviewed="0.1.0">List your business functions. These group the risk heat map and can be renamed later.</li>
-      <li data-cap="step-intake" data-sop-reviewed="0.1.0">Lite checks the Intake Pack is complete. <span class="pill idle" data-arrives="2">Arrives in P2</span></li>
+      <li data-cap="step-intake" data-sop-reviewed="0.2.0">Build your starting evidence in Stage 3: the ACES Analysis, then the Strategy Statement. This step is Set once at least one ACES row and the statement are confirmed. Uploading a Chart Intake Pack instead <span class="pill idle" data-arrives="2">Arrives in P2</span></li>
       <li data-cap="step-policy" data-sop-reviewed="0.1.0">Upload your Risk Management Policy. Lite shows what it read and you confirm or correct each setting. With none on file, Lite uses the AEGIS defaults, flags the gap and recommends writing one.</li>
       <li data-cap="step-brand" data-sop-reviewed="0.1.0">Optionally add your Voice and Brand Charter, Brand Guide, logo and brand colour.</li>
       <li data-cap="step-cadence" data-sop-reviewed="0.1.0">Set the review cadence (default every 90 days).</li>
       <li data-cap="step-ceiling" data-sop-reviewed="0.1.0">Confirm the data ceiling (L3, with L5 always refused).</li>
       <li data-cap="step-permissions" data-sop-reviewed="0.1.0">Decide whether Ask Lite and web research are allowed. Client data is never part of a search. <span class="pill idle" data-arrives="6">Arrives in P6</span></li>
-      <li data-cap="step-mvv" data-sop-reviewed="0.1.0">Enter your Mission, Vision and Values, or give your website address so Lite can propose them from your public pages for you to confirm. <span class="pill idle" data-arrives="2">Arrives in P2; website reading in P8</span></li>
+      <li data-cap="step-mvv" data-sop-reviewed="0.2.0">Enter your Mission, Vision and Values in Stage 3. This step is Set once your Mission, Vision and at least one Value are confirmed. Giving your website address so Lite can propose them from your public pages <span class="pill idle" data-arrives="8">Arrives in P8</span></li>
       <li data-cap="step-ethics" data-sop-reviewed="0.1.0">Keep the SpecNav default AI ethical principles (BATHERS), edit them, or use your own. <span class="pill idle" data-arrives="2">Arrives in P2</span></li>
       <li data-cap="step-backup" data-sop-reviewed="0.1.0">Download a backup and keep it in your own cloud storage.</li>
     </ol>
@@ -570,7 +594,35 @@ footer .bad{color:var(--crit);font-weight:600}
 
 <article data-doc="guide" data-label="Page guide">
   <h3 class="sop-title">Page guide: using Compass Lite</h3>
-  <p class="sop-lede">What each part of this page does. This release is Phase 1 (Foundation): saving, set-up, the Organization tab, backup and restore, the Dashboard, the Guide panel and the logs. Tools that arrive in a later phase are shown with the phase they arrive in.</p>
+  <p class="sop-lede">What each part of this page does. This release is Phase 1 (Foundation) with the guided build: you build your ACES Analysis, Strategy Statement, Mission, Vision and Values, and WIGs and Objectives here from scratch, alongside saving, set-up, the Organization tab, backup and restore, the Dashboard, the Guide panel and the logs. Tools that arrive in a later phase are shown with the phase they arrive in.</p>
+  <section data-cap="flow-diagram" data-sop-reviewed="0.2.0"><h4>Building your strategy: the flow</h4>
+    <p><b>Purpose.</b> Take you from nothing to a confirmed strategy, without needing an Intake Pack.</p>
+    <p><b>Summary.</b> The Dashboard opens with <b>Build your strategy</b>, a flow of four steps: 1 ACES Analysis, 2 Strategy Statement, 3 Mission, Vision and Values, 4 WIGs and Objectives, leading on to the Roadmap and Reviews (Phase 5). Each step shows Not started, In progress or Done, with a short status, and the first step that is not done is marked <b>Recommended next</b>. Click any step to open it. The order is a recommendation only: every step opens at any time, none waits for another, and each tool has a bar showing its place in the order with buttons to the previous and next step. The Guide panel shows the recommended next step too, as a SUGGESTION you can park.</p>
+    <p><b>Output / value.</b> You always know where you are and what to do next, and nothing blocks you from working in the order that suits you.</p></section>
+  <section data-cap="drafts decision-box" data-sop-reviewed="0.2.0"><h4>Save as draft, Confirm and decisions</h4>
+    <p><b>Purpose.</b> Let you work in stages without anything becoming part of your strategy by accident (policy principle 3).</p>
+    <p><b>Summary.</b> Every entry in the build tools has two buttons. <b>Save as draft</b> keeps it, labelled Draft, so you can come back to it. <b>Confirm</b> makes it part of your strategy, and asks for anything it still needs first. Editing a confirmed entry and saving it as a draft takes it back to Draft until you confirm it again. Drafts waiting for you are listed in the Guide panel. Removing a row or value, or cancelling a WIG, opens a decision box on the page that says what follows; a cancellation needs a reason, which goes in the Decision Log.</p>
+    <p><b>Output / value.</b> A draft is never mistaken for a decision, and every change is in the Change log.</p></section>
+  <section data-cap="aces-analysis tool-aces" data-sop-reviewed="0.2.0"><h4>Step 1: ACES Analysis</h4>
+    <p><b>Purpose.</b> Capture your starting evidence in your own words.</p>
+    <p><b>Summary.</b> Stage 3, ACES Analysis, has four quadrants: what you want to <b>Achieve</b>, <b>Conserve</b>, <b>Eliminate</b> and <b>Start</b>. Add rows to each with what it is, why it matters, and a weight: High (3), Medium (2) or Low (1). A row needs its reason before it can be confirmed. Rows can be edited or removed; removing one re-scores any goal scored against it, and the removal is logged. Uploading the ACES Analysis workbook from Chart arrives in Phase 2.</p>
+    <p><b>Output / value.</b> Weighted evidence that your goals are scored against.</p></section>
+  <section data-cap="strategy-statement tool-strategy" data-sop-reviewed="0.2.0"><h4>Step 2: Strategy Statement</h4>
+    <p><b>Purpose.</b> Make the one choice that sits above your goals.</p>
+    <p><b>Summary.</b> Write the four parts: who you serve, the problem you solve, what sets you apart, and the trade-offs you accept. Then write the statement itself. <b>Build a draft sentence from the four parts</b> joins your words into one sentence for you to edit; it is labelled SUGGESTION and nothing is saved until you confirm. You can say what each strategic theme (Growth, Efficiency, Innovation, Risk mitigation) means for you, and tick the confirmed ACES rows the statement rests on, so it cites its evidence. To confirm, all four parts and the statement are needed. Confirming a changed statement asks you to retest your MVV scores.</p>
+    <p><b>Output / value.</b> A confirmed Strategy Statement, traced to its evidence.</p></section>
+  <section data-cap="mvv-entry mvv-score tool-mvv" data-sop-reviewed="0.2.0"><h4>Step 3: Mission, Vision and Values</h4>
+    <p><b>Purpose.</b> Record who you are, and test the strategy against it: strategy proposes, identity constrains.</p>
+    <p><b>Summary.</b> Type your Mission (one), Vision (one) and Values (each a name and what it means). Lite never writes or rewrites them. Then score each confirmed item against each of the four parts of the Strategy Statement: 0 no link, 1 indirect, 2 supports it, 3 directly expresses it, or <b>Conflict</b> where the statement works against it, each with a one-line reason. The <b>MVV Alignment Score</b> is the sum of each item's best score divided by 3 times the number of items, as a percentage: Strong 75 and over, Partial 50 to 74, Weak under 50. A Conflict is never averaged away: it is raised as a CONFLICT to resolve now, with the options to change the strategy, change the item, or accept with a reason. A Value whose best score is 0 or 1 is raised as barely reflected. AI ethical principles arrive in Phase 2.</p>
+    <p><b>Output / value.</b> A strategy that fits who you are, with every tension in front of you.</p></section>
+  <section data-cap="wigs aces-score smart-check tool-goals" data-sop-reviewed="0.2.0"><h4>Step 4: WIGs</h4>
+    <p><b>Purpose.</b> Turn the strategy into the few goals that matter most.</p>
+    <p><b>Summary.</b> Stage 4, WIGs and Objectives, holds at most four active WIGs; a fifth cannot be added until one is completed or cancelled. Each WIG has a title, a theme, an owner from the People Register, From and To numbers with a unit, a date to reach it by, lead measures, and an optional latest reading that shows how far along it is. The lag measure is written for you as From X to Y by when. Score the WIG against each confirmed ACES row, 0 to 3, with a reason for every score above 0. The <b>ACES Alignment Score</b> is the sum of row score times row weight, divided by 3 times the sum of your three largest row weights, as a percentage capped at 100. A confirmed WIG below 40 is flagged, and a High-weight row that no confirmed WIG scores 2 or more against is raised as an OPPORTUNITY. The <b>SMART check</b> shows each criterion passed or failed: Specific (a clear title), Measurable (From and To differ), Achievable (a named owner), Relevant (a theme or an ACES link) and Time-bound (a date). To confirm a WIG it needs From, To, a date and an owner.</p>
+    <p><b>Output / value.</b> Up to four goals, each measured, owned and traced to your evidence.</p></section>
+  <section data-cap="objectives wig-complete" data-sop-reviewed="0.2.0"><h4>Step 4: Objectives, and completing a WIG</h4>
+    <p><b>Purpose.</b> Turn each goal into work someone is accountable for.</p>
+    <p><b>Summary.</b> Add objectives under each WIG, numbered OBJ-01.1 and so on. Each has exactly one Accountable person and, optionally, a Responsible person, both from the People Register, a due date, and a lead or lag measure; all are needed to confirm (CL-405). Objectives are Open, Completed or Cancelled. A WIG can be completed only when every objective under it is Completed or Cancelled; otherwise Lite names the open objectives. Completing records the final result and the lessons learned, and logs the decision; cancelling needs a reason. Either frees the WIG's slot. The full Archive and choosing the next WIG from a ranked backlog arrive in Phase 3.</p>
+    <p><b>Output / value.</b> No goal without owned work, and no goal closed with work left open.</p></section>
   <section data-cap="saving not-connected" data-sop-reviewed="0.1.0"><h4>Saving and the status chip</h4>
     <p><b>Purpose.</b> Keep every confirmed change, and always show whether it was kept.</p>
     <p><b>Summary.</b> Every change you confirm is saved to this page's own database shortly after you make it. The status chip at the top right always shows one of: <b>Saved</b>, <b>Saving</b>, <b>Not connected</b> or <b>Save failed</b>. <b>Not connected</b> means this copy has no database connection, for example a copy opened outside Claude. Lite still opens, but changes will not be saved. Open your installed Compass Lite link in Claude instead. <b>Save failed</b> means a write was refused: reload the page and run the database self-test on Set-up.</p>
@@ -619,7 +671,7 @@ footer .bad{color:var(--crit);font-weight:600}
 </template>
 
 <!-- Ask Lite instruction block (CL-1406). Used from Phase 6; versioned with the release now so the release check keeps it aligned. -->
-<script type="text/plain" id="ask-lite-instructions" data-release="0.1.2">
+<script type="text/plain" id="ask-lite-instructions" data-release="0.2.0">
 You are Ask Lite inside Compass Lite, a strategy tool a small business owner runs for themselves.
 Guardrails:
 1. Reflect and prompt. Never decide. The owner decides every purpose, value, ethic, goal, score and risk acceptance.
@@ -637,11 +689,12 @@ Guardrails:
 
 /* ===================== Release record (the only place the version lives, CL-605) ===================== */
 const APP_RELEASE = {
-  version: '0.1.2',
+  version: '0.2.0',
   date: '2026-10-08',
   phase: 1,
-  name: 'P1 Foundation',
+  name: 'P1 Foundation with the guided build',
   notes: [
+    { version: '0.2.0', date: '2026-10-08', text: 'Build your strategy from scratch, no Intake Pack needed: ACES Analysis, Strategy Statement, Mission, Vision and Values, then WIGs and Objectives. A clickable flow on the Dashboard shows the recommended order and what is next; every step opens at any time. ACES Alignment Score, MVV Alignment Score with conflicts, SMART check, the four-WIG ceiling, and objectives with owners.' },
     { version: '0.1.2', date: '2026-10-08', text: 'SOP alignment: every capability is in a register with the release it last changed in. The Policy and SOP, Set-up, the Dashboard, the footer and the Guide panel flag any capability the SOP does not describe, describes from an older release, or still marks as arriving in a phase that is now running.' },
     { version: '0.1.1', date: '2026-10-08', text: 'The SOP now mirrors Compass Lite: Policy, Process and Procedure: Your Strategy Explained, the Strategy Management Policy, Annexes A to C, Procedures P1 to P3, and a page guide to every feature.' },
     { version: '0.1.0', date: '2026-10-07', text: 'Phase 1 Foundation: saving with the status chip, first-run screen, Set-up steps, Organization tab, backup and restore, database self-test, data health check, Dashboard, Guide panel, Decision Log, Change log, assumptions log and the release check.' }
@@ -742,7 +795,19 @@ const CAPABILITIES = [
   { id: 'templates', name: 'Reference data labelled Template', changed: '0.1.0', marker: 'const TEMPLATES' },
   { id: 'versions', name: 'Versions and this SOP', changed: '0.1.2', marker: 'function versionStatus' },
   { id: 'schema', name: 'Saved-data compatibility', changed: '0.1.0', marker: 'const SCHEMA_VERSION' },
-  { id: 'sop-coverage', name: 'SOP coverage and gap flags', changed: '0.1.2', marker: 'function sopCoverage' }
+  { id: 'sop-coverage', name: 'SOP coverage and gap flags', changed: '0.1.2', marker: 'function sopCoverage' },
+  { id: 'flow-diagram', name: 'Build flow on the Dashboard', changed: '0.2.0', marker: 'function flowDiagram' },
+  { id: 'aces-analysis', name: 'ACES Analysis built in the app', changed: '0.2.0', marker: 'function viewAces' },
+  { id: 'strategy-statement', name: 'Strategy Statement built in the app', changed: '0.2.0', marker: 'function viewStrategy' },
+  { id: 'mvv-entry', name: 'Mission, Vision and Values entered in the app', changed: '0.2.0', marker: 'function viewMvv' },
+  { id: 'mvv-score', name: 'MVV Alignment Score and conflicts', changed: '0.2.0', marker: 'function mvvScore' },
+  { id: 'wigs', name: 'WIGs with the four-WIG ceiling', changed: '0.2.0', marker: 'const MAX_WIGS' },
+  { id: 'aces-score', name: 'ACES Alignment Score', changed: '0.2.0', marker: 'function acesScore' },
+  { id: 'smart-check', name: 'SMART check on WIGs', changed: '0.2.0', marker: 'function smartCheck' },
+  { id: 'objectives', name: 'Objectives with an Accountable owner', changed: '0.2.0', marker: 'function objProblems' },
+  { id: 'wig-complete', name: 'Completing a WIG only when its objectives are closed', changed: '0.2.0', marker: 'wigCompleteGo' },
+  { id: 'drafts', name: 'Save as draft or Confirm', changed: '0.2.0', marker: 'function saveRecord' },
+  { id: 'decision-box', name: 'In-page decision box', changed: '0.2.0', marker: 'function askDecision' }
 ];
 
 /* ===================== Schema and migrations (CL-1308, Appendix A) ===================== */
@@ -768,13 +833,13 @@ const STEPS = [
   { key: 'start', title: 'Restore a backup or start fresh, and check saving', why: 'So you know your records are really being saved before you rely on them. The check writes a small test record, reads it back and removes it.', phase: 1 },
   { key: 'business', title: 'Business name, owner name and roles', why: 'Lite needs to know whose strategy this is, and who holds the roles AEGIS Essentials uses. Executive Sponsor and AI Governance Lead are required. One person may hold all of them.', phase: 1 },
   { key: 'functions', title: 'Business functions', why: 'The functions of your business group the risk heat map and the People Register. You can rename them later.', phase: 1 },
-  { key: 'intake', title: 'Intake Pack', why: 'The ACES Analysis, Client Intake and Strategy Statement from Chart are where Stage 3 starts.', phase: 2 },
+  { key: 'intake', title: 'Starting evidence: ACES Analysis and Strategy Statement', why: 'Your strategy starts from evidence. Build your ACES Analysis and Strategy Statement here, step by step. No Intake Pack is needed; uploading one from Chart arrives in Phase 2.', phase: 1, changed: '0.2.0' },
   { key: 'policy', title: 'Risk Management Policy', why: 'Lite scores risk the way your own policy says. With no policy, Lite uses the AEGIS default scoring and flags the gap.', phase: 1 },
   { key: 'brand', title: 'Voice and Brand Charter, Brand Guide, logo and brand colour', why: 'Optional. Your logo and colour show in the header and on exports. Branding never changes a rule, score or finding.', phase: 1, optional: true },
   { key: 'cadence', title: 'Review cadence', why: 'How often the registers are reviewed. The default is every 90 days, the same as AEGIS Essentials.', phase: 1 },
   { key: 'ceiling', title: 'Data ceiling', why: 'Lite will not accept data above L3 (Confidential). L5, such as passwords and keys, is always refused.', phase: 1 },
   { key: 'permissions', title: 'Ask Lite and research permissions', why: 'Whether Lite may ask Claude for explanations and drafts, and the rule that searches never contain your client data.', phase: 6 },
-  { key: 'mvv', title: 'Mission, Vision and Values', why: 'Your identity, which every goal is tested against.', phase: 2 },
+  { key: 'mvv', title: 'Mission, Vision and Values', why: 'Your identity, which your strategy and every goal are tested against. Type them in your own words.', phase: 1, changed: '0.2.0' },
   { key: 'ethics', title: 'AI ethical principles', why: 'SpecNav sets default AI ethics based on BATHERS. You can keep, edit or replace them.', phase: 2 },
   { key: 'backup', title: 'First backup', why: 'A copy of everything in one file that you keep in your own cloud storage. It is also how you move to another Claude account.', phase: 1 }
 ];
@@ -786,7 +851,7 @@ let db = null, assetsNs = null, downloadsNs = null, userNs = null;
 const me = { id: null, isOwner: true, guest: false, canWrite: true };
 let connState = 'checking'; // checking | connected | none
 const Q = new Map(); const inflight = new Map(); let flushing = false, flushTimer = null, writeFailed = false;
-const UI = { top: 'dashboard', tool: { setup: 'setup', s3: 'strategy', s4: 'aces', s5: 'timeline' }, draft: {}, msg: {}, open: {}, restore: null, undo: [], health: null, removing: null, editPerson: null, pending: {}, showAllGuide: false, logLimit: 100, sopDoc: 'explained' };
+const UI = { top: 'dashboard', tool: { setup: 'setup', s3: 'strategy', s4: 'aces', s5: 'timeline' }, draft: {}, msg: {}, open: {}, restore: null, undo: [], health: null, removing: null, editPerson: null, pending: {}, showAllGuide: false, logLimit: 100, sopDoc: 'explained', editRec: null, ask: null, completing: null };
 let pendingRender = false, renderQueued = false;
 
 /* ===================== Helpers ===================== */
@@ -1100,9 +1165,12 @@ function ownershipFlags() {
 }
 
 /* ===================== Flags, contradictions and the Guide panel (CL-609, CL-612, CL-1401) ===================== */
+// Steps done by building the strategy in the app are Set as soon as the work is confirmed.
+const DERIVED_STEPS = { intake: () => confRows().length > 0 && isConf(strategyDoc()), mvv: () => mvvDone() };
 function stepStatus(key) {
   const st = STEPS.find(s => s.key === key);
   if (st.phase > CURRENT_PHASE) return 'Arrives in P' + st.phase;
+  if (DERIVED_STEPS[key] && DERIVED_STEPS[key]()) return 'Set';
   const rec = setupDoc().steps[key];
   return rec ? rec.status : 'Not started';
 }
@@ -1139,6 +1207,7 @@ function computeFlags() {
   if (pa && pa.by_person && !S.people[pa.by_person]) F.push({ key: 'contradiction:pilot', label: 'CONFLICT', urgency: 'Can park', title: 'The pilot approval names a person who is no longer in the People Register', detail: 'Record the approval again, or keep it with a reason.', ref: 'meta/settings', go: 'setup', rank: 15 });
   TEMPLATES.required_roles.forEach((r, i) => { if (!holders(r).length) F.push({ key: 'role-vacant:' + r, label: 'POTENTIAL CHALLENGE', urgency: 'Resolve now', title: r + ' is vacant', detail: 'This role is required. Give it to someone in the People Register. One person may hold several roles.', ref: 'people', go: 'org', rank: 20 + i / 10 }); });
   ownershipFlags().forEach(f => F.push(f));
+  buildFlags().forEach(f => F.push(f));
   const vs = versionStatus();
   if (!vs.sopOk || !vs.askOk) F.push({ key: 'sop-version', label: 'CONFLICT', urgency: 'Can park', title: 'The SOP does not match the release running (v' + vs.release + ')', detail: sopStatusLine(vs) + '. The Policy and SOP may describe a different build. Tell whoever maintains Compass Lite.', ref: 'Policy and SOP', go: 'sop', rank: 44 });
   vs.coverage.gaps.forEach(g => F.push({ key: 'sop-gap:' + g.id, label: 'POTENTIAL CHALLENGE', urgency: 'Can park', title: 'SOP gap: ' + g.name + ' (' + g.status + ')', detail: g.status === 'Not described' ? 'This capability is in the page but the Policy and SOP does not describe it yet.' : g.status === 'Out of date' ? 'The capability changed in v' + g.changed + ', but its SOP description was last reviewed for v' + g.reviewed + ' (' + g.place + ').' : 'The SOP still says this has not arrived: ' + g.place + '.', ref: 'Policy and SOP', go: 'sop', rank: 45 }));
@@ -1158,14 +1227,15 @@ function contradictionDetail(key) {
   return 'The recorded answer is missing. Open the step and confirm it again.';
 }
 const TAB_NAMES = { org: 'Organization', setup: 'Set-up', reviews: 'Reviews', dashboard: 'Dashboard', sop: 'Policy and SOP' };
+function goLabel(k) { if (TAB_NAMES[k]) return TAB_NAMES[k]; for (const t in TOOLS) { const x = TOOLS[t].find(y => y[0] === k); if (x) return x[1]; } return k; }
 function guidePanel() {
   const F = computeFlags();
   const first = F[0];
   const rest = F.slice(1);
   return `<section class="card plain guide" aria-labelledby="guide-h" id="guide" style="margin-bottom:14px">
     <div class="row"><h3 id="guide-h">Guide: your next step</h3>${F.length ? pill(F.some(f => f.urgency === 'Resolve now') ? 'crit' : 'warn', F.length + ' open') : pill('good', 'All clear')}</div>
-    ${first ? `<div class="item" data-guide-first="${esc(first.key)}"><div class="t">${lbl(first.label, first.urgency)}<div><b>${esc(first.title)}</b></div><div class="mute">${esc(first.detail)}</div></div><button class="btn pri" data-act="go" data-arg="${esc(first.go)}">Go to ${esc(TAB_NAMES[first.go] || first.go)}</button></div>
-      ${rest.length ? `<details ${UI.showAllGuide ? 'open' : ''} data-toggle="showAllGuide"><summary class="mute">${rest.length} more after this one</summary>${rest.map(f => `<div class="item"><div class="t">${lbl(f.label, f.urgency)} <b>${esc(f.title)}</b><div class="mute">${esc(f.detail)}</div></div><button class="btn" data-act="go" data-arg="${esc(f.go)}">Go to ${esc(TAB_NAMES[f.go] || f.go)}</button></div>`).join('')}</details>` : ''}`
+    ${first ? `<div class="item" data-guide-first="${esc(first.key)}"><div class="t">${lbl(first.label, first.urgency)}<div><b>${esc(first.title)}</b></div><div class="mute">${esc(first.detail)}</div></div><button class="btn pri" data-act="go" data-arg="${esc(first.go)}">Go to ${esc(goLabel(first.go))}</button></div>
+      ${rest.length ? `<details ${UI.showAllGuide ? 'open' : ''} data-toggle="showAllGuide"><summary class="mute">${rest.length} more after this one</summary>${rest.map(f => `<div class="item"><div class="t">${lbl(f.label, f.urgency)} <b>${esc(f.title)}</b><div class="mute">${esc(f.detail)}</div></div><button class="btn" data-act="go" data-arg="${esc(f.go)}">Go to ${esc(goLabel(f.go))}</button></div>`).join('')}</details>` : ''}`
     : '<div class="mute">Nothing needs your attention right now.</div>'}
   </section>`;
 }
@@ -1182,7 +1252,7 @@ function semverCmp(a, b) { const x = String(a || '0').split('.').map(Number), y 
 // The capabilities the SOP must describe in this release: the register, plus live Set-up steps and tools.
 function requiredCapabilities() {
   const caps = CAPABILITIES.slice();
-  STEPS.filter(st => st.phase <= CURRENT_PHASE).forEach(st => caps.push({ id: 'step-' + st.key, name: 'Set-up step: ' + st.title, changed: '0.1.0', auto: true }));
+  STEPS.filter(st => st.phase <= CURRENT_PHASE).forEach(st => caps.push({ id: 'step-' + st.key, name: 'Set-up step: ' + st.title, changed: st.changed || '0.1.0', auto: true }));
   Object.values(TOOLS).forEach(list => list.filter(t => !t[2] || t[2] <= CURRENT_PHASE).forEach(t => caps.push({ id: 'tool-' + t[0], name: 'Tool: ' + t[1], changed: '0.1.0', auto: true })));
   return caps;
 }
@@ -1345,7 +1415,7 @@ async function selfTestAndRecord(stepToo) {
 
 /* ===================== Data health check (CL-1310) ===================== */
 const ID_PATTERNS = [['PER-', 'people'], ['U-', 'uploads'], ['WIG-', 'goals'], ['OBJ-', 'objectives'], ['UC-', 'use_cases'], ['MS-', 'milestones'], ['R-', 'risks'], ['FL-', 'fm_links'], ['B-', 'backlog'], ['A-', 'aces_rows'], ['M-', 'mvv'], ['E-', 'ethics'], ['X-', 'exceptions'], ['AS-', 'assumptions'], ['K-', 'kpis_kris'], ['MX-', 'measures']];
-const LINK_FIELDS = ['goal_id', 'objective_id', 'use_case_id', 'upload_id', 'risk_id', 'target_id', 'measure_id', 'links'];
+const LINK_FIELDS = ['goal_id', 'objective_id', 'use_case_id', 'upload_id', 'risk_id', 'target_id', 'measure_id', 'links', 'evidence'];
 function colForId(v) { for (const [p, c] of ID_PATTERNS) if (typeof v === 'string' && v.startsWith(p) && /\d/.test(v.slice(p.length))) return c; return null; }
 async function collectHealthIssues() {
   const issues = [];
@@ -1402,12 +1472,12 @@ async function undoHealthFix(i) {
 const TOP = [['dashboard', 'Dashboard'], ['setup', 'Set-up'], ['s3', 'Stage 3'], ['s4', 'Stage 4'], ['s5', 'Stage 5'], ['reviews', 'Reviews']];
 const TOOLS = {
   setup: [['setup', 'Set-up'], ['org', 'Organization'], ['sop', 'Policy and SOP']],
-  s3: [['strategy', 'Strategy Statement', 2, 'Intake Pack, the four-part statement, themes and exceptions', 'CL-301 to CL-309'], ['mvv', 'Mission, Vision and Values', 2, 'Your Mission, Vision and Values, the MVV Alignment Score and exceptions', 'CL-1001 to CL-1005, CL-1009'], ['ethics', 'AI ethics', 2, 'BATHERS default or your own set, with mappings', 'CL-1006 to CL-1008'], ['sop1', 'Strategy on a page', 5, 'Confirmed content only, to print or download', 'CL-1111']],
-  s4: [['aces', 'ACES', 3, 'Rows, weights, and re-scoring with before and after', 'CL-409, CL-411'], ['goals', 'Goals (WIGs)', 3, 'Up to four active goals, objectives, owners and failure mode chips', 'CL-401 to CL-405, CL-709'], ['backlog', 'Backlog', 3, 'Ranked candidates and the next-goal choice', 'CL-410, CL-711'], ['archive', 'Archive', 3, 'Completed goals, read-only', 'CL-710'], ['usecases', 'AI use cases', 3, 'Use cases with owner, indicative data and pilot review date', 'CL-803 to CL-805, CL-817'], ['library', 'Starter library', 3, 'Examples by sector, labelled Example', 'CL-1102']],
+  s3: [['aces', 'ACES Analysis', 1, 'What you want to Achieve, Conserve, Eliminate and Start, with weights', 'CL-409'], ['strategy', 'Strategy Statement', 1, 'The four-part statement, themes and the evidence it rests on', 'CL-302, CL-303'], ['mvv', 'Mission, Vision and Values', 1, 'Your Mission, Vision and Values and the MVV Alignment Score', 'CL-1001, CL-1003, CL-1004'], ['ethics', 'AI ethics', 2, 'BATHERS default or your own set, with mappings', 'CL-1006 to CL-1008'], ['sop1', 'Strategy on a page', 5, 'Confirmed content only, to print or download', 'CL-1111']],
+  s4: [['goals', 'WIGs and Objectives', 1, 'Up to four active WIGs with ACES scores, SMART checks, objectives and owners', 'CL-402, CL-405, CL-409, CL-709'], ['backlog', 'Backlog', 3, 'Ranked candidates and the next-goal choice', 'CL-410, CL-711'], ['archive', 'Archive', 3, 'Completed goals, read-only', 'CL-710'], ['usecases', 'AI use cases', 3, 'Use cases with owner, indicative data and pilot review date', 'CL-803 to CL-805, CL-817'], ['library', 'Starter library', 3, 'Examples by sector, labelled Example', 'CL-1102']],
   s5: [['timeline', 'Timeline', 5, 'Phases, milestones, RASCI, thresholds and the gate pack', 'CL-501 to CL-507'], ['riskreg', 'Risk Register', 4, 'AEGIS scoring, heat map and treatment', 'CL-903 to CL-909'], ['failure', 'Failure patterns', 4, 'Readiness check, the register by four categories, goal-to-mode links and plans', 'CL-813, CL-814, CL-818 to CL-828'], ['team', 'Team pack', 5, 'Weekly pack and Commitment Register', 'CL-1112, CL-1113'], ['data', 'Connected data', 8, 'Measures, provenance and readings to map', 'CL-1121, CL-1122'], ['assure', 'Assurance', 7, 'Assurance pack and supplier questionnaire helper', 'CL-1141, CL-1142']]
 };
 const STAGE_INTRO = {
-  s3: ['Stage 3 · Strategic Direction', 'Test your Strategy Statement against your Mission, Vision, Values and AI ethics, and decide the exceptions.'],
+  s3: ['Stage 3 · Strategic Direction', 'Start from your evidence (ACES), write your Strategy Statement, then test it against your Mission, Vision and Values. Build it here from scratch; no Intake Pack is needed.'],
   s4: ['Stage 4 · Goals and Objectives', 'Rank goals by how well they serve your ACES issues, break them into objectives with owners, and propose AI use cases.'],
   s5: ['Stage 5 · Strategic Roadmap', 'Turn goals into milestones with owners, measures, risks and failure mode plans.']
 };
@@ -1483,6 +1553,10 @@ function viewFor(name) {
     case 'org': return viewOrg();
     case 'sop': return viewSop();
     case 'reviews': return viewReviews();
+    case 'aces': return askBox() + viewAces();
+    case 'strategy': return askBox() + viewStrategy();
+    case 'mvv': return askBox() + viewMvv();
+    case 'goals': return askBox() + viewGoals();
     default: {
       const t = (TOOLS[UI.top] || []).find(x => x[0] === name);
       return t ? laterTool(t) : '';
@@ -1558,14 +1632,15 @@ function viewDashboard() {
   const base = lastRev || s.installed_at;
   const nextRev = base ? new Date(new Date(base).getTime() + cad * 86400000) : null;
   const bd = backupDue();
-  const goals = Object.values(S.goals).filter(g => !['Archived', 'Cancelled'].includes(g.lifecycle));
+  const goals = activeGoals();
   const later = (p, t) => `<div class="mute">${esc(t)} ${pill('idle', 'Arrives in P' + p)}</div>`;
   return `<div id="view-dashboard"><h2>Dashboard</h2><p class="lede">Where your strategy stands today${s.business_name ? ' for ' + esc(s.business_name) : ''}. Every panel shows the date its data last changed.</p>
+  ${flowDiagram()}
   ${gaps.length ? `<section class="card warnb" style="margin-bottom:14px" id="dash-setup"><div class="row"><h3>Open set-up items</h3>${pill('warn', gaps.length + ' still to do')}</div><div>${gaps.map(x => `Step ${x.i + 1}: ${esc(x.st.title)} <span class="mute">(${esc(x.status)})</span>`).join('<br>')}</div>
     ${s.policy && s.policy.status === 'none' ? '<div class="msg err">No Risk Management Policy on file, AEGIS default scoring in use.</div>' : ''}<div style="margin-top:8px"><button class="btn" data-act="go" data-arg="setup">Open Set-up</button></div>${asOfLine(['meta'])}</section>` : ''}
   <div class="grid g2">
     <section class="card plain" id="dash-decisions"><div class="row"><h3>Waiting for your decision</h3>${pill(now.length ? 'crit' : 'good', now.length + ' open')}</div>${flagList(now, { empty: 'Nothing is waiting for a decision.' })}${asOfLine(['meta', 'people', 'decisions'])}</section>
-    <section class="card plain" id="dash-goals"><div class="row"><h3>Goals and objectives</h3>${pill('idle', goals.length + ' active')}</div>${goals.length ? goals.map(g => `<div>${esc(g.id)} ${esc(g.title || '')}</div>`).join('') : later(3, 'Goals and objectives are set in Stage 4.')}${asOfLine(['goals', 'objectives'])}</section>
+    <section class="card plain" id="dash-goals"><div class="row"><h3>Goals and objectives</h3>${pill(goals.length ? 'info' : 'idle', goals.length + ' of ' + MAX_WIGS + ' active')}</div>${goals.length ? goals.map(g => { const n = acesScore(g); const ob = objectivesOf(g.id); return `<div class="item"><div class="t"><b>${esc(g.id)} ${esc(g.title || '')}</b> ${statusPill(g)}<div class="mute">Owner ${esc(g.owner ? pname(g.owner) : 'not assigned')} · ${ob.filter(o => o.lifecycle === 'Completed').length} of ${ob.length} objectives completed · ACES ${n == null ? 'not scored' : n}</div></div></div>`; }).join('') + '<button class="btn" data-act="go" data-arg="goals">Open WIGs and Objectives</button>' : `<div class="mute">No WIGs yet. <button class="btn" data-act="go" data-arg="goals">Add your first WIG</button></div>`}${asOfLine(['goals', 'objectives'])}</section>
     <section class="card plain" id="dash-scoreboard"><h3>Scoreboard</h3>${later(5, 'Lead and lag measures with readings.')}${asOfLine(['readings', 'measures'])}</section>
     <section class="card plain" id="dash-risks"><h3>Risks to watch</h3>${later(4, 'Triggered and watching failure modes and High or Critical risks.')}${s.policy && s.policy.status === 'none' ? '<div class="mute">No Risk Management Policy on file, AEGIS default scoring in use.</div>' : ''}${asOfLine(['risks', 'failure_modes', 'fm_links'])}</section>
     <section class="card plain" id="dash-gates"><h3>Gate status</h3>${later(2, 'The Stage 3, 4 and 5 exit gates.')}${asOfLine(['gates'])}</section>
@@ -1649,6 +1724,8 @@ function stepSummary(key) {
     case 'cadence': return s.cadence_confirmed ? 'Every ' + esc(s.review_cadence_days) + ' days' : '<span class="mute">Default every 90 days, not yet confirmed.</span>';
     case 'ceiling': return s.data_ceiling ? esc(s.data_ceiling) + ' confirmed. L5 is always refused.' : '<span class="mute">Not confirmed yet.</span>';
     case 'backup': return s.last_backup_at ? 'Last backup ' + fmtDateTime(s.last_backup_at) : '<span class="mute">No backup yet.</span>';
+    case 'intake': return 'ACES Analysis: ' + esc(flowStatus('aces').text) + '<br>Strategy Statement: ' + esc(flowStatus('strategy').text);
+    case 'mvv': return esc(flowStatus('mvv').text);
     default: { const st = STEPS.find(x => x.key === key); return st.phase > CURRENT_PHASE ? '<span class="mute">Arrives in Phase ' + st.phase + '. Not counted as missing until then.</span>' : ''; }
   }
 }
@@ -1668,6 +1745,8 @@ function stepForm(key) {
       const v = d.ceiling || s.data_ceiling || 'L3';
       return `<fieldset style="border:0;padding:0;margin:0"><legend class="fl">Highest data level Lite may hold</legend>${['L1', 'L2', 'L3'].map(l => `<label style="display:flex;gap:6px;align-items:center"><input type="radio" name="ceiling" value="${l}" data-draft="ceiling" ${v === l ? 'checked' : ''}> ${l}${l === 'L3' ? ' (Confidential, the default and the most Lite accepts)' : ''}</label>`).join('')}</fieldset><p class="mute">Anything above your ceiling is flagged and left out of exports. L5, such as passwords and keys, can never be entered.</p><div class="btns"><button class="btn pri" data-act="confirmCeiling">Confirm data ceiling</button></div>`;
     }
+    case 'intake': return `<p class="mute">Build them in Stage 3. This step is Set once you have confirmed at least one ACES row and your Strategy Statement.</p><div class="btns"><button class="btn pri" data-act="go" data-arg="aces">Open ACES Analysis</button><button class="btn" data-act="go" data-arg="strategy">Open the Strategy Statement</button></div>`;
+    case 'mvv': return `<p class="mute">This step is Set once your Mission, Vision and at least one Value are confirmed.</p><button class="btn pri" data-act="go" data-arg="mvv">Open Mission, Vision and Values</button>`;
     case 'backup': return `<p class="mute">Download a backup and keep it in your own cloud storage. This step is Set when the download is saved.</p><button class="btn pri" data-act="backup">Download backup</button><div class="msg" aria-live="polite">${esc(UI.msg.backup || '')}</div>`;
     default: return '';
   }
@@ -1814,11 +1893,446 @@ function viewSop() {
   <article class="card plain" id="sop-doc" data-doc="${esc(cur ? cur.id : '')}" tabindex="-1">${cur ? (cur.id === 'coverage' ? coverageDoc(v) : liveArrives(cur.html)) : ''}</article></div></div>`;
 }
 
+/* ===================== Guided build: ACES → Strategy Statement → MVV → WIGs and Objectives =====================
+   The owner builds the strategy here from scratch; no Intake Pack is needed. The order is a recommendation only:
+   every tool opens at any time and none waits for another. Until Ask Lite arrives (P6) the owner writes every entry
+   and Lite applies rule-based checks only (CL-626). */
+const ACES_Q = [['Achieve', 'What you want to achieve'], ['Conserve', 'What you must keep and protect'], ['Eliminate', 'What you want to stop or remove'], ['Start', 'What you want to begin']];
+const WEIGHT = { 3: 'High', 2: 'Medium', 1: 'Low' };
+const SP_PARTS = [['who', 'Who you serve'], ['problem', 'The problem you solve'], ['apart', 'What sets you apart'], ['tradeoffs', 'The trade-offs you accept']];
+const THEMES = ['Growth', 'Efficiency', 'Innovation', 'Risk mitigation'];
+const ALIGN = ['0 · No link', '1 · Indirect', '2 · Supports it', '3 · Directly moves it'];
+const MVV_SC = [[-1, 'Conflict · works against it'], [0, '0 · No link'], [1, '1 · Indirect'], [2, '2 · Supports it'], [3, '3 · Directly expresses it']];
+const MAX_WIGS = 4, ACES_FLOOR = 40;
+const FLOW = [
+  { id: 'aces', n: 1, title: 'ACES Analysis', stage: 'Stage 3 · Evidence', what: 'What you want to Achieve, Conserve, Eliminate and Start, and how much each matters' },
+  { id: 'strategy', n: 2, title: 'Strategy Statement', stage: 'Stage 3 · Strategic Direction', what: 'Who you serve, the problem you solve, what sets you apart and the trade-offs you accept' },
+  { id: 'mvv', n: 3, title: 'Mission, Vision and Values', stage: 'Stage 3 · Strategic Direction', what: 'Who you are, tested against the Strategy Statement' },
+  { id: 'goals', n: 4, title: 'WIGs and Objectives', stage: 'Stage 4 · Goals and Objectives', what: 'Up to four goals, From X to Y by when, each with objectives and owners' }
+];
+const FLOW_LATER = [
+  { id: 'timeline', title: 'Roadmap', stage: 'Stage 5 · Strategic Roadmap', phase: 5 },
+  { id: 'reviews', title: 'Reviews', stage: 'After launch', phase: 5 }
+];
+
+const recs = col => Object.values(S[col]).sort((a, b) => a.id < b.id ? -1 : 1);
+const isConf = r => !!r && r.confirmation === 'Confirmed';
+const acesRows = () => recs('aces_rows');
+const confRows = () => acesRows().filter(isConf);
+const strategyDoc = () => S.strategy['S-1'] || null;
+const mvvItems = () => recs('mvv');
+const goalsAll = () => recs('goals');
+const activeGoals = () => goalsAll().filter(g => (g.lifecycle || 'Active') === 'Active');
+const objectivesOf = gid => recs('objectives').filter(o => o.goal_id === gid);
+const statusPill = r => !r ? pill('idle', 'Not started') : isConf(r) ? pill('good', 'Confirmed') : pill('warn', 'Draft');
+const shortVal = v => v == null ? null : typeof v === 'string' ? v.slice(0, 200) : JSON.stringify(v).slice(0, 200);
+
+// Form helpers: unsaved typing lives in UI.draft under f:<form>:<field> until Save draft or Confirm.
+const fk = (fid, k) => 'f:' + fid + ':' + k;
+const fv = (fid, k, def) => UI.draft[fk(fid, k)] !== undefined ? UI.draft[fk(fid, k)] : (def == null ? '' : def);
+const fclear = fid => Object.keys(UI.draft).filter(k => k.startsWith('f:' + fid + ':')).forEach(k => delete UI.draft[k]);
+const fIn = (fid, k, label, def, attrs) => `<label>${esc(label)}<input class="in" aria-label="${esc(label)}" data-draft="${esc(fk(fid, k))}" value="${esc(fv(fid, k, def))}" ${attrs || ''}></label>`;
+const fTa = (fid, k, label, def, attrs) => `<label>${esc(label)}<textarea aria-label="${esc(label)}" data-draft="${esc(fk(fid, k))}" ${attrs || ''}>${esc(fv(fid, k, def))}</textarea></label>`;
+const fSel = (fid, k, label, opts, def) => { const v = String(fv(fid, k, def)); return `<label>${esc(label)}<select data-draft="${esc(fk(fid, k))}" aria-label="${esc(label)}">${opts.map(o => `<option value="${esc(o[0])}"${String(o[0]) === v ? ' selected' : ''}>${esc(o[1])}</option>`).join('')}</select></label>`; };
+const fPerson = (fid, k, label, def, none) => `<label>${esc(label)}${personSelect(`data-draft="${esc(fk(fid, k))}" aria-label="${esc(label)}"`, fv(fid, k, def), { noneLabel: none || 'Choose a person' })}</label>`;
+const saveBtns = (act, arg, extra) => `<div class="btns" style="margin-top:10px"><button class="btn" data-act="${act}" data-arg="${esc(arg)}|draft">Save as draft</button><button class="btn pri" data-act="${act}" data-arg="${esc(arg)}|confirm">Confirm</button>${extra || ''}</div>`;
+
+// Saves one record as Draft or Confirmed, logging each changed field (CL-610, CL-617, CL-1411).
+function saveRecord(col, id, data, confirm, what, extraWrites) {
+  const prev = S[col][id];
+  const rec = stamp(Object.assign(clone(prev || {}), data, { id }), prev);
+  if (confirm) confirmStamp(rec); else { rec.confirmation = 'Draft'; delete rec.confirmed_at; delete rec.confirmed_by; }
+  if (!rec.source) rec.source = 'Entered';
+  const log = [];
+  if (!prev) log.push({ record: col + '/' + id, new: rec.confirmation, what: what + (confirm ? ' added and confirmed' : ' saved as a draft') });
+  else {
+    Object.keys(data).forEach(f => { if (JSON.stringify(prev[f]) !== JSON.stringify(data[f])) log.push({ record: col + '/' + id, field: f, old: shortVal(prev[f]), new: shortVal(data[f]), what: what + ' changed' }); });
+    if (prev.confirmation !== rec.confirmation || confirm) log.push({ record: col + '/' + id, field: 'confirmation', old: prev.confirmation || null, new: rec.confirmation, what: what + (confirm ? ' confirmed' : ' saved as a draft') });
+  }
+  return commit([{ col, id, data: rec }].concat(extraWrites || []), log);
+}
+
+/* ----- Scores (6.3) ----- */
+function top3Weights() { return confRows().map(r => +r.weight || 0).sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a + b, 0); }
+// ACES Alignment Score: sum(row score × row weight) ÷ (3 × sum of the three largest weights) × 100, capped at 100 (CL-409).
+function acesScore(g) {
+  const rows = confRows(); const t = top3Weights();
+  if (!t || !g || !g.aces) return null;
+  let tot = 0, any = false;
+  rows.forEach(r => { const s = g.aces[r.id]; if (s && s.score !== '' && s.score != null) { any = true; tot += (+s.score) * (+r.weight || 0); } });
+  return any ? Math.min(100, Math.round(tot / (3 * t) * 100)) : null;
+}
+const scoreClass = n => n == null ? 'idle' : n >= 60 ? 'good' : n >= ACES_FLOOR ? 'warn' : 'crit';
+function mvvBest(m) { const sc = (m.scores || []).filter(x => x !== null && x !== '' && x !== undefined).map(Number); return sc.length === 4 ? Math.max(0, ...sc) : null; }
+// MVV Alignment Score: sum of each item's best score ÷ (3 × number of items) × 100. A Conflict is never averaged away (CL-1003).
+function mvvScore() {
+  const items = mvvItems().filter(isConf);
+  if (!items.length) return { score: null, scored: 0, total: 0, conflicts: [] };
+  const scored = items.filter(m => mvvBest(m) !== null);
+  const conflicts = [];
+  items.forEach(m => (m.scores || []).forEach((v, j) => { if (+v === -1 && v !== '' && v !== null) conflicts.push({ m, j }); }));
+  if (scored.length < items.length) return { score: null, scored: scored.length, total: items.length, conflicts };
+  const score = Math.round(items.reduce((a, m) => a + mvvBest(m), 0) / (3 * items.length) * 100);
+  return { score, band: score >= 75 ? 'Strong' : score >= 50 ? 'Partial' : 'Weak', scored: scored.length, total: items.length, conflicts };
+}
+const bandClass = b => b === 'Strong' ? 'good' : b === 'Partial' ? 'warn' : 'crit';
+// SMART check on a WIG (CL-402): each criterion passed or failed, with the reason.
+function smartCheck(g) {
+  const num = v => v !== '' && v != null && !isNaN(+v);
+  return [
+    ['Specific', !!(g.title && g.title.trim().length >= 4), 'A clear goal title'],
+    ['Measurable', num(g.from) && num(g.to) && +g.from !== +g.to, 'A start and a target number that differ'],
+    ['Achievable', !!g.owner, 'A named owner who answers for it'],
+    ['Relevant', !!g.theme || acesScore(g) > 0, 'A strategic theme or a link to your ACES rows'],
+    ['Time-bound', !!g.by, 'A date to reach it by']
+  ];
+}
+
+/* ----- Flow status ----- */
+function flowStatus(id) {
+  if (id === 'aces') {
+    const rows = acesRows(); const c = rows.filter(isConf).length;
+    if (!rows.length) return { state: 'todo', text: 'No rows yet' };
+    const qs = ACES_Q.filter(q => rows.some(r => r.quadrant === q[0] && isConf(r))).length;
+    return { state: c && c === rows.length ? 'done' : 'draft', text: c + ' of ' + rows.length + ' rows confirmed · ' + qs + ' of 4 quadrants' };
+  }
+  if (id === 'strategy') { const s = strategyDoc(); return !s ? { state: 'todo', text: 'Not started' } : isConf(s) ? { state: 'done', text: 'Confirmed ' + fmtDate(s.confirmed_at) } : { state: 'draft', text: 'Draft' }; }
+  if (id === 'mvv') {
+    const it = mvvItems(); if (!it.length) return { state: 'todo', text: 'Not started' };
+    const ms = mvvScore();
+    return { state: mvvDone() ? 'done' : 'draft', text: (ms.score != null ? 'Alignment ' + ms.score + ' (' + ms.band + ')' : it.filter(isConf).length + ' of ' + it.length + ' confirmed') + (ms.conflicts.length ? ' · ' + ms.conflicts.length + ' conflict' + (ms.conflicts.length === 1 ? '' : 's') : '') };
+  }
+  if (id === 'goals') {
+    const g = activeGoals(); if (!g.length) return { state: 'todo', text: 'No WIGs yet' };
+    const okG = g.filter(x => isConf(x) && objectivesOf(x.id).some(isConf)).length;
+    const objs = g.reduce((a, x) => a + objectivesOf(x.id).length, 0);
+    return { state: okG === g.length ? 'done' : 'draft', text: g.length + ' of ' + MAX_WIGS + ' WIGs · ' + objs + ' objective' + (objs === 1 ? '' : 's') };
+  }
+  return { state: 'todo', text: '' };
+}
+function mvvDone() { const it = mvvItems(); return ['Mission', 'Vision'].every(k => it.some(m => m.kind === k && isConf(m))) && it.some(m => m.kind === 'Value' && isConf(m)) && it.every(isConf); }
+function flowNext() { return FLOW.find(f => flowStatus(f.id).state !== 'done') || null; }
+
+function flowDiagram() {
+  const next = flowNext();
+  const node = f => {
+    const st = flowStatus(f.id); const isNext = next && next.id === f.id;
+    const badge = st.state === 'done' ? pill('good', 'Done') : st.state === 'draft' ? pill('warn', 'In progress') : pill('idle', 'Not started');
+    return `<li><button class="fnode ${st.state}${isNext ? ' next' : ''}" data-act="go" data-arg="${f.id}" data-flow="${f.id}" aria-label="Step ${f.n}: ${esc(f.title)}. ${esc(st.state === 'done' ? 'Done' : st.state === 'draft' ? 'In progress' : 'Not started')}. ${esc(st.text)}${isNext ? '. Recommended next' : ''}">
+      <span class="fstage">${esc(f.stage)}</span><span class="fn">${f.n}</span><b>${esc(f.title)}</b><span class="fwhat">${esc(f.what)}</span><span class="fstat">${badge} ${esc(st.text)}</span>${isNext ? '<span class="fnext">Recommended next</span>' : ''}</button></li>`;
+  };
+  return `<section class="card plain" id="flow" aria-labelledby="flow-h" style="margin-bottom:14px"><div class="row"><h3 id="flow-h">Build your strategy</h3><span class="mute">The recommended order. You can open any step at any time.</span></div>
+    <ol class="flow">${FLOW.map(node).join('')}${FLOW_LATER.map(f => `<li><button class="fnode later" data-act="go" data-arg="${f.id}" data-flow="${f.id}"><span class="fstage">${esc(f.stage)}</span><b>${esc(f.title)}</b><span class="fstat">${pill('idle', 'Arrives in P' + f.phase)}</span></button></li>`).join('')}</ol>
+    <p class="mute" style="margin:8px 0 0">No Intake Pack needed: build each part here, in your own words. Lite checks each part and you confirm it. Uploading a Chart Intake Pack arrives in Phase 2.</p></section>`;
+}
+function flowBar(id) {
+  const f = FLOW.find(x => x.id === id); const nx = FLOW[f.n]; const pv = FLOW[f.n - 2];
+  return `<div class="flowbar" role="navigation" aria-label="Recommended order"><span class="mute">Step ${f.n} of ${FLOW.length} in the recommended order. You can do the steps in any order.</span><span class="btns">${pv ? `<button class="btn" data-act="go" data-arg="${pv.id}">← ${esc(pv.title)}</button>` : ''}${nx ? `<button class="btn" data-act="go" data-arg="${nx.id}">Next: ${esc(nx.title)} →</button>` : `<button class="btn" data-act="go" data-arg="dashboard">Back to the Dashboard</button>`}</span></div>`;
+}
+
+/* ----- Flags from the guided build (CL-409, CL-1003, CL-1004, CL-617) ----- */
+function buildFlags() {
+  const F = [];
+  const nx = flowNext();
+  if (nx) F.push({ key: 'flow-next:' + nx.id, label: 'SUGGESTION', urgency: 'Can park', title: 'Recommended next: ' + nx.title, detail: 'Lite suggests building your strategy in this order: ACES Analysis, Strategy Statement, Mission, Vision and Values, then WIGs and Objectives. You can open any step at any time.', ref: 'Dashboard flow', go: nx.id, rank: 35 });
+  const drafts = [['aces_rows', 'aces', 'ACES Analysis'], ['strategy', 'strategy', 'Strategy Statement'], ['mvv', 'mvv', 'Mission, Vision and Values'], ['goals', 'goals', 'WIGs'], ['objectives', 'goals', 'objectives']];
+  drafts.forEach(([col, go, name]) => { const n = Object.values(S[col]).filter(r => r.confirmation === 'Draft' && !['Cancelled', 'Completed'].includes(r.lifecycle)).length; if (n) F.push({ key: 'drafts:' + col, label: 'SUGGESTION', urgency: 'Can park', title: n + ' draft' + (n === 1 ? '' : 's') + ' in ' + name + ' waiting for your confirmation', detail: 'A draft is not part of your strategy until you confirm it.', ref: col, go, rank: 38 }); });
+  const ms = mvvScore();
+  ms.conflicts.forEach(c => F.push({ key: 'mvv-conflict:' + c.m.id + ':' + c.j, label: 'CONFLICT', urgency: 'Resolve now', title: c.m.kind + (c.m.kind === 'Value' ? ' "' + (c.m.text || '') + '"' : '') + ' conflicts with "' + SP_PARTS[c.j][1] + '"', detail: 'Change the strategy, change the ' + c.m.kind.toLowerCase() + ', or accept with a reason. Lite never resolves it for you.', ref: 'mvv/' + c.m.id, go: 'mvv', rank: 12, acceptable: true }));
+  mvvItems().filter(m => isConf(m) && m.kind === 'Value').forEach(m => { const b = mvvBest(m); if (b !== null && b <= 1) F.push({ key: 'mvv-unreflected:' + m.id, label: 'SUGGESTION', urgency: 'Can park', title: 'Value "' + (m.text || m.id) + '" is barely reflected in the strategy (best score ' + b + ')', detail: 'Add it to the strategy, ask whether it is really a value, or accept with a reason.', ref: 'mvv/' + m.id, go: 'mvv', rank: 52, acceptable: true }); });
+  const s = strategyDoc();
+  if (isConf(s) && mvvItems().some(m => m.scored_at && m.scored_at < s.confirmed_at)) F.push({ key: 'mvv-retest:' + s.confirmed_at, label: 'SUGGESTION', urgency: 'Can park', title: 'Retest your MVV scores: the Strategy Statement changed after they were scored', detail: 'Open Mission, Vision and Values and confirm the scores again (CL-1009).', ref: 'strategy/S-1', go: 'mvv', rank: 39 });
+  const act = activeGoals();
+  if (act.length > MAX_WIGS) F.push({ key: 'wig-ceiling', label: 'CONFLICT', urgency: 'Resolve now', title: act.length + ' active WIGs: more than the ceiling of four', detail: 'Complete or cancel a WIG. Too many goals is a common reason strategies stall.', ref: 'goals', go: 'goals', rank: 13 });
+  act.filter(isConf).forEach(g => { const n = acesScore(g); if (n !== null && n < ACES_FLOOR) F.push({ key: 'wig-floor:' + g.id + ':' + n, label: 'POTENTIAL CHALLENGE', urgency: 'Can park', title: g.id + ' ' + (g.title || '') + ' scores ' + n + ' against your ACES, below the floor of ' + ACES_FLOOR, detail: 'Check the scores and reasons, or accept with a reason.', ref: 'goals/' + g.id, go: 'goals', rank: 54, acceptable: true }); });
+  if (act.some(isConf)) confRows().filter(r => +r.weight === 3).forEach(r => { if (!act.some(g => isConf(g) && g.aces && g.aces[r.id] && +g.aces[r.id].score >= 2)) F.push({ key: 'aces-uncovered:' + r.id, label: 'OPPORTUNITY', urgency: 'Can park', title: 'High-weight ACES row ' + r.id + ' "' + (r.what || '') + '" is not served by any WIG', detail: 'No confirmed WIG scores 2 or more against it. Consider a WIG for it, or accept with a reason.', ref: 'aces_rows/' + r.id, go: 'goals', rank: 56, acceptable: true }); });
+  act.forEach(g => { if (isConf(g) && !objectivesOf(g.id).length) F.push({ key: 'wig-no-objectives:' + g.id, label: 'SUGGESTION', urgency: 'Can park', title: g.id + ' has no objectives yet', detail: 'Break the WIG into objectives, each with an Accountable owner, a date and a measure.', ref: 'goals/' + g.id, go: 'goals', rank: 41 }); });
+  return F;
+}
+
+/* ----- Views ----- */
+function viewAces() {
+  const rows = acesRows();
+  const t3 = top3Weights();
+  const edit = UI.editRec && UI.editRec.col === 'aces_rows' ? UI.editRec.id : null;
+  const rowForm = (fid, r, q) => `<div class="form">${fIn(fid, 'what', 'What', r ? r.what : '')}${fIn(fid, 'why', 'Why it matters', r ? r.why : '')}${fSel(fid, 'weight', 'How much it matters', [[3, 'High (3)'], [2, 'Medium (2)'], [1, 'Low (1)']], r ? r.weight : 2)}${r ? fSel(fid, 'quadrant', 'Quadrant', ACES_Q.map(x => [x[0], x[0]]), r.quadrant) : ''}</div>`;
+  return `<div id="view-aces">${flowBar('aces')}<h2>ACES Analysis</h2><p class="lede">Your starting evidence, in your own words: what you want to Achieve, Conserve, Eliminate and Start. Give each row a weight. Your goals are later scored against these rows, so the rows that matter most should carry High.</p>
+  <div class="grid g2">${ACES_Q.map(([q, hint]) => { const qr = rows.filter(r => r.quadrant === q); const fid = 'aces-new-' + q; return `<section class="card plain" data-quadrant="${q}"><div class="row"><h3>${q}</h3><span class="mute">${esc(hint)}</span></div>
+    ${qr.length ? qr.map(r => edit === r.id ? `<div class="card" style="margin:6px 0">${rowForm('aces-' + r.id, r)}${saveBtns('acesSave', r.id, `<button class="btn" data-act="editCancel">Cancel</button>`)}<div class="msg err">${esc(UI.msg['aces-' + r.id] || '')}</div></div>` :
+      `<div class="item" data-aces="${esc(r.id)}"><div class="t"><b>${esc(r.id)} ${esc(r.what)}</b> ${statusPill(r)} ${pill(+r.weight === 3 ? 'info' : 'idle', (WEIGHT[r.weight] || 'Not weighted') + ' weight')}<div class="mute">${esc(r.why || 'No reason recorded')}</div></div><div class="btns">${isConf(r) ? '' : `<button class="btn pri" data-act="acesConfirm" data-arg="${esc(r.id)}">Confirm</button>`}<button class="btn" data-act="editRec" data-arg="aces_rows|${esc(r.id)}">Edit</button><button class="btn danger" data-act="acesRemove" data-arg="${esc(r.id)}" aria-label="Remove ${esc(r.id)}">Remove</button></div></div>`).join('') : '<div class="mute">No rows yet.</div>'}
+    <details ${UI.open[fid] ? 'open' : ''} data-open-key="${fid}" style="margin-top:8px"><summary>Add a row to ${q}</summary>${rowForm(fid, null, q)}${saveBtns('acesAdd', q)}<div class="msg err" aria-live="polite">${esc(UI.msg[fid] || '')}</div></details></section>`; }).join('')}</div>
+  <p class="mute" style="margin-top:12px">Weights: High 3, Medium 2, Low 1. A WIG scores 100 if it directly moves your three most important confirmed rows (their weights add to ${t3 || 'nothing yet'}). Removing a row is logged, and goals scored against it are re-scored without it.</p></div>`;
+}
+
+function viewStrategy() {
+  const s = strategyDoc(); const fid = 'sp';
+  const evidence = fv(fid, 'evidence', s ? s.evidence : []);
+  const ev = Array.isArray(evidence) ? evidence : [];
+  const rows = confRows();
+  const ms = mvvScore();
+  return `<div id="view-strategy">${flowBar('strategy')}<h2>Strategy Statement</h2><p class="lede">The one choice that sits above your goals. Write the four parts in your own words, then the statement itself. Your Mission, Vision and Values then test it.</p>
+  <section class="card plain"><div class="row"><h3>Your Strategy Statement</h3>${statusPill(s)}</div>
+    ${s && s.statement ? `<p class="statement">${esc(s.statement)}</p>` : '<p class="mute">No statement yet.</p>'}
+    ${s && isConf(s) ? `<div class="mute">Confirmed ${fmtDate(s.confirmed_at)} by ${esc(whoLabel(s.confirmed_by))}.</div>` : ''}
+    ${ms.score != null ? `<div style="margin-top:6px">Tested against your identity: ${pill(bandClass(ms.band), ms.band + ' ' + ms.score)} ${ms.conflicts.length ? pill('crit', ms.conflicts.length + ' conflict' + (ms.conflicts.length === 1 ? '' : 's')) : ''} <button class="btn" data-act="go" data-arg="mvv">Open the MVV check</button></div>` : ''}</section>
+  <section class="card plain" style="margin-top:14px"><h3>The four parts</h3>
+    <div class="form">${SP_PARTS.map(([k, l]) => fTa(fid, k, l, s ? s[k] : '')).join('')}</div>
+    <div style="margin-top:10px">${fTa(fid, 'statement', 'Strategy Statement', s ? s.statement : '', 'style="min-height:90px"')}</div>
+    <div class="btns" style="margin-top:6px"><button class="btn" data-act="spCompose">Build a draft sentence from the four parts</button><span class="mute">Joins your four parts into one sentence for you to edit. Labelled SUGGESTION until you confirm.</span></div>
+    ${UI.msg.spCompose ? `<div class="msg"><span class="lbl warn">SUGGESTION</span> ${esc(UI.msg.spCompose)}</div>` : ''}
+    <h4 style="margin-top:14px">Strategic themes</h4><p class="mute" style="margin:0 0 6px">Optional. What each theme means for you. Each WIG sits under one theme.</p>
+    <div class="form">${THEMES.map(t => fIn(fid, 'theme_' + t, t, s && s.themes ? s.themes[t] : '')).join('')}</div>
+    <h4 style="margin-top:14px">Evidence it rests on</h4>
+    ${rows.length ? `<fieldset style="border:0;padding:0;margin:0"><legend class="sr">Confirmed ACES rows this statement rests on</legend>${rows.map(r => `<label style="display:flex;gap:6px;align-items:flex-start;margin:3px 0"><input type="checkbox" data-draft-list="${esc(fk(fid, 'evidence'))}" value="${esc(r.id)}" ${ev.includes(r.id) ? 'checked' : ''}> <span><b>${esc(r.id)}</b> ${esc(r.quadrant)}: ${esc(r.what)}</span></label>`).join('')}</fieldset>` : `<div class="mute">No confirmed ACES rows yet. Every statement should cite its evidence (CL-602): <button class="btn" data-act="go" data-arg="aces">Open ACES Analysis</button></div>`}
+    ${saveBtns('spSave', 'S-1')}<div class="msg err" aria-live="polite">${esc(UI.msg.sp || '')}</div>
+    <p class="mute">Confirming a changed statement asks you to retest your MVV scores. Nothing changes until you confirm.</p></section></div>`;
+}
+
+function viewMvv() {
+  const items = mvvItems(); const s = strategyDoc(); const ms = mvvScore();
+  const edit = UI.editRec && UI.editRec.col === 'mvv' ? UI.editRec.id : null;
+  const one = kind => items.find(m => m.kind === kind);
+  const itemCard = (m) => edit === m.id ? `<div class="card" style="margin:6px 0">${itemForm('mvv-' + m.id, m.kind, m)}${saveBtns('mvvSave', m.id, `<button class="btn" data-act="editCancel">Cancel</button>`)}<div class="msg err">${esc(UI.msg['mvv-' + m.id] || '')}</div></div>`
+    : `<div class="item" data-mvv="${esc(m.id)}"><div class="t"><b>${esc(m.kind === 'Value' ? 'Value: ' + m.text : m.kind)}</b> ${statusPill(m)}<p class="${m.kind === 'Value' ? 'mute' : 'statement'}" style="margin:4px 0;${m.kind === 'Value' ? '' : 'font-size:15px'}">${esc(m.kind === 'Value' ? (m.meaning || 'No meaning recorded') : m.text)}</p><div class="mute">Source: ${esc(m.source || 'Entered')}${isConf(m) ? ' · confirmed ' + fmtDate(m.confirmed_at) : ''}</div></div><div class="btns">${isConf(m) ? '' : `<button class="btn pri" data-act="mvvConfirm" data-arg="${esc(m.id)}">Confirm</button>`}<button class="btn" data-act="editRec" data-arg="mvv|${esc(m.id)}">Edit</button>${m.kind === 'Value' ? `<button class="btn danger" data-act="mvvRemove" data-arg="${esc(m.id)}" aria-label="Remove ${esc(m.text)}">Remove</button>` : ''}</div></div>`;
+  function itemForm(fid, kind, m) { return kind === 'Value' ? `<div class="form">${fIn(fid, 'text', 'Value', m ? m.text : '')}${fIn(fid, 'meaning', 'What it means, in one line', m ? m.meaning : '')}</div>` : `<div class="form">${fTa(fid, 'text', kind, m ? m.text : '')}</div>`; }
+  const single = kind => { const m = one(kind); const fid = 'mvv-new-' + kind; return `<section class="card plain" data-kind="${kind}"><h3>${kind}</h3>${m ? itemCard(m) : `${itemForm(fid, kind)}${saveBtns('mvvAdd', kind)}<div class="msg err" aria-live="polite">${esc(UI.msg[fid] || '')}</div>`}</section>`; };
+  const vals = items.filter(m => m.kind === 'Value');
+  const conf = items.filter(isConf);
+  const parts = s ? SP_PARTS.map(([k, l]) => [l, s[k] || '']) : [];
+  return `<div id="view-mvv">${flowBar('mvv')}<h2>Mission, Vision and Values</h2><p class="lede">Who you are as a business. Type them in your own words. Lite never writes or rewrites them. They then test your Strategy Statement: strategy proposes, identity constrains.</p>
+  <div class="grid g2">${single('Mission')}${single('Vision')}</div>
+  <section class="card plain" style="margin-top:14px" data-kind="Value"><div class="row"><h3>Values</h3>${pill('info', vals.length + ' value' + (vals.length === 1 ? '' : 's'))}</div>${vals.map(itemCard).join('') || '<div class="mute">No values yet.</div>'}
+    <details ${UI.open['mvv-new-Value'] ? 'open' : ''} data-open-key="mvv-new-Value" style="margin-top:8px"><summary>Add a value</summary>${itemForm('mvv-new-Value', 'Value')}${saveBtns('mvvAdd', 'Value')}<div class="msg err" aria-live="polite">${esc(UI.msg['mvv-new-Value'] || '')}</div></details></section>
+  <section class="card plain" style="margin-top:14px" id="mvv-score"><div class="row"><h3>How well your identity fits the strategy</h3>${ms.score != null ? `<span>${pill(bandClass(ms.band), ms.band)} <span class="sc3 ${bandClass(ms.band)}" id="mvv-total">${ms.score}</span></span>` : pill('idle', 'Not scored')}</div>
+    ${!s ? `<p class="mute">Write your Strategy Statement to score against it. <button class="btn" data-act="go" data-arg="strategy">Open the Strategy Statement</button></p>` : !conf.length ? '<p class="mute">Confirm your Mission, Vision or a Value to score it.</p>' : `
+    <p class="mute">Score each confirmed item 0 to 3 against each part of the Strategy Statement${isConf(s) ? '' : ' (still a draft)'}, with a one-line reason. Mark Conflict where the statement works against it. Score = the sum of each item's best score ÷ (3 × number of items). Strong 75 and over, Partial 50 to 74, Weak under 50. A Conflict stays visible whatever the total.</p>
+    ${ms.conflicts.length ? `<div class="msg err">${ms.conflicts.length} conflict${ms.conflicts.length === 1 ? '' : 's'} to decide: see the Guide panel.</div>` : ''}
+    ${conf.map(m => { const fid = 'mvs-' + m.id; return `<details class="card" style="margin-top:8px" ${UI.open[fid] ? 'open' : ''} data-open-key="${fid}" data-mvv-score="${esc(m.id)}"><summary><b>${esc(m.kind === 'Value' ? 'Value: ' + m.text : m.kind)}</b> ${mvvBest(m) != null ? pill(mvvBest(m) >= 2 ? 'good' : mvvBest(m) === 1 ? 'warn' : 'crit', 'Best ' + mvvBest(m)) : pill('idle', 'Not scored')} ${(m.scores || []).some(v => +v === -1 && v !== '' && v !== null) ? pill('crit', 'Conflict') : ''}</summary>
+      ${parts.map(([l, txt], j) => `<div class="form" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))"><div><b>${esc(l)}</b><div class="mute">${esc(txt || 'Not written yet')}</div></div>${fSel(fid, 's' + j, 'Score against ' + l, [['', 'Not scored']].concat(MVV_SC), m.scores ? m.scores[j] : '')}${fIn(fid, 'r' + j, 'Reason', m.reasons ? m.reasons[j] : '')}</div>`).join('')}
+      <div class="btns" style="margin-top:8px"><button class="btn pri" data-act="mvvScore" data-arg="${esc(m.id)}">Confirm scores</button></div><div class="msg err" aria-live="polite">${esc(UI.msg[fid] || '')}</div></details>`; }).join('')}`}</section>
+  <section class="card plain later" style="margin-top:14px"><div class="row"><h3>AI ethical principles</h3>${pill('idle', 'Arrives in P2')}</div><p class="mute">The SpecNav default (BATHERS), or your own set, tested against your Values.</p></section></div>`;
+}
+
+function viewGoals() {
+  const act = activeGoals(); const done = goalsAll().filter(g => (g.lifecycle || 'Active') !== 'Active');
+  const rows = confRows(); const s = strategyDoc();
+  const edit = UI.editRec && UI.editRec.col === 'goals' ? UI.editRec.id : null;
+  const themes = [['', 'Choose a theme']].concat(THEMES.map(t => [t, t]));
+  const goalForm = (fid, g) => `<div class="form">${fIn(fid, 'title', 'Goal', g ? g.title : '', 'placeholder="For example: Repeat clients"')}${fSel(fid, 'theme', 'Theme', themes, g ? g.theme : '')}${fPerson(fid, 'owner', 'WIG owner', g ? g.owner : '')}</div>
+    <div class="form">${fIn(fid, 'from', 'From (now)', g ? g.from : '', 'inputmode="decimal"')}${fIn(fid, 'to', 'To (target)', g ? g.to : '', 'inputmode="decimal"')}${fIn(fid, 'unit', 'Unit', g ? g.unit : '', 'placeholder="clients, %, days"')}<label>By when<input type="date" class="in" data-draft="${esc(fk(fid, 'by'))}" value="${esc(fv(fid, 'by', g ? g.by : ''))}"></label></div>
+    <div class="form">${fTa(fid, 'leads', 'Lead measures: the actions you control, one per line', g ? g.leads : '')}${fIn(fid, 'now', 'Latest reading (optional)', g ? g.now : '', 'inputmode="decimal"')}</div>
+    ${rows.length ? `<h4 style="margin-top:12px">ACES alignment</h4><p class="mute" style="margin:0 0 6px">Score how this goal serves each confirmed ACES row, with a one-line reason.</p>${rows.map(r => `<div class="form" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))"><div><b>${esc(r.id)}</b> ${esc(r.what)}<div class="mute">${esc(r.quadrant)}, ${esc(WEIGHT[r.weight] || '')} weight</div></div>${fSel(fid, 'a_' + r.id, 'Score against ' + r.id, [['', 'Not scored']].concat(ALIGN.map((l, i) => [i, l])), g && g.aces && g.aces[r.id] ? g.aces[r.id].score : '')}${fIn(fid, 'ar_' + r.id, 'Reason for ' + r.id, g && g.aces && g.aces[r.id] ? g.aces[r.id].reason : '')}</div>`).join('')}` : `<p class="mute" style="margin-top:10px">No confirmed ACES rows to score against yet. You can add the goal now and score it later. <button class="btn" data-act="go" data-arg="aces">Open ACES Analysis</button></p>`}`;
+  const objForm = (fid, o) => `<div class="form">${fIn(fid, 'title', 'Objective', o ? o.title : '')}${fPerson(fid, 'accountable', 'Accountable (one person)', o ? o.accountable : '')}${fPerson(fid, 'responsible', 'Responsible (optional)', o ? o.responsible : '', 'No one')}<label>Due date<input type="date" class="in" data-draft="${esc(fk(fid, 'date'))}" value="${esc(fv(fid, 'date', o ? o.date : ''))}"></label>${fIn(fid, 'lead', 'Lead measure', o ? o.lead : '')}${fIn(fid, 'lag', 'Lag measure', o ? o.lag : '')}</div>`;
+  const card = g => {
+    const n = acesScore(g); const sm = smartCheck(g); const objs = objectivesOf(g.id);
+    const pct = (g.now !== '' && g.now != null && !isNaN(+g.now) && +g.to !== +g.from) ? Math.max(0, Math.min(100, Math.round((+g.now - +g.from) / (+g.to - +g.from) * 100))) : null;
+    if (edit === g.id) return `<section class="card plain" data-goal="${esc(g.id)}"><h3>${esc(g.id)}: edit</h3>${goalForm('wig-' + g.id, g)}${saveBtns('wigSave', g.id, `<button class="btn" data-act="editCancel">Cancel</button>`)}<div class="msg err">${esc(UI.msg['wig-' + g.id] || '')}</div></section>`;
+    const ofid = 'obj-new-' + g.id;
+    return `<section class="card plain" data-goal="${esc(g.id)}"><div class="row"><b style="font-size:15px">${esc(g.id)} ${esc(g.title)}</b><span>${statusPill(g)} <span class="sc3 ${scoreClass(n)}" title="ACES Alignment Score">${n == null ? 'No ACES score' : 'ACES ' + n}</span></span></div>
+      <div class="mute">From ${esc(g.from)}${esc(g.unit ? ' ' + g.unit : '')} to ${esc(g.to)}${esc(g.unit ? ' ' + g.unit : '')} by ${g.by ? fmtDate(g.by) : 'Not recorded'} · Owner: ${esc(g.owner ? pname(g.owner) : 'Not assigned')} · Theme: ${esc(g.theme || 'Not recorded')}</div>
+      ${pct != null ? `<div class="bar" role="img" aria-label="${pct}% of the way"><i style="width:${pct}%;background:var(--good)"></i></div><div class="mute">Now ${esc(g.now)}${esc(g.unit ? ' ' + g.unit : '')}, ${pct}% of the way</div>` : '<div class="mute">No reading yet: Not recorded.</div>'}
+      ${g.leads ? `<div style="margin-top:6px"><span class="mute">Lead measures:</span> ${esc(g.leads).replace(/\n/g, '; ')}</div>` : ''}
+      <div class="smart" style="margin-top:8px" aria-label="SMART check">${sm.map(([k, ok, why]) => `<span class="pill ${ok ? 'good' : 'warn'}" title="${esc(why)}">${esc(k)} ${ok ? 'passed' : 'failed'}</span>`).join(' ')}</div>
+      <div class="btns" style="margin-top:8px">${isConf(g) ? '' : `<button class="btn pri" data-act="wigConfirm" data-arg="${esc(g.id)}">Confirm WIG</button>`}<button class="btn" data-act="editRec" data-arg="goals|${esc(g.id)}">Edit</button><button class="btn" data-act="wigComplete" data-arg="${esc(g.id)}">Complete WIG</button><button class="btn danger" data-act="wigCancel" data-arg="${esc(g.id)}">Cancel WIG</button></div>
+      <div class="msg err" aria-live="polite">${esc(UI.msg['wigc-' + g.id] || '')}</div>
+      <h4 style="margin-top:12px">Objectives</h4>
+      ${objs.length ? objs.map(o => UI.editRec && UI.editRec.col === 'objectives' && UI.editRec.id === o.id ? `<div class="card" style="margin:6px 0">${objForm('obj-' + o.id, o)}${saveBtns('objSave', o.id, `<button class="btn" data-act="editCancel">Cancel</button>`)}<div class="msg err">${esc(UI.msg['obj-' + o.id] || '')}</div></div>` :
+        `<div class="item" data-objective="${esc(o.id)}"><div class="t"><b>${esc(o.id)} ${esc(o.title)}</b> ${statusPill(o)} ${pill(o.lifecycle === 'Completed' ? 'good' : o.lifecycle === 'Cancelled' ? 'idle' : 'info', o.lifecycle || 'Open')}<div class="mute">Accountable: ${esc(o.accountable ? pname(o.accountable) : 'Not assigned')}${o.responsible ? ' · Responsible: ' + esc(pname(o.responsible)) : ''} · Due ${o.date ? fmtDate(o.date) : 'Not recorded'}${o.lead ? ' · Lead: ' + esc(o.lead) : ''}${o.lag ? ' · Lag: ' + esc(o.lag) : ''}</div></div>
+        <div class="btns">${isConf(o) ? '' : `<button class="btn pri" data-act="objConfirm" data-arg="${esc(o.id)}">Confirm</button>`}${(o.lifecycle || 'Open') === 'Open' ? `<button class="btn" data-act="editRec" data-arg="objectives|${esc(o.id)}">Edit</button><button class="btn" data-act="objLife" data-arg="${esc(o.id)}|Completed">Complete</button><button class="btn" data-act="objLife" data-arg="${esc(o.id)}|Cancelled">Cancel</button>` : ''}</div></div>`).join('') : '<div class="mute">No objectives yet.</div>'}
+      <details ${UI.open[ofid] ? 'open' : ''} data-open-key="${ofid}" style="margin-top:8px"><summary>Add an objective to ${esc(g.id)}</summary>${objForm(ofid)}${saveBtns('objAdd', g.id)}<div class="msg err" aria-live="polite">${esc(UI.msg[ofid] || '')}</div></details></section>`;
+  };
+  const nfid = 'wig-new';
+  return `<div id="view-goals">${flowBar('goals')}<h2>WIGs and Objectives</h2><p class="lede">Your Wildly Important Goals: at most four at a time, each written From X to Y by when, with an owner, lead measures and objectives. Lite scores each WIG against your ACES rows and runs a SMART check. You decide.</p>
+  ${!s ? `<p class="mute">Tip: your Strategy Statement gives each WIG its reason for being. <button class="btn" data-act="go" data-arg="strategy">Open the Strategy Statement</button></p>` : ''}
+  <div class="row" style="margin-bottom:8px"><h3>Active WIGs</h3>${pill(act.length > MAX_WIGS ? 'crit' : 'info', act.length + ' of ' + MAX_WIGS + ' slots used')}</div>
+  <div class="grid">${act.map(card).join('') || '<div class="mute">No WIGs yet.</div>'}</div>
+  ${act.length < MAX_WIGS ? `<details class="card plain" style="margin-top:14px" ${UI.open[nfid] ? 'open' : ''} data-open-key="${nfid}" id="wig-new"><summary><b>Add a WIG</b> <span class="mute">(${MAX_WIGS - act.length} slot${MAX_WIGS - act.length === 1 ? '' : 's'} free)</span></summary>${goalForm(nfid)}${saveBtns('wigAdd', 'new')}<div class="msg err" aria-live="polite">${esc(UI.msg[nfid] || '')}</div></details>` : `<div class="card warnb" style="margin-top:14px">All four WIG slots are in use. Complete or cancel a WIG to free a slot. The ceiling keeps your team focused on what matters most.</div>`}
+  ${done.length ? `<section class="card" style="margin-top:14px"><h3>Completed and cancelled</h3>${done.map(g => `<div class="item"><div class="t"><b>${esc(g.id)} ${esc(g.title)}</b> ${pill(g.lifecycle === 'Completed' ? 'good' : 'idle', g.lifecycle)}<div class="mute">${g.lifecycle === 'Completed' ? 'Result ' + esc(g.result != null ? g.result : 'Not recorded') + (g.unit ? ' ' + esc(g.unit) : '') + ', ' + fmtDate(g.completed_at) + (g.lessons ? '. Lessons: ' + esc(g.lessons) : '') : 'Cancelled ' + fmtDate(g.updated_at)}</div></div></div>`).join('')}<p class="mute">The full read-only Archive arrives in Phase 3.</p></section>` : ''}
+  ${UI.completing ? completePanel(UI.completing) : ''}</div>`;
+}
+function completePanel(id) {
+  const g = S.goals[id]; if (!g) return '';
+  return `<section class="card critb" id="complete-panel" style="margin-top:14px"><h3>Complete ${esc(g.id)} ${esc(g.title)}</h3><p class="mute">Decision: record the final result against the lag measure and the lessons learned. The WIG then leaves the active slots. Or cancel and nothing changes.</p>
+    <div class="form">${fIn('wcomp', 'result', 'Final result (' + (g.unit || 'lag measure') + ')', g.now, 'inputmode="decimal"')}${fTa('wcomp', 'lessons', 'Lessons learned', '')}</div>
+    <div class="btns" style="margin-top:8px"><button class="btn pri" data-act="wigCompleteGo" data-arg="${esc(id)}">Complete the WIG</button><button class="btn" data-act="wigCompleteCancel">Cancel</button></div><div class="msg err" aria-live="polite">${esc(UI.msg.wcomp || '')}</div></section>`;
+}
+
+/* ----- Actions ----- */
+const splitArg = a => { const i = a.lastIndexOf('|'); return [a.slice(0, i), a.slice(i + 1) === 'confirm']; };
+const nextNum = (col, prefix) => { let max = 0; Object.keys(S[col]).forEach(k => { const m = k.match(new RegExp('^' + prefix + '(\\d+)')); if (m) max = Math.max(max, +m[1]); }); return max + 1; };
+function acesData(fid, q) {
+  const what = String(fv(fid, 'what', '')).trim(), why = String(fv(fid, 'why', '')).trim(), weight = +fv(fid, 'weight', 2);
+  return { what, why, weight, quadrant: q };
+}
+function goalData(fid, g) {
+  const d = { title: String(fv(fid, 'title', g ? g.title : '')).trim(), theme: fv(fid, 'theme', g ? g.theme : ''), owner: fv(fid, 'owner', g ? g.owner : '') || null, from: String(fv(fid, 'from', g ? g.from : '')).trim(), to: String(fv(fid, 'to', g ? g.to : '')).trim(), unit: String(fv(fid, 'unit', g ? g.unit : '')).trim(), by: fv(fid, 'by', g ? g.by : ''), leads: String(fv(fid, 'leads', g ? g.leads : '')).trim(), now: String(fv(fid, 'now', g ? g.now : '')).trim() };
+  const aces = {};
+  confRows().forEach(r => { const sc = fv(fid, 'a_' + r.id, g && g.aces && g.aces[r.id] ? g.aces[r.id].score : ''); const rs = String(fv(fid, 'ar_' + r.id, g && g.aces && g.aces[r.id] ? g.aces[r.id].reason : '')).trim(); if (sc !== '' && sc != null) aces[r.id] = { score: +sc, reason: rs }; });
+  if (g && g.aces) Object.keys(g.aces).forEach(k => { if (!(k in aces) && !confRows().some(r => r.id === k)) aces[k] = g.aces[k]; });
+  d.aces = aces;
+  d.lag = d.from !== '' && d.to !== '' ? 'From ' + d.from + (d.unit ? ' ' + d.unit : '') + ' to ' + d.to + (d.unit ? ' ' + d.unit : '') + (d.by ? ' by ' + d.by : '') : '';
+  return d;
+}
+function goalProblems(d, confirm) {
+  if (!d.title) return 'Give the goal a short title.';
+  if (!confirm) return '';
+  const missing = [];
+  if (d.from === '' || isNaN(+d.from)) missing.push('a From number');
+  if (d.to === '' || isNaN(+d.to)) missing.push('a To number');
+  if (!d.by) missing.push('a date');
+  if (!d.owner) missing.push('an owner');
+  const unreasoned = Object.entries(d.aces).filter(([k, v]) => +v.score > 0 && !v.reason);
+  if (unreasoned.length) missing.push('a reason for each ACES score above 0 (' + unreasoned.map(x => x[0]).join(', ') + ')');
+  return missing.length ? 'To confirm, add ' + missing.join(', ') + '. Or save it as a draft.' : '';
+}
+function objData(fid, o) { return { title: String(fv(fid, 'title', o ? o.title : '')).trim(), accountable: fv(fid, 'accountable', o ? o.accountable : '') || null, responsible: fv(fid, 'responsible', o ? o.responsible : '') || null, date: fv(fid, 'date', o ? o.date : ''), lead: String(fv(fid, 'lead', o ? o.lead : '')).trim(), lag: String(fv(fid, 'lag', o ? o.lag : '')).trim() }; }
+function objProblems(d, confirm) {
+  if (!d.title) return 'Give the objective a short title.';
+  if (!confirm) return '';
+  const missing = [];
+  if (!d.accountable) missing.push('one Accountable person');
+  if (!d.date) missing.push('a due date');
+  if (!d.lead && !d.lag) missing.push('a lead or lag measure');
+  return missing.length ? 'To confirm, add ' + missing.join(', ') + ' (CL-405). Or save it as a draft.' : '';
+}
+
+// In-page decision box: a native confirm() or prompt() can be blocked inside an artifact frame.
+function askDecision(a) { UI.ask = a; UI.msg.ask = ''; fclear('ask'); render(true); const b = $('#ask-box'); if (b) b.scrollIntoView({ block: 'center' }); }
+function askBox() {
+  const a = UI.ask; if (!a) return '';
+  return `<section class="card critb" id="ask-box" role="alertdialog" aria-labelledby="ask-h" style="margin-bottom:14px"><h3 id="ask-h">Decision</h3><p><b>${esc(a.text)}</b></p><p class="mute">${esc(a.consequence || '')}</p>${a.reason ? `<div class="form">${fIn('ask', 'reason', 'Reason', '')}</div>` : ''}
+    <div class="btns" style="margin-top:8px"><button class="btn pri" data-act="askYes">${esc(a.yes || 'Yes')}</button><button class="btn" data-act="askNo">No, keep it</button></div><div class="msg err" aria-live="polite">${esc(UI.msg.ask || '')}</div></section>`;
+}
+const BUILD_ACT = {
+  askYes() { const a = UI.ask; if (!a) return; const reason = String(fv('ask', 'reason', '')).trim(); if (a.reason && !reason) { UI.msg.ask = 'Give a short reason first.'; render(true); return; } UI.ask = null; fclear('ask'); BUILD_ACT[a.do](a.arg, reason); render(true); },
+  askNo() { UI.ask = null; fclear('ask'); render(true); },
+  editRec(arg) { const [col, id] = arg.split('|'); UI.editRec = { col, id }; render(true); },
+  editCancel() { if (UI.editRec) { const pfx = { aces_rows: 'aces-', mvv: 'mvv-', goals: 'wig-', objectives: 'obj-' }[UI.editRec.col]; fclear(pfx + UI.editRec.id); } UI.editRec = null; render(true); },
+  acesAdd(arg) {
+    const [q, confirm] = splitArg(arg); const fid = 'aces-new-' + q; const d = acesData(fid, q);
+    if (!d.what) { UI.msg[fid] = 'Say what the row is first.'; render(true); return; }
+    if (confirm && !d.why) { UI.msg[fid] = 'Add why it matters to confirm the row, or save it as a draft.'; render(true); return; }
+    const id = 'A-' + String(nextNum('aces_rows', 'A-')).padStart(2, '0');
+    saveRecord('aces_rows', id, d, confirm, 'ACES row ' + id + ' (' + q + ')');
+    fclear(fid); UI.msg[fid] = ''; UI.open[fid] = true;
+  },
+  acesSave(arg) {
+    const [id, confirm] = splitArg(arg); const r = S.aces_rows[id]; const fid = 'aces-' + id;
+    const d = acesData(fid, fv(fid, 'quadrant', r.quadrant)); if (UI.draft[fk(fid, 'what')] === undefined) d.what = r.what; if (UI.draft[fk(fid, 'why')] === undefined) d.why = r.why; if (UI.draft[fk(fid, 'weight')] === undefined) d.weight = r.weight;
+    if (!d.what) { UI.msg[fid] = 'A row needs its what.'; render(true); return; }
+    if (confirm && !d.why) { UI.msg[fid] = 'Add why it matters to confirm.'; render(true); return; }
+    saveRecord('aces_rows', id, d, confirm, 'ACES row ' + id);
+    fclear(fid); UI.editRec = null;
+  },
+  acesConfirm(id) { const r = S.aces_rows[id]; if (!r.why) { UI.editRec = { col: 'aces_rows', id }; UI.msg['aces-' + id] = 'Add why it matters to confirm.'; render(true); return; } saveRecord('aces_rows', id, {}, true, 'ACES row ' + id); },
+  acesRemove(id) {
+    const r = S.aces_rows[id]; const used = activeGoals().filter(g => g.aces && g.aces[id]).map(g => g.id);
+    askDecision({ do: 'acesRemoveGo', arg: id, text: 'Remove ACES row ' + id + ' "' + r.what + '"?', consequence: used.length ? used.join(', ') + ' will be re-scored without it. The removal is logged.' : 'The removal is logged. No goal is scored against it.', yes: 'Yes, remove it' });
+  },
+  acesRemoveGo(id) {
+    const r = S.aces_rows[id]; if (!r) return; const used = activeGoals().filter(g => g.aces && g.aces[id]).map(g => g.id);
+    commit([{ col: 'aces_rows', id, data: null }, logDecision({ what: 'Remove ACES row ' + id, options: ['Keep it', 'Remove it'], choice: 'Remove it', linked: [id].concat(used) })], [{ record: 'aces_rows/' + id, old: r.what, new: null, what: 'ACES row ' + id + ' removed' + (used.length ? '; ' + used.join(', ') + ' re-scored without it' : '') }]);
+  },
+  spCompose() {
+    const s = strategyDoc(); const p = SP_PARTS.map(([k]) => String(fv('sp', k, s ? s[k] : '')).trim().replace(/\.$/, ''));
+    if (p.some(x => !x)) { UI.msg.sp = 'Write all four parts first.'; render(true); return; }
+    const lc = t => t.charAt(0).toLowerCase() + t.slice(1);
+    UI.draft[fk('sp', 'statement')] = 'We serve ' + lc(p[0]) + '. We solve ' + lc(p[1]) + '. We win because ' + lc(p[2]) + '. We accept ' + lc(p[3]) + '.';
+    UI.msg.spCompose = 'A draft sentence built from your four parts is in the statement box. Edit it into your own words before you confirm.'; UI.msg.sp = ''; render(true);
+  },
+  spSave(arg) {
+    const [, confirm] = splitArg(arg); const s = strategyDoc();
+    const d = {}; SP_PARTS.forEach(([k]) => { d[k] = String(fv('sp', k, s ? s[k] : '')).trim(); });
+    d.statement = String(fv('sp', 'statement', s ? s.statement : '')).trim();
+    d.themes = {}; THEMES.forEach(t => { const v = String(fv('sp', 'theme_' + t, s && s.themes ? s.themes[t] : '')).trim(); if (v) d.themes[t] = v; });
+    const ev = fv('sp', 'evidence', s ? s.evidence : []); d.evidence = Array.isArray(ev) ? ev : [];
+    if (!d.statement && SP_PARTS.every(([k]) => !d[k])) { UI.msg.sp = 'Write at least one part first.'; render(true); return; }
+    if (confirm) { const miss = SP_PARTS.filter(([k]) => !d[k]).map(x => x[1]); if (miss.length || !d.statement) { UI.msg.sp = 'To confirm, write ' + miss.concat(d.statement ? [] : ['the statement']).join(', ') + '. Or save it as a draft.'; render(true); return; } }
+    saveRecord('strategy', 'S-1', Object.assign(d, { version: ((s && s.version) || 0) + (confirm ? 1 : 0) }), confirm, 'Strategy Statement');
+    fclear('sp'); UI.msg.sp = ''; UI.msg.spCompose = '';
+  },
+  mvvAdd(arg) {
+    const [kind, confirm] = splitArg(arg); const fid = 'mvv-new-' + kind;
+    const text = String(fv(fid, 'text', '')).trim(), meaning = String(fv(fid, 'meaning', '')).trim();
+    if (!text) { UI.msg[fid] = 'Write the ' + kind.toLowerCase() + ' first.'; render(true); return; }
+    if (kind !== 'Value' && mvvItems().some(m => m.kind === kind)) { UI.msg[fid] = 'You already have a ' + kind + '. Edit it instead.'; render(true); return; }
+    if (confirm && kind === 'Value' && !meaning) { UI.msg[fid] = 'Add what the value means to confirm it, or save it as a draft.'; render(true); return; }
+    const id = 'M-' + String(nextNum('mvv', 'M-')).padStart(2, '0');
+    saveRecord('mvv', id, { kind, text, meaning }, confirm, kind + (kind === 'Value' ? ' "' + text + '"' : ''));
+    fclear(fid); UI.msg[fid] = '';
+  },
+  mvvSave(arg) {
+    const [id, confirm] = splitArg(arg); const m = S.mvv[id]; const fid = 'mvv-' + id;
+    const text = String(fv(fid, 'text', m.text)).trim(), meaning = String(fv(fid, 'meaning', m.meaning)).trim();
+    if (!text) { UI.msg[fid] = 'It cannot be empty.'; render(true); return; }
+    if (confirm && m.kind === 'Value' && !meaning) { UI.msg[fid] = 'Add what the value means to confirm it.'; render(true); return; }
+    saveRecord('mvv', id, { text, meaning }, confirm, m.kind + ' ' + id);
+    fclear(fid); UI.editRec = null;
+  },
+  mvvConfirm(id) { const m = S.mvv[id]; if (m.kind === 'Value' && !m.meaning) { UI.editRec = { col: 'mvv', id }; UI.msg['mvv-' + id] = 'Add what the value means to confirm it.'; render(true); return; } saveRecord('mvv', id, {}, true, m.kind + ' ' + id); },
+  mvvRemove(id) { const m = S.mvv[id]; askDecision({ do: 'mvvRemoveGo', arg: id, text: 'Remove the value "' + m.text + '"?', consequence: 'Its scores leave the MVV Alignment Score. The removal is logged.', yes: 'Yes, remove it' }); },
+  mvvRemoveGo(id) { const m = S.mvv[id]; if (!m) return; commit([{ col: 'mvv', id, data: null }, logDecision({ what: 'Remove value ' + m.text, options: ['Keep it', 'Remove it'], choice: 'Remove it', linked: [id] })], [{ record: 'mvv/' + id, old: m.text, new: null, what: 'Value "' + m.text + '" removed' }]); },
+  mvvScore(id) {
+    const m = S.mvv[id]; const fid = 'mvs-' + id; const scores = [], reasons = [];
+    for (let j = 0; j < 4; j++) { const v = fv(fid, 's' + j, m.scores ? m.scores[j] : ''); scores.push(v === '' || v == null ? null : +v); reasons.push(String(fv(fid, 'r' + j, m.reasons ? m.reasons[j] : '')).trim()); }
+    if (scores.some(v => v === null)) { UI.msg[fid] = 'Score all four parts (0 is fine).'; render(true); return; }
+    const need = scores.map((v, j) => v !== 0 && !reasons[j] ? SP_PARTS[j][1] : null).filter(Boolean);
+    if (need.length) { UI.msg[fid] = 'Give a one-line reason for each score above 0 and each Conflict: ' + need.join(', ') + '.'; render(true); return; }
+    const before = mvvScore().score;
+    const prev = S.mvv[id]; const rec = stamp(Object.assign(clone(prev), { scores, reasons, scored_at: nowIso(), scored_by: me.id }), prev);
+    S.mvv[id] = rec; const after = mvvScore().score; S.mvv[id] = prev;
+    commit([{ col: 'mvv', id, data: rec }], [{ record: 'mvv/' + id, field: 'scores', old: shortVal(prev.scores || null), new: shortVal(scores), what: 'MVV scores confirmed for ' + (m.kind === 'Value' ? m.text : m.kind) + (before !== after ? '. MVV Alignment Score ' + (before == null ? 'not scored' : before) + ' → ' + (after == null ? 'not scored' : after) : '') }]);
+    fclear(fid); UI.msg[fid] = ''; UI.open[fid] = false;
+  },
+  wigAdd(arg) {
+    const [, confirm] = splitArg(arg); const fid = 'wig-new'; const d = goalData(fid);
+    if (activeGoals().length >= MAX_WIGS) { UI.msg[fid] = 'All four WIG slots are in use. Complete or cancel a WIG first.'; render(true); return; }
+    const p = goalProblems(d, confirm); if (p) { UI.msg[fid] = p; render(true); return; }
+    const id = 'WIG-' + String(nextNum('goals', 'WIG-')).padStart(2, '0');
+    saveRecord('goals', id, Object.assign(d, { lifecycle: 'Active' }), confirm, id + ' ' + d.title);
+    fclear(fid); UI.msg[fid] = ''; UI.open[fid] = false;
+  },
+  wigSave(arg) {
+    const [id, confirm] = splitArg(arg); const g = S.goals[id]; const fid = 'wig-' + id; const d = goalData(fid, g);
+    const p = goalProblems(d, confirm); if (p) { UI.msg[fid] = p; render(true); return; }
+    saveRecord('goals', id, d, confirm, id + ' ' + d.title); fclear(fid); UI.editRec = null;
+  },
+  wigConfirm(id) { const g = S.goals[id]; const p = goalProblems(goalData('wig-x-' + id, g), true); if (p) { UI.editRec = { col: 'goals', id }; UI.msg['wig-' + id] = p; render(true); return; } saveRecord('goals', id, {}, true, id + ' ' + g.title); },
+  wigComplete(id) {
+    const open = objectivesOf(id).filter(o => (o.lifecycle || 'Open') === 'Open');
+    if (open.length) { UI.msg['wigc-' + id] = 'Cannot complete yet. ' + open.length + ' objective' + (open.length === 1 ? ' is' : 's are') + ' still open: ' + open.map(o => o.id).join(', ') + '. Complete or cancel each one first.'; render(true); return; }
+    UI.msg['wigc-' + id] = ''; UI.completing = id; render(true);
+  },
+  wigCompleteCancel() { UI.completing = null; fclear('wcomp'); render(true); },
+  wigCompleteGo(id) {
+    const g = S.goals[id]; const result = String(fv('wcomp', 'result', g.now)).trim(); const lessons = String(fv('wcomp', 'lessons', '')).trim();
+    if (result === '' || !lessons) { UI.msg.wcomp = 'Record the final result and the lessons learned.'; render(true); return; }
+    const rec = stamp(Object.assign(clone(g), { lifecycle: 'Completed', result, lessons, completed_at: nowIso() }), g);
+    commit([{ col: 'goals', id, data: rec }, logDecision({ what: 'Complete ' + id + ' ' + g.title, options: ['Complete', 'Keep active'], choice: 'Complete', reason: 'Result ' + result + '. Lessons: ' + lessons, linked: [id] })], [{ record: 'goals/' + id, field: 'lifecycle', old: 'Active', new: 'Completed', what: id + ' completed with result ' + result }]);
+    UI.completing = null; fclear('wcomp'); UI.msg.wcomp = '';
+  },
+  wigCancel(id) { const g = S.goals[id]; askDecision({ do: 'wigCancelGo', arg: id, text: 'Cancel ' + id + ' ' + g.title + '?', consequence: 'It leaves the active slots and stays readable. The reason goes in the Decision Log.', yes: 'Yes, cancel the WIG', reason: true }); },
+  wigCancelGo(id, reason) {
+    const g = S.goals[id]; if (!g) return;
+    commit([{ col: 'goals', id, data: stamp(Object.assign(clone(g), { lifecycle: 'Cancelled', cancel_reason: reason }), g) }, logDecision({ what: 'Cancel ' + id + ' ' + g.title, options: ['Keep it active', 'Cancel it'], choice: 'Cancel it', reason, linked: [id] })], [{ record: 'goals/' + id, field: 'lifecycle', old: 'Active', new: 'Cancelled', what: id + ' cancelled' }]);
+  },
+  objAdd(arg) {
+    const [gid, confirm] = splitArg(arg); const fid = 'obj-new-' + gid; const d = objData(fid);
+    const p = objProblems(d, confirm); if (p) { UI.msg[fid] = p; render(true); return; }
+    const gnum = gid.replace('WIG-', ''); const id = 'OBJ-' + gnum + '.' + nextNum('objectives', 'OBJ-' + gnum.replace('.', '\\.') + '\\.');
+    saveRecord('objectives', id, Object.assign(d, { goal_id: gid, lifecycle: 'Open' }), confirm, 'Objective ' + id);
+    fclear(fid); UI.msg[fid] = ''; UI.open[fid] = false;
+  },
+  objSave(arg) { const [id, confirm] = splitArg(arg); const o = S.objectives[id]; const fid = 'obj-' + id; const d = objData(fid, o); const p = objProblems(d, confirm); if (p) { UI.msg[fid] = p; render(true); return; } saveRecord('objectives', id, d, confirm, 'Objective ' + id); fclear(fid); UI.editRec = null; },
+  objConfirm(id) { const o = S.objectives[id]; const p = objProblems(objData('obj-x-' + id, o), true); if (p) { UI.editRec = { col: 'objectives', id }; UI.msg['obj-' + id] = p; render(true); return; } saveRecord('objectives', id, {}, true, 'Objective ' + id); },
+  objLife(arg) { const [id, st] = arg.split('|'); const o = S.objectives[id]; commit([{ col: 'objectives', id, data: stamp(Object.assign(clone(o), { lifecycle: st }), o) }], [{ record: 'objectives/' + id, field: 'lifecycle', old: o.lifecycle || 'Open', new: st, what: 'Objective ' + id + ' ' + st.toLowerCase() }]); }
+};
+
 /* ===================== Actions ===================== */
 const ACT = {
   top(k) { UI.top = k; UI.msg = {}; window.scrollTo(0, 0); render(true); const b = $('#tab-' + k); if (b) b.focus(); },
   tool(k) { const top = Object.keys(TOOLS).find(t => TOOLS[t].some(x => x[0] === k)); if (top) { UI.top = top; UI.tool[top] = k; } window.scrollTo(0, 0); render(true); },
-  go(k) { if (k === 'org' || k === 'sop' || k === 'setup') { UI.top = 'setup'; UI.tool.setup = k; } else UI.top = k; window.scrollTo(0, 0); render(true); },
+  go(k) { const top = Object.keys(TOOLS).find(t => TOOLS[t].some(x => x[0] === k)); if (top) { UI.top = top; UI.tool[top] = k; } else UI.top = k; UI.ask = null; window.scrollTo(0, 0); render(true); },
   startFresh() {
     const sd = { id: 'setup', first_run_done: false, first_run_stage: 'business', steps: {} };
     const prev = S.meta.settings;
@@ -2059,6 +2573,7 @@ function maybeSetBusinessStep() {
     if (stepStatus('business') !== 'Set' && s.business_name && s.owner_name && TEMPLATES.required_roles.every(r => holders(r).length)) setStep('business', 'Set', 'Required roles held');
   }, 0);
 }
+Object.assign(ACT, BUILD_ACT);
 const CHANGE = {
   async restorePick(el) {
     const f = el.files && el.files[0]; if (!f) return;
@@ -2110,7 +2625,7 @@ function onDraft(e) {
   if (el.hasAttribute('data-draft-check')) UI.draft[el.getAttribute('data-draft-check')] = el.checked;
 }
 function wireDraftInputs(root) { root.querySelectorAll('[data-draft],[data-draft-check]').forEach(el => { el.oninput = onDraft; el.onchange = onDraft; }); }
-document.addEventListener('toggle', e => { const el = e.target; if (el.hasAttribute && el.hasAttribute('data-toggle')) UI[el.getAttribute('data-toggle')] = el.open; }, true);
+document.addEventListener('toggle', e => { const el = e.target; if (!el.hasAttribute) return; if (el.hasAttribute('data-toggle')) UI[el.getAttribute('data-toggle')] = el.open; if (el.hasAttribute('data-open-key')) UI.open[el.getAttribute('data-open-key')] = el.open; }, true);
 document.addEventListener('keydown', e => {
   const t = e.target;
   if (t && t.getAttribute && t.getAttribute('role') === 'tab' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {

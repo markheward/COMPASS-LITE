@@ -45,9 +45,10 @@ def capabilities(s, phase):
     reg = block(s, 'const CAPABILITIES = [', '];')
     for m in re.finditer(r"\{ id: '([^']+)', name: '([^']+)', changed: '([^']+)', marker: (?:'([^']*)'|\"([^\"]*)\") \}", reg):
         caps.append(dict(id=m.group(1), name=m.group(2), changed=m.group(3), marker=m.group(4) if m.group(4) is not None else m.group(5)))
-    for m in re.finditer(r"\{ key: '([^']+)', title: '([^']+)',.*?phase: (\d)", block(s, 'const STEPS = [', '];')):
-        if int(m.group(3)) <= phase:
-            caps.append(dict(id='step-' + m.group(1), name='Set-up step: ' + m.group(2), changed='0.1.0', marker=None))
+    for line in block(s, 'const STEPS = [', '];').splitlines():
+        m = re.search(r"\{ key: '([^']+)', title: '([^']+)',.*?phase: (\d)(?:, changed: '([^']+)')?", line)
+        if m and int(m.group(3)) <= phase:
+            caps.append(dict(id='step-' + m.group(1), name='Set-up step: ' + m.group(2), changed=m.group(4) or '0.1.0', marker=None))
     for m in re.finditer(r"\['([a-z0-9]+)', '([^']+)'(?:, (\d))?", block(s, 'const TOOLS = {', '};')):
         if not m.group(3) or int(m.group(3)) <= phase:
             caps.append(dict(id='tool-' + m.group(1), name='Tool: ' + m.group(2), changed='0.1.0', marker=None))

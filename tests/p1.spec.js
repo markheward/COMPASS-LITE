@@ -237,7 +237,7 @@ test.describe('P1 set-up', () => {
     await open(); await firstRun(page);
     const steps = page.locator('#setup-steps .stp');
     await expect(steps).toHaveCount(12);
-    await expect(page.locator('#step-intake')).toHaveAttribute('data-status', 'Arrives in P2');
+    await expect(page.locator('#step-ethics')).toHaveAttribute('data-status', 'Arrives in P2');
     await expect(page.locator('#step-permissions')).toHaveAttribute('data-status', 'Arrives in P6');
     await expect(page.locator('#step-start')).toHaveAttribute('data-status', 'Set');
     const missingText = await page.locator('#setup-steps .row .pill').first().textContent();
@@ -505,7 +505,8 @@ test.describe('P1 data health, guide, logs and dashboard', () => {
   test('later-phase tools say when they arrive (6.1)', async ({ open, page }) => {
     await open(); await firstRun(page);
     await page.getByRole('tab', { name: 'Stage 4' }).click();
-    await expect(page.locator('#view-aces')).toContainText('Arrives in P3');
+    await page.locator('.subnav').getByRole('button', { name: 'Backlog' }).click();
+    await expect(page.locator('#view-backlog')).toContainText('Arrives in P3');
     await page.getByRole('tab', { name: 'Stage 5' }).click();
     await page.locator('.subnav').getByRole('button', { name: 'Risk Register' }).click();
     await expect(page.locator('#view-riskreg')).toContainText('Arrives in P4');
@@ -650,7 +651,7 @@ test.describe('P1 SOP alignment (CL-605, CL-1312)', () => {
   test('when a phase goes live, stale Arrives markers and its undescribed tools are gaps', async ({ open, page }) => {
     const { ctx, page: p } = await newInstall(page.context().browser(), { html: variants.phase() });
     await firstRun(p);
-    await expect(p.locator('#guide')).toContainText('SOP gap: Tool: Strategy Statement (Not described)');
+    await expect(p.locator('#guide')).toContainText('SOP gap: Tool: AI ethics (Not described)');
     await p.locator('.subnav').getByRole('button', { name: 'Policy and SOP' }).click();
     await p.getByRole('navigation', { name: 'Policy and SOP documents' }).getByRole('button', { name: 'P3 · Set-up and Snapshot' }).click();
     await expect(p.locator('#sop-doc')).toContainText('SOP gap: live since P2, description not updated');
@@ -658,6 +659,6 @@ test.describe('P1 SOP alignment (CL-605, CL-1312)', () => {
     const r = releaseCheck(variants.phase());
     expect(r.code).toBe(1);
     expect(r.out).toContain('still marks something "Arrives in P2", but this release is Phase 2');
-    expect(r.out).toContain('Tool: Strategy Statement (tool-strategy) is not described');
+    expect(r.out).toContain('Tool: AI ethics (tool-ethics) is not described');
   });
 });
