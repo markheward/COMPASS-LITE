@@ -45,6 +45,6 @@ and 390 pixels wide, with Ask Lite available and switched off.
 
 ## Version
 
-Current: **v0.1.1** (2026-10-08), Phase 1 Foundation. See [CHANGELOG.md](CHANGELOG.md) for what changed in each release. Your copy shows its version in the footer and on Set-up.
+Current: **v0.1.2** (2026-10-08), Phase 1 Foundation. See [CHANGELOG.md](CHANGELOG.md) for what changed in each release. Your copy shows its version in the footer and on Set-up.
 
 Powered by SpecNav.

@@ -297,7 +297,7 @@ test.describe('P1 set-up', () => {
     await open(); await firstRun(page);
     await page.locator('.subnav').getByRole('button', { name: 'Policy and SOP' }).click();
     const nav = page.getByRole('navigation', { name: 'Policy and SOP documents' });
-    const labels = ['Your Strategy Explained', 'Compass Lite Policy', 'Annex A · Cadence Calendar', 'Annex B · Records and AEGIS Handoff', 'Annex C · Escalation Signals', 'P1 · Review Cadence', 'P2 · WIG Turnover', 'P3 · Set-up and Snapshot', 'Page guide'];
+    const labels = ['Your Strategy Explained', 'Compass Lite Policy', 'Annex A · Cadence Calendar', 'Annex B · Records and AEGIS Handoff', 'Annex C · Escalation Signals', 'P1 · Review Cadence', 'P2 · WIG Turnover', 'P3 · Set-up and Snapshot', 'Page guide', 'Versions and coverage'];
     await expect(nav.getByRole('button')).toHaveText(labels);
     await expect(page.locator('#sop-doc')).toContainText('1. Why your strategy exists');
     await expect(page.locator('#sop-doc')).toContainText('Purpose.');
@@ -583,5 +583,81 @@ test.describe('P1 repository', () => {
   test('the release check prints aligned (CL-1312)', async () => {
     const out = execSync('python3 tools/release_check.py', { cwd: ROOT }).toString();
     expect(out).toContain('ALIGNED');
+  });
+});
+
+test.describe('P1 SOP alignment (CL-605, CL-1312)', () => {
+  const html = () => fs.readFileSync(path.join(ROOT, 'compass-lite.html'), 'utf8');
+  const releaseCheck = text => {
+    const f = tmp('compass-lite.html'); fs.writeFileSync(f, text);
+    try { return { code: 0, out: execSync('python3 tools/release_check.py ' + f, { cwd: ROOT }).toString() }; }
+    catch (e) { return { code: e.status, out: e.stdout.toString() }; }
+  };
+  const variants = {
+    // A capability the SOP no longer describes.
+    missing: () => html().replace('data-cap="selftest data-health"', 'data-cap="data-health"'),
+    // A capability changed in this release without its SOP description being reviewed.
+    changed: () => html().replace("{ id: 'dashboard', name: 'Dashboard', changed: '0.1.0'", "{ id: 'dashboard', name: 'Dashboard', changed: '0.1.2'"),
+    // The next phase goes live: its steps still say Arrives in P2 and its new tools are not described.
+    phase: () => html().replace("  phase: 1,\n", "  phase: 2,\n")
+  };
+
+  test('an aligned build says so on the SOP, Set-up, the Dashboard and the footer', async ({ open, page }) => {
+    await open(); await firstRun(page);
+    const v = await page.evaluate(() => window.CompassLite.release.version);
+    await expect(page.locator('#footer #ft-cov')).toContainText('capabilities described');
+    await expect(page.locator('#setup-cov')).toContainText('No gaps');
+    await page.getByRole('tab', { name: 'Dashboard' }).click();
+    await expect(page.locator('#dash-sop')).toHaveText('v' + v + ', matches this build');
+    await page.getByRole('tab', { name: 'Set-up' }).click();
+    await page.locator('.subnav').getByRole('button', { name: 'Policy and SOP' }).click();
+    await expect(page.locator('#sop-status')).toContainText('Current as of v' + v + ' · matches this build');
+    await page.getByRole('navigation', { name: 'Policy and SOP documents' }).getByRole('button', { name: 'Versions and coverage' }).click();
+    await expect(page.locator('#sop-coverage tr[data-cap-row]').first()).toBeVisible();
+    await expect(page.locator('#sop-coverage .pill', { hasText: 'Not described' })).toHaveCount(0);
+    await expect(page.locator('#sop-doc')).toContainText('Release history');
+  });
+
+  test('a capability the SOP does not describe is flagged in the page and refused by the release check', async ({ open, page }) => {
+    const { ctx, page: p } = await newInstall(page.context().browser(), { html: variants.missing() });
+    await firstRun(p);
+    await expect(p.locator('#guide')).toContainText('SOP gap: Database self-test (Not described)');
+    await expect(p.locator('#footer #ft-cov')).toContainText('1 SOP gap');
+    await expect(p.locator('#setup-cov')).toContainText('1 SOP gap');
+    await p.getByRole('tab', { name: 'Dashboard' }).click();
+    await expect(p.locator('#dash-sop')).toContainText('SOP may be out of date: 1 SOP gap');
+    await p.getByRole('tab', { name: 'Set-up' }).click();
+    await p.locator('.subnav').getByRole('button', { name: 'Policy and SOP' }).click();
+    await expect(p.locator('#sop-status')).toHaveAttribute('data-aligned', 'no');
+    await p.getByRole('button', { name: 'See the gaps' }).click();
+    await expect(p.locator('#sop-gaps')).toContainText('Database self-test');
+    await ctx.close();
+    const r = releaseCheck(variants.missing());
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('SOP gap: Database self-test (selftest) is not described');
+  });
+
+  test('a capability changed without its SOP description being reviewed is Out of date', async ({ open, page }) => {
+    const { ctx, page: p } = await newInstall(page.context().browser(), { html: variants.changed() });
+    await firstRun(p);
+    await expect(p.locator('#guide')).toContainText('SOP gap: Dashboard (Out of date)');
+    await ctx.close();
+    const r = releaseCheck(variants.changed());
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('Dashboard (dashboard) changed in v0.1.2, but the SOP was last reviewed for v0.1.0');
+  });
+
+  test('when a phase goes live, stale Arrives markers and its undescribed tools are gaps', async ({ open, page }) => {
+    const { ctx, page: p } = await newInstall(page.context().browser(), { html: variants.phase() });
+    await firstRun(p);
+    await expect(p.locator('#guide')).toContainText('SOP gap: Tool: Strategy Statement (Not described)');
+    await p.locator('.subnav').getByRole('button', { name: 'Policy and SOP' }).click();
+    await p.getByRole('navigation', { name: 'Policy and SOP documents' }).getByRole('button', { name: 'P3 · Set-up and Snapshot' }).click();
+    await expect(p.locator('#sop-doc')).toContainText('SOP gap: live since P2, description not updated');
+    await ctx.close();
+    const r = releaseCheck(variants.phase());
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('still marks something "Arrives in P2", but this release is Phase 2');
+    expect(r.out).toContain('Tool: Strategy Statement (tool-strategy) is not described');
   });
 });

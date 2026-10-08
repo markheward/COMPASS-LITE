@@ -3,6 +3,12 @@
 Compass Lite shows its version in the footer of every page and on **Set-up**,
 where **What's new** lists these notes. Backups record which version made them.
 
+## v0.1.2 — 2026-10-08
+- **SOP alignment, as in Rhythm:** the Policy and SOP header reads "Current as of v… · matches this build", and every capability of the page is held in a register with the release in which it last changed. The page compares the register with the SOP. A capability the SOP does not describe, a description older than the capability's last change, or a step still marked "Arrives in Pn" once Phase n is running is flagged as an **SOP gap** on the Policy and SOP, Set-up, the Dashboard, the footer and in the Guide panel.
+- New **Versions and coverage** page in the Policy and SOP: alignment, any gaps, where each capability is described, and the release history.
+- `tools/release_check.py` reads the same register and refuses a release with any SOP gap.
+- **Fixes:** a change saved moments after another no longer briefly shows the older value; a file chosen, or text typed, while the page refreshes after a save is no longer lost.
+
 ## v0.1.1 — 2026-10-08
 - **Policy and SOP:** the in-page SOP now mirrors *Compass Lite: Policy, Process and Procedure*. It has Your Strategy Explained, the Strategy Management Policy with Annexes A to C (Cadence Calendar, Records and AEGIS Handoff, Escalation Signals), Procedures P1 to P3 (Review Cadence, WIG Turnover, Set-up and Snapshot), and a page guide to every feature. Steps that arrive in a later phase are marked. Open it from **Set-up → Policy and SOP**.
 - Data levels in the reference data now read L1 Public and L5 Critical.

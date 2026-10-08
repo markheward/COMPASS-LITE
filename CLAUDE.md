@@ -42,5 +42,7 @@ and carries no one's data.
   copy its sample data.
 - Keep everything in `compass-lite.html`. External libraries only from
   cdnjs.cloudflare.com or cdn.jsdelivr.net at the pinned versions in SPEC.md 5.1.
+- When you add or change a capability, update `const CAPABILITIES` and the SOP
+  (`data-cap`, `data-sop-reviewed`) in the same change. RELEASING.md step 2 and 3.
 - Each phase adds `tests/pN.spec.js`. Run `npx playwright test` and
   `python3 tools/release_check.py` and follow `RELEASING.md` before a release.
